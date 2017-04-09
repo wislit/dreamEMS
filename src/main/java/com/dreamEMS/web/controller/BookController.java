@@ -29,6 +29,12 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    /**
+     * @param pageString
+     * @param perPageString
+     * @return / TODO
+     * @Param 
+     */
     @GetMapping
     public ResponseEntity<?> getBooks(@RequestParam(value = "page", required = false) String pageString,
                                       @RequestParam(value = "per_page", required = false) String perPageString) {

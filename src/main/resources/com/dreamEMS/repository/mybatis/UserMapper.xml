@@ -16,19 +16,28 @@
           (#{id}, #{username}, #{password})
     </insert>
 
-    <insert id="insertAuthority" parameterType="org.springframework.security.core.GrantedAuthority">
+    <insert id="insertAuthority">
           INSERT INTO authority (user_id, authority_name)
           VALUES
           <foreach item="authority" index="index" collection="authorities" separator=",">
                (#{id}, #{authority})
           </foreach>
      </insert>
+     
+     <update id="updateUserByNo">
+        UPDATE
+          user
+        SET
+          username = #{username}
+        WHERE
+          no = #{no}
+    </update>
 
     <update id="updateUserOnPasswordByNo">
         UPDATE
           user
         SET
-          name = #{name}
+          password = #{password}
         WHERE
           no = #{no}
     </update>
@@ -39,6 +48,14 @@
         WHERE
           no = #{no}
     </delete>
+    
+    <delete id="deleteUserById">
+        DELETE FROM
+          user
+        WHERE
+          id = #{id}
+    </delete>
+    
     <delete id="deleteAuthority">
           DELETE FROM authority WHERE user_id = #{id}
      </delete>

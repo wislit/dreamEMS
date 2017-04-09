@@ -10,7 +10,7 @@
 
 body{
 	background-color: #e7e7e7;
-	font-family: "Open Sans", sans-serif;
+	font-family: 굴림, gulim, helvetica, sans-serif;
 	font-weight: 300;
 	scrollbar-face-color: #121212;
 }
@@ -38,7 +38,7 @@ body{
 } 
 
 ::-webkit-scrollbar-track {
-	background-color: #121212;
+	/* background-color: #121212; */
 } 
 
 ::-webkit-scrollbar-thumb {
@@ -2947,7 +2947,7 @@ a:hover{
 		color: #fff;
 		text-transform: uppercase;
 		font-weight: 300;
-		font-family: 'Open Sans', sans-serif;
+		font-family: 굴림, gulim, helvetica, sans-serif;
 		box-shadow: 0 4px #16a085;
 		margin-bottom: 20px;
 	}

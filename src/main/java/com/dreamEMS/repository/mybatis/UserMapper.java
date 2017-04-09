@@ -31,11 +31,25 @@ public interface UserMapper extends UserRepository {
 	Integer deleteUserByNo(@Param("no") Long no);
 
 	@Override
+	Integer deleteUserById(@Param("id") String id);
+
+	@Override
 	Integer insertAuthority(User user);
 
 	@Override
 	Integer deleteAuthority(@Param("id") String id);
+
+	@Override
+	List<User> selectAllUsers();
+
+	@Override
+	Integer updateUserOnPasswordByNo(User user);
+
+	@Override
+	Integer updateUserByNo(User user);
 	
 	
+
+
 	
 }

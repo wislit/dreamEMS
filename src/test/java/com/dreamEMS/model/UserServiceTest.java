@@ -35,19 +35,19 @@ public class UserServiceTest {
      @Before
      public void setup() {
           user1 = new User();
-          user1.setId("user1");
-          user1.setPassword("pass1");
+          user1.setId("ems");
+          user1.setPassword("ems");
           user1.setAccountNonExpired(true);
           user1.setAccountNonLocked(true);
-          user1.setUsername("USER1");
+          user1.setUsername("ems");
           user1.setCredentialsNonExpired(true);
           user1.setEnabled(true);
-          user1.setAuthorities(AuthorityUtils.createAuthorityList("USER"));
+          user1.setAuthorities(AuthorityUtils.createAuthorityList("USER","ADMIN"));
      }
       
      @Test
      public void createUserTest() {
-          userService.deleteUser(user1);
+          userService.deleteUserById(user1);
           userService.saveUser(user1);
           User user = userService.getUserById(user1.getId()).get() ;
           assertThat(user.getId(), is(user1.getId()));

@@ -11,8 +11,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
-/**
- * @author Xiaoyue Xiao
+/** 사용자 클래스
+ * @author min gyeong
  */
 @Accessors(chain = true)
 @NoArgsConstructor
@@ -23,7 +23,12 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 7698862379923111158L;
 
+    
+    /**사용자 고유번호
+     */
     private Long no;
+    /**tt
+     */
     private String id;
     private String username;
     private String password;

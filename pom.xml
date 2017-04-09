@@ -64,6 +64,14 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             </dependency>
+            
+        <!-- Sql log -->
+        <dependency>
+		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
+		    <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+		    <version>1.16</version>
+		</dependency>
+
 
         <!-- Databases - Uses HSQL by default -->
         <dependency>
@@ -129,7 +137,23 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
+		<dependency>
+		   <groupId>org.mockito</groupId>
+		   <artifactId>mockito-all</artifactId>
+		   <version>1.10.19</version>
+		</dependency>
+		
+		<!-- security taglibs -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-taglibs</artifactId>
+		</dependency>
 
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
+		</dependency>
     </dependencies>
     
     <packaging>war</packaging>

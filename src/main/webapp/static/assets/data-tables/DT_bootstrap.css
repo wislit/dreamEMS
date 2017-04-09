@@ -1,3 +1,7 @@
+div.dataTables_length,
+div.dataTables_info{
+	float: left; 
+}
 
 div.dataTables_length label {
 	float: left;

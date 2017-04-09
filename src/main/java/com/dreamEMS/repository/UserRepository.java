@@ -20,13 +20,18 @@ public interface UserRepository {
     Integer insertUser(User user);
 
     Integer updateUserOnPasswordByNo(User user);
+    
+    Integer updateUserByNo(User user);
 
     Integer deleteUserByNo(Long no);
     
+    Integer deleteUserById(String id); 
+
     List<GrantedAuthority> selectAuthority(String id);
 
 	Integer insertAuthority(User user);
 
-	Integer deleteAuthority(String id); 
+	Integer deleteAuthority(String id);
+
 
 }

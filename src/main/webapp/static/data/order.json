@@ -1,0 +1,30 @@
+[
+{
+  "date": "2016-06-20",
+  "state": "CN",
+  "name": "홍길동",
+  "emsFee": 63425,
+  "postFee": 236234,
+  "weight": 18700,
+  "invoice": "EG33527429424KR"
+},
+{
+  "date": "2016-06-20",
+  "state": "CN",
+  "name": "홍길동3",
+  "emsFee": 2634342,
+  "postFee": 154524,
+  "weight": 23343,
+  "invoice": "EG395asfasd424KR"
+},
+{
+  "date": "2016-06-20",
+  "state": "CN",
+  "name": "홍길동2",
+  "emsFee": 2434342,
+  "postFee": 23434,
+  "weight": 24663,
+  "invoice": "EG23427429424KR"
+}
+
+]
