@@ -1,5 +1,8 @@
 package com.dreamEMS.web.controller;
 
+import com.dreamEMS.model.entity.Nation;
+import com.dreamEMS.service.ApiService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,13 +16,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dreamEMS.model.entity.Book;
 
+import java.util.List;
+
 /**
+ * 접수
  * @author 
  */
 @Controller
 @RequestMapping("/order")
 public class OrderController {
-	
+
+    private ApiService apiService;
+
+    @Autowired
+    public OrderController(ApiService apiService) { this.apiService = apiService; }
+
+
 	@GetMapping("/home")
     public String home() {
 		return "tiles.order.orderHome";
@@ -83,6 +95,19 @@ public class OrderController {
                 .build();*/
     	return null;
     }
+
+
+
+    @GetMapping("/test")
+    public ResponseEntity<?> test() {
+
+        List<Nation> nationList = apiService.getNationList();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(nationList);
+    }
+
 
     /********************************** HELPER METHOD **********************************/
     private void assertBookExist(Long orderNo) {
