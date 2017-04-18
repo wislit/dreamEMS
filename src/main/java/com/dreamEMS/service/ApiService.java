@@ -1,5 +1,6 @@
 package com.dreamEMS.service;
 
+import com.dreamEMS.model.entity.EmsSearchNewEngZipCodeInfo;
 import com.dreamEMS.model.entity.Nation;
 
 import java.util.List;
@@ -41,4 +42,12 @@ public interface ApiService {
      */
     List<Nation> getNationList();
 
+    /**
+     * 새우편번호 영문주소 조회
+     * @param searchText : 검색어
+     * @param countPerPage : 페이지당 조회건수
+     * @param currentPage : 현재 페이지
+     * @return
+     */
+    List<EmsSearchNewEngZipCodeInfo> getEmsSearchNewEngZipCodeInfoList(String searchText, int countPerPage, int currentPage);
 }
