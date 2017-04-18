@@ -57,6 +57,10 @@
     </delete>
     
     <delete id="deleteAuthority">
+          DELETE FROM authority WHERE user_id = (SELECT ID FROM user WHERE NO = #{no} )
+     </delete>
+     
+     <delete id="deleteAuthorityById">
           DELETE FROM authority WHERE user_id = #{id}
      </delete>
 

@@ -28,6 +28,8 @@
     <![endif]-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/bootstrap-table/bootstrap-table.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/data-tables/DT_bootstrap.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/jquery-confirm/jquery-confirm.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/assets/datepicker/css/bootstrap-datepicker3.css" />
 </head>
 
 <sec:authorize access="hasAuthority('ADMIN')" var="isAdmin" />
@@ -319,6 +321,7 @@ isadmin ${isAdmin}
 
 <script src="${pageContext.request.contextPath}/static/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/data-tables/DT_bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/jquery-confirm/jquery-confirm.js"></script>
 <%-- <script src="${pageContext.request.contextPath}/static/assets/bootstrap-table/bootstrap-table.min.js"></script> --%>
 <%-- <script src="${pageContext.request.contextPath}/static/assets/bootstrap-table/bootstrap-table-locale-all.min.js"></script> --%>
 <script type="text/javascript">

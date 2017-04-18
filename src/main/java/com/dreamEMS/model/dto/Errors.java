@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @JsonFormat(shape= JsonFormat.Shape.OBJECT)
 public enum Errors {
 
-	SERVER_INTERNAL_ERROR	(1000,HttpStatus.CONFLICT), 
+	SERVER_INTERNAL_ERROR	(1000,HttpStatus.INTERNAL_SERVER_ERROR), 
 	PARAMETER_MISSING_ERROR	(1001,HttpStatus.NOT_FOUND), 
 	PARAMETER_ILLEGAL_ERROR	(1002,HttpStatus.BAD_REQUEST), 
 	RESOURCE_NOT_FOUND_ERROR(1003,HttpStatus.INTERNAL_SERVER_ERROR);

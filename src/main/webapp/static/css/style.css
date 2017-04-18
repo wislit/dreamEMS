@@ -8,6 +8,11 @@
 /*	GENERAL
 ========================================*/
 
+.div-test{
+	border: 1px solid #2980b9;
+}
+
+
 body{
 	background-color: #e7e7e7;
 	font-family: 굴림, gulim, helvetica, sans-serif;

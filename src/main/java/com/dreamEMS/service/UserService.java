@@ -27,7 +27,7 @@ public interface UserService extends UserDetailsService {
     
     boolean modifyUserById(User user);
 
-    boolean deleteUser(User user);
+    boolean deleteUser(Long no);
     
     boolean deleteUserById(User user);
 

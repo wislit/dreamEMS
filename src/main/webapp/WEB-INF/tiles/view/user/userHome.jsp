@@ -75,7 +75,6 @@
         <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-body">
-                  <div class="tab-pane fade active in" id="beforePrint">  
               		<div class="adv-table">
                  			<table class="display table table-hover table-condensed text-center" id="example">
                        	<thead>
@@ -83,24 +82,13 @@
                                 <th class="text-center">No</th>
                                 <th class="text-center">ID</th>
                                 <th class="text-center">이름</th>
-                                <th></th>
+                             	<th></th>
                              </tr>
                         </thead>
                       		<tbody>
-                            <!-- <tr>
-                            	<td>2</td>
-                            	<td>2016-06-20</td>
-                            	<td>아무개</td>
-                                <td>
-                                    <button class="btn btn-info btn-sm"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-warning btn-sm"><i class="fa fa-unlock "></i></button>
-                                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr> -->
                       		</tbody>
                    	</table>
                    </div>
-                  </div>
                 </div><!-- /panel-body -->
             </div><!-- /panel -->
         </div><!-- /col-lg-12 -->
@@ -115,24 +103,43 @@
 <script src="${pageContext.request.contextPath}/static/assets/data-tables/DT_bootstrap.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
 <script type="text/javascript" charset="utf-8"> 
-    $(document).ready(function() {
-    	
-        $("#test").click(function() {
-        	  $.create(
-        			  '/user',
-        			  JSON.stringify($("#registForm").serializeObject()),	
-        			  function (reponse) {
-        				  alert( i18n("msg."+reponse.code));
-        			  },
-        			  function (request,status,error){
-        				  //alert("code:"+request.status+"\n"+"message:"+request.responseJSON.code);
-        				  alert(i18n("error."+request.responseJSON.code) );
-        			  });  
+function ajaxSuccess(reponse){
+		$.alert({
+	    content:  i18n("msg."+reponse.code),
+	    type: 'green',
+	    buttons: {
+	        ok: {
+	            btnClass: 'btn-success',
+	            action: function(){
+	            	location.reload();
+	            }
+	        }
+	    }
+	});
+}
+function ajaxError(xhr){
+	var errorMsg = xhr.status +' : ' +  xhr.responseJSON.message;
+	if (xhr.responseJSON.isDetail){ 
+		errorMsg = errorMsg + "<br>" + i18n("err."+xhr.responseJSON.detail.code);
+	}
+	
+	$.alert({
+		    content: errorMsg,
+		    //i18n("err."+xhr.responseJSON.code),
+		    type: 'red',
+		    buttons: {
+		        ok: {
+		            btnClass: 'btn-danger',
+		        }
+		    }
 		});
+}    
+    
+    $(document).ready(function() {
         
-        var btnStr = "<button class='btn btn-info btn-sm'><i class='fa fa-pencil'></i></button><span> </span>"
-            +"<button class='btn btn-warning btn-sm'><i class='fa fa-unlock '></i></button><span> </span>"
-            +"<button class='btn btn-danger btn-sm'><i class='fa fa-trash-o '></i></button>";
+        var btnStr = "<button class='btn btn-info btn-sm edit'><i class='fa fa-pencil'></i></button><span> </span>"
+            +"<button class='btn btn-warning btn-sm reset'><i class='fa fa-unlock '></i></button><span> </span>"
+            +"<button class='btn btn-danger btn-sm delete'><i class='fa fa-trash-o '></i></button>";
         
         var t = $('#example').DataTable({
         	ajax: {
@@ -142,15 +149,17 @@
         	columns: [
         		{ data: null,
         			searchable: false,
-                    orderable: false
+                    orderable: false,
+                    width: "10%" 
         		},
-                { data: "id" },
-                { data: "username" },
+                { data: "id" ,  width: "20%" },
+                { data: "username",  width: "50%" },
                 {
                     data: null,
                     defaultContent: btnStr,
                     searchable: false,
                     orderable: false,
+                    width: "20%"
                   }
             ],
             order: [[ 1, 'asc' ]]
@@ -161,6 +170,79 @@
                 cell.innerHTML = i+1;
             } );
         } ).draw();
+        
+        
+      	//https://craftpip.github.io/jquery-confirm/#callbacks
+      	//https://github.com/alassek/jquery.rest
+        $("#test").click(function() {
+        	 var create = $.create('/user', JSON.stringify($("#registForm").serializeObject()) );
+        	 create.then(ajaxSuccess, ajaxError);
+		});
+        
+        $('#example tbody').on('click', 'tr .edit', function () {
+            var data = t.row( this.parentNode.parentNode ).data();
+            alert( 'You clicked on '+data.no+'\'s row' );
+        } );
+        
+        $('#example tbody').on('click', 'tr .reset', function () {
+            var data = t.row( this.parentNode.parentNode ).data();
+            
+            $.confirm({
+                content: '' +
+                '<form action="" class="formName">' +
+                '<div class="form-group">' +
+                '<label>초기화 비밀번호를 입력하세요</label>' +
+                '<input type="text" placeholder="password" class="name form-control" required />' +
+                '</div>' +
+                '</form>',
+                buttons: {
+                    formSubmit: {
+                        text: 'Submit',
+                        btnClass: 'btn-warning',
+                        action: function () {
+                            var password = this.$content.find('.name').val();
+                            if(!password){
+                                $.alert('provide a valid name');
+                                return false;
+                            }
+                            var create = $.create('/user/resetPwd', JSON.stringify({ "no": data.no , "password": password}) );
+                       	 	create.then(ajaxSuccess, ajaxError);
+                        }
+                    },
+                    cancel: function () {
+                        //close
+                    },
+                },
+                onContentReady: function () {
+                    // bind to events
+                    var jc = this;
+                    this.$content.find('form').on('submit', function (e) {
+                        // if the user submits the form by pressing enter in the field.
+                        e.preventDefault();
+                        jc.$$formSubmit.trigger('click'); // reference the button and click it
+                    });
+                }
+            });
+        } );
+         
+        $('#example tbody').on('click', 'tr .delete', function () {
+            var data = t.row( this.parentNode.parentNode ).data();
+            $.confirm({
+				    content:  "<label>사용자를 삭제하시겠습니까?</label>",
+				    buttons: {
+					    confirm : {
+					    	btnClass: 'btn-danger',
+					    	action : function () {
+						    	var destroy = $.destroy('/user/'+data.no);
+						    	destroy.then(ajaxSuccess, ajaxError);
+					        } 
+					    }, 
+				        cancel: function () {
+				        }
+				    }
+				});
+        } );
+        
        
         /* 
         

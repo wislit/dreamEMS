@@ -100,16 +100,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteUser(User user) {
-    	boolean rvl = userRepository.deleteUserByNo(user.getNo()) > 0 & 
-    			userRepository.deleteAuthority(user.getId()) > 0;
+    public boolean deleteUser(Long no) {
+    	boolean rvl = userRepository.deleteAuthority(no) > 0 & 
+    			userRepository.deleteUserByNo(no) > 0;
         return  rvl;
     }
     
     @Override
     public boolean deleteUserById(User user) {
-    	boolean rvl = userRepository.deleteUserById(user.getId()) > 0 & 
-    			userRepository.deleteAuthority(user.getId()) > 0;
+    	boolean rvl = userRepository.deleteAuthorityById(user.getId()) > 0 & 
+    			userRepository.deleteUserById(user.getId()) > 0;
         return  rvl;
     }
 

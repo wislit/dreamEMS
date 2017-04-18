@@ -2,6 +2,7 @@ package com.dreamEMS.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.dreamEMS.model.entity.User;
@@ -31,7 +32,8 @@ public interface UserRepository {
 
 	Integer insertAuthority(User user);
 
-	Integer deleteAuthority(String id);
+	Integer deleteAuthority(Long no);
 
+	Integer deleteAuthorityById(String id);
 
 }

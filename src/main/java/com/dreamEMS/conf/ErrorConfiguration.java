@@ -14,14 +14,14 @@ import org.springframework.http.HttpStatus;
 /**
  * @author min gyeong
  */
-@Configuration
+//@Configuration
 public class ErrorConfiguration  extends ServerProperties{
 	
 	@Override
 	public void customize(ConfigurableEmbeddedServletContainer container)
 	{
 		super.customize(container);
-		container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/404"));
+		//container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/404"));
 		//container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500"));
 		//container.addErrorPages(new ErrorPage("/error"));
 	}

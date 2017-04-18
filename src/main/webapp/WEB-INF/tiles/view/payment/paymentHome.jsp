@@ -15,9 +15,9 @@
                 
                  <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="page-header">
+                        <h3 class="page-header">
                             	결제내역 조회
-                        </h2>
+                        </h3>
                     </div>
                 </div>
                 
@@ -26,21 +26,17 @@
                   <div class="col-lg-12">
                       <section class="panel">
                           <div class="panel-body">
-                          	<div class="col-sm-4 col-sm-offset-4">
+                          	<div class="col-sm-6 col-sm-offset-3">
                           			<div class="well well-sm">
 	                          			<form class="form-inline" role="form">
 		                                    	<div class="form-group">
 		                                    		<ul class="pager">
 					                                    <li class="previous"><a href="#">&larr; 이전달</a></li>
 					                                    <li>
-					                                    	<select class="form-control input-sm">
-			                                                	<option>2016</option>
-			                                                	<option>2015</option>
-			                                            	</select>
-			                                            	<select class="form-control input-sm">
-			                                                	<option>3</option>
-			                                                	<option>4</option>
-			                                            	</select>
+					                                    	<div class="input-group input-group-sm col-sm-6">
+									                           	<span class="input-group-addon input-group-addon-info"><i class="fa fa-calendar"></i></span>
+									                            <input type="text" class="form-control"  id="dp1" >
+									                       </div>
 					                                    </li>
 					                                    <li class="next"><a href="#">다음달 &rarr;</a></li>
 					                                </ul>	
@@ -108,6 +104,23 @@
 
 
     <!-- start:javascript for this page -->
+<script src="${pageContext.request.contextPath}/static/assets/datepicker/js/bootstrap-datepicker.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/datepicker/locales/bootstrap-datepicker.kr.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#dp1').datepicker({
+		minViewMode: 1,
+	    maxViewMode: 2,
+	    language: "kr",
+	    autoclose: true,
+	    todayHighlight: true,
+	    format: "yyyy/mm"
+	});
+	
+	
+});
+
+</script>
     <!-- end:javascript for this page -->
 
 </body>

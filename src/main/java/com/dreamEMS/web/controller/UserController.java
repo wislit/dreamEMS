@@ -1,6 +1,5 @@
 package com.dreamEMS.web.controller;
 
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.dreamEMS.model.dto.Errors;
 import com.dreamEMS.model.dto.Msg;
 import com.dreamEMS.model.entity.User;
 import com.dreamEMS.service.UserService;
+import com.dreamEMS.web.exception.DreamEMSException;
 
 import lombok.extern.apachecommons.CommonsLog;
 
@@ -43,33 +42,17 @@ public class UserController {
 		
 		List<User> users = userService.getAllUsers();
 
-        return ResponseEntity
-        		.ok(users);
+        return ResponseEntity.ok(users);
     }
 	
 	@PostMapping
     public ResponseEntity<?> postUser(@RequestBody User user) {
-		userService.saveUser(user);
-
-       /* URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(book.getId())
-                .toUri();*/
-		//ResponseEntity.created(new URI("/user/"+newUser.getUserId())).build()
 		
+		if(user.getId().equals("err")) throw new DreamEMSException(Errors.PARAMETER_ILLEGAL_ERROR);
+		userService.saveUser(user);
 		log.info(user);
-		 URI location = ServletUriComponentsBuilder
-	                .fromCurrentRequest()
-	                .path("/{id}")
-	                .buildAndExpand(user.getId())
-	                .toUri();
-
-        return ResponseEntity.
-        		ok(Msg.SAVE_USER);
-        		//badRequest().body(Errors.PARAMETER_ILLEGAL_ERROR);
-/*                .created(location)
-                .body("등록되었습니다");*/
+        
+		return ResponseEntity.ok(Msg.SAVE_USER);
     }
 	
 	 @PutMapping("/{userId}")
@@ -77,18 +60,24 @@ public class UserController {
 		 
 		 userService.modifyUserById(user);
 		 
-	        return ResponseEntity
-	                .status(HttpStatus.OK)
-	                .body(user);
+	     return ResponseEntity.ok(Msg.MODIFY_USER);
+	    }
+	 
+	 @PostMapping("resetPwd")
+	    public ResponseEntity<?> resetPassored(@RequestBody User user) {
+			
+		 log.info(user);
+		 userService.modifyUserOnPasswordById(user);
+ 
+		 return ResponseEntity.ok(Msg.RESET_USER);
 	    }
 	
-	@DeleteMapping
-	public ResponseEntity<?> deleteUser(@RequestBody User user) {
-		userService.deleteUser(user);
+	@DeleteMapping("/{userNo}")
+	public ResponseEntity<?> deleteUser(@PathVariable Long userNo) {
 		
-		return ResponseEntity
-                .noContent()
-                .build();
+		userService.deleteUser(userNo);
+		
+		return ResponseEntity.ok(Msg.REMOVE_USER);
 	}
 
 }
