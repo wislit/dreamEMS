@@ -24,10 +24,10 @@ public class EmsSearchNewEngZipCodeInfo {
 
     private Integer currentPage;
 
-    private String zipcode;
+    private String zipCode;
 
     private String addr;
 
-    private String engaddr;
+    private String engAddr;
 
 }

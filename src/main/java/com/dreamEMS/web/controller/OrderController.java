@@ -1,7 +1,7 @@
 package com.dreamEMS.web.controller;
 
-import com.dreamEMS.model.entity.EmsSearchNewEngZipCodeInfo;
-import com.dreamEMS.model.entity.Nation;
+import com.dreamEMS.constant.ApiConstant;
+import com.dreamEMS.model.entity.*;
 import com.dreamEMS.service.ApiService;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.dreamEMS.model.entity.Book;
 
 import java.util.List;
 import java.util.Map;
@@ -105,11 +103,20 @@ public class OrderController {
     public ResponseEntity<?> test() {
 
         Map<String,Object> resultMap = new HashedMap();
-        List<Nation> nationList = apiService.getNationList();
-        List<EmsSearchNewEngZipCodeInfo> zipCodeInfoList = apiService.getEmsSearchNewEngZipCodeInfoList("이문로",10,1);
+        List<Nation> nationList = apiService.getNationList(ApiConstant.PREMIUMCD_EMS);
+        List<EmsSearchNewEngZipCodeInfo> zipCodeInfoList = apiService.getEmsSearchNewEngZipCodeInfoList("이문로",5,1);
+        List<JuDo> juDoList = apiService.getJuDoList("CN");
+        List<SiDo> siDoList = apiService.getSiDoList("CN","BEIJING");
+        List<ZipCode> zipCodeList = apiService.getZipCodeList("CN","BEIJING","BEIJING");
+        EmsTotProcCmd emsTotProcCmd = apiService.getEmsTotProcCmd(ApiConstant.PREMIUMCD_EMS,"CN", 30000, "n", 0, "em");
 
         resultMap.put("nationList",nationList);
         resultMap.put("zipCodeInfoList",zipCodeInfoList);
+        resultMap.put("juDoList",juDoList);
+        resultMap.put("siDoList",siDoList);
+        resultMap.put("zipCodeList",zipCodeList);
+        resultMap.put("emsTotProcCmd",emsTotProcCmd);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(resultMap);
