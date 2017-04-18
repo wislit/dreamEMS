@@ -1,7 +1,9 @@
 package com.dreamEMS.web.controller;
 
+import com.dreamEMS.model.entity.EmsSearchNewEngZipCodeInfo;
 import com.dreamEMS.model.entity.Nation;
 import com.dreamEMS.service.ApiService;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.dreamEMS.model.entity.Book;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 접수
@@ -101,11 +104,15 @@ public class OrderController {
     @GetMapping("/test")
     public ResponseEntity<?> test() {
 
+        Map<String,Object> resultMap = new HashedMap();
         List<Nation> nationList = apiService.getNationList();
+        List<EmsSearchNewEngZipCodeInfo> zipCodeInfoList = apiService.getEmsSearchNewEngZipCodeInfoList("이문로",10,1);
 
+        resultMap.put("nationList",nationList);
+        resultMap.put("zipCodeInfoList",zipCodeInfoList);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(nationList);
+                .body(resultMap);
     }
 
 

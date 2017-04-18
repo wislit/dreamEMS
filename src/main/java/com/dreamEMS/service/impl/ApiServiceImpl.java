@@ -1,9 +1,12 @@
 package com.dreamEMS.service.impl;
 
 import com.dreamEMS.constant.ApiConstant;
+import com.dreamEMS.model.dto.Errors;
+import com.dreamEMS.model.entity.EmsSearchNewEngZipCodeInfo;
 import com.dreamEMS.model.entity.Nation;
 import com.dreamEMS.model.entity.SEED128;
 import com.dreamEMS.service.ApiService;
+import com.dreamEMS.web.exception.DreamEMSException;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -127,10 +130,61 @@ public class ApiServiceImpl implements ApiService {
 
         } catch (Exception e){
             e.printStackTrace();
+            throw new DreamEMSException(Errors.SERVER_INTERNAL_ERROR, "Error from [ apiService.getNationList ]");
         }
 
-
-
         return nationList;
+    }
+
+    @Override
+    public List<EmsSearchNewEngZipCodeInfo> getEmsSearchNewEngZipCodeInfoList(String searchText, int countPerPage, int currentPage) {
+        List<EmsSearchNewEngZipCodeInfo> zipCodeInfoList = new ArrayList<>();
+        StringBuffer apiUrl = new StringBuffer();
+        apiUrl.append("http://eship.epost.go.kr/api.EmsSearchNewEngZipCodeInfo.ems?regkey=");
+        apiUrl.append(ApiConstant.REGKEY);
+        apiUrl.append("&searchText=");
+        apiUrl.append(searchText!=null?searchText:"");
+        apiUrl.append("&countPerPage=");
+        apiUrl.append(countPerPage);
+        apiUrl.append("&currentPage=");
+        apiUrl.append(currentPage);
+
+        try {
+            String xmlStr = this.callApi(apiUrl.toString(),"GET");
+            InputSource is = new InputSource(new StringReader(xmlStr));
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
+            //최상위 노드 찾기
+            Element element = doc.getDocumentElement();
+            //원하는 태그 찾아오기
+            NodeList items1 = element.getElementsByTagName("zipcode");
+            NodeList items2 = element.getElementsByTagName("addr");
+            NodeList items3 = element.getElementsByTagName("engaddr");
+            NodeList items4 = element.getElementsByTagName("totalCount");
+            NodeList items5 = element.getElementsByTagName("totalPage");
+            NodeList items6 = element.getElementsByTagName("countPerPage");
+            NodeList items7 = element.getElementsByTagName("currentPage");
+            //데이터 개수 찾아오기
+            int n = items1.getLength();
+            for (int i=0; i<n; i++){
+                EmsSearchNewEngZipCodeInfo info = new EmsSearchNewEngZipCodeInfo();
+
+                info.setZipcode(items1.item(i).getFirstChild().getNodeValue());
+                info.setAddr(items2.item(i).getFirstChild().getNodeValue());
+                info.setEngaddr(items3.item(i).getFirstChild().getNodeValue());
+
+                info.setTotalCount(Integer.parseInt(items4.item(0).getFirstChild().getNodeValue()));
+                info.setTotalPage(Integer.parseInt(items5.item(0).getFirstChild().getNodeValue()));
+                info.setCountPerPage(Integer.parseInt(items6.item(0).getFirstChild().getNodeValue()));
+                info.setCurrentPage(Integer.parseInt(items7.item(0).getFirstChild().getNodeValue()));
+
+                zipCodeInfoList.add(info);
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new DreamEMSException(Errors.SERVER_INTERNAL_ERROR, "Error from [ apiService.getNationList ]");
+        }
+
+        return zipCodeInfoList;
     }
 }
