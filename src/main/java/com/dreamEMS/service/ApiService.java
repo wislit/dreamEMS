@@ -85,4 +85,22 @@ public interface ApiService {
      * @return
      */
     EmsTotProcCmd getEmsTotProcCmd(String premiumCd, String countryCd, int totWeight, String boyn, int boprc, String em_ee);
+
+
+    /******************************************************************************************************************/
+
+    /**
+     * 고객번호 조회
+     * @return
+     */
+    String getCustno();
+
+    /**
+     * 계약승인번호 조회
+     * @param custno
+     * @return
+     */
+    String getApprno(String custno);
+
+
 }

@@ -109,6 +109,9 @@ public class OrderController {
         List<SiDo> siDoList = apiService.getSiDoList("CN","BEIJING");
         List<ZipCode> zipCodeList = apiService.getZipCodeList("CN","BEIJING","BEIJING");
         EmsTotProcCmd emsTotProcCmd = apiService.getEmsTotProcCmd(ApiConstant.PREMIUMCD_EMS,"CN", 30000, "n", 0, "em");
+        String custno = apiService.getCustno();
+        String apprno = apiService.getApprno(custno);
+
 
         resultMap.put("nationList",nationList);
         resultMap.put("zipCodeInfoList",zipCodeInfoList);
@@ -116,6 +119,8 @@ public class OrderController {
         resultMap.put("siDoList",siDoList);
         resultMap.put("zipCodeList",zipCodeList);
         resultMap.put("emsTotProcCmd",emsTotProcCmd);
+        resultMap.put("custno",custno);
+        resultMap.put("apprno",apprno);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

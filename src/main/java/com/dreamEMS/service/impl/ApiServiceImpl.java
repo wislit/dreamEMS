@@ -340,4 +340,69 @@ public class ApiServiceImpl implements ApiService {
 
         return emsTotProcCmd;
     }
+
+
+    @Override
+    public String getCustno() {
+        String custno = "";
+        String plainStr = "memberID="+ApiConstant.EPOST_ID;
+        String regData = this.getEncryptData(ApiConstant.REGKEY,plainStr);
+
+        StringBuffer apiUrl = new StringBuffer();
+        apiUrl.append("http://eship.epost.go.kr/api.EmsIdCustnoInfo.ems?regkey=");
+        apiUrl.append(ApiConstant.REGKEY);
+        apiUrl.append("&regData=");
+        apiUrl.append(regData);
+
+        try {
+            String xmlStr = this.callApi(apiUrl.toString(),"GET");
+            System.out.println(xmlStr);
+            InputSource is = new InputSource(new StringReader(xmlStr));
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
+            //최상위 노드 찾기
+            Element element = doc.getDocumentElement();
+            //원하는 태그 찾아오기
+            NodeList items1 = element.getElementsByTagName("custno");
+
+            custno = items1.item(0).getFirstChild().getNodeValue();
+
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new DreamEMSException(Errors.SERVER_INTERNAL_ERROR, "Error from [ ApiServiceImpl.getEmsIdCustnoInfo ]");
+        }
+
+        return custno;
+    }
+
+    @Override
+    public String getApprno(String custno) {
+        String apprno = "";
+        String plainStr = "custno="+custno;
+        String regData = this.getEncryptData(ApiConstant.REGKEY,plainStr);
+
+        StringBuffer apiUrl = new StringBuffer();
+        apiUrl.append("http://eship.epost.go.kr/api.EmsPrcPayMethodList.ems?regkey=");
+        apiUrl.append(ApiConstant.REGKEY);
+        apiUrl.append("&regData=");
+        apiUrl.append(regData);
+
+        try {
+            String xmlStr = this.callApi(apiUrl.toString(),"GET");
+            System.out.println(xmlStr);
+            InputSource is = new InputSource(new StringReader(xmlStr));
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
+            //최상위 노드 찾기
+            Element element = doc.getDocumentElement();
+            //원하는 태그 찾아오기
+            NodeList items1 = element.getElementsByTagName("apprno");
+
+            apprno = items1.item(0).getFirstChild().getNodeValue();
+
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new DreamEMSException(Errors.SERVER_INTERNAL_ERROR, "Error from [ ApiServiceImpl.getEmsIdCustnoInfo ]");
+        }
+
+        return apprno;
+    }
 }
