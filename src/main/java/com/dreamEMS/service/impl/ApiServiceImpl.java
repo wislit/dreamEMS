@@ -405,4 +405,40 @@ public class ApiServiceImpl implements ApiService {
 
         return apprno;
     }
+
+    @Override
+    public EmsApplyReturnData receiptEms(String custno, String apprno, LinkMapTable linkMapTable) {
+        String plainStr = "custno="+custno;
+        String regData = this.getEncryptData(ApiConstant.REGKEY,plainStr);
+
+        StringBuffer apiUrl = new StringBuffer();
+        // TODO: 2017-04-23 라이브 적용시 url 변경
+        //apiUrl.append("http://eship.epost.go.kr/api.EmsApplyInsertReceiveTempCmdNew.ems?regkey=");    //라이브 url
+        apiUrl.append("http://eship.epost.go.kr/api.EmsApplyInsertReceiveTempCmdNewDev.ems?regkey=");   //테스트 url
+        apiUrl.append(ApiConstant.REGKEY);
+        apiUrl.append("&regData=");
+        apiUrl.append(regData);
+
+
+
+        return null;
+    }
+
+
+
+
+    private String getPlainStr(String custno, String apprno, LinkMapTable linkMapTable){
+        StringBuffer plainStr = new StringBuffer();
+        plainStr.append("custno=");
+        plainStr.append(custno);
+        plainStr.append("&apprno=");
+        plainStr.append(apprno);
+        plainStr.append("&sender=");
+
+
+
+
+        return plainStr.toString();
+    }
+
 }

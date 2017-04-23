@@ -103,4 +103,6 @@ public interface ApiService {
     String getApprno(String custno);
 
 
+    EmsApplyReturnData receiptEms(String custno, String apprno, LinkMapTable linkMapTable);
+
 }
