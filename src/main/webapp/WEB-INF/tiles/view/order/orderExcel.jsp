@@ -2,6 +2,18 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<style>
+
+.tb-excel > tbody > tr > td{padding: 3px 15px; font-size: 12px; line-height: 1.2;}
+
+#excel_container {
+		border: 1px solid #C3C3C3;
+		height: 360px;
+		position: relative;
+		overflow: scroll;
+	}
+table.tb-excel{border: 0px; position: absolute; left: -2px;}
+</style>
 <!-- start:main -->
 <div class="container"><!-- footer.jsp에 container </div> 있음 마지막에 닫는태그 안써도됨 -->
     <div id="main">
@@ -38,8 +50,8 @@
 				                	</div>
 				                    <ul>
 				                        <li>엑셀양식을 다운로드 받아 작성해 주시기 바랍니다<br>
-				                         	<a class="btn btn-info btn-sm" href="" role="button" ><i class="fa fa-download"></i> ems간편 템플릿 <span class="label label-warning">추천</span></a>
-				                         	<a class="btn btn-info btn-sm" href="" role="button" ><i class="fa fa-download"></i> 기존 우체국용 템플릿</a>
+				                         	<a class="btn btn-info btn-sm" href="${pageContext.request.contextPath}/download/dreamEMS_template" role="button" ><i class="fa fa-download"></i> ems간편 템플릿 <span class="label label-warning">추천</span></a>
+				                         	<a class="btn btn-info btn-sm" href="${pageContext.request.contextPath}/download/ems_template" role="button" ><i class="fa fa-download"></i> 기존 우체국용 템플릿</a>
 				                         	</li>
 				                         <li>비서류 일반EMS 배송헤대해 대량접수가 가능합니다</li>
 				                         <li>EMS 프리미엄 배송을 원하실 경우 사무실로 연락주시기 바랍니다.</li>
@@ -47,38 +59,26 @@
 				            </div>
 				        </div>
 				        <!-- end:excel download info -->
-				        
-				        <!-- start:excel file uploader -->
-				        <div class="row">
-				        	<div class="col-sm-6 col-sm-offset-3">
-				        		<section class="panel panel-info">
-				        			<div class="panel-heading">
-				        				파일 업로드
-				        			</div>
-                    				<div class="panel-body">
-                    					<form class="" role="form">
-                    						<div class="form-group">
+				        		 <div class="alert alert-info alert-outline alert-dismissable" style="height: 70px; margin-top: 20px;">
+			                          <form class="" role="form" enctype="multipart/form-data" method="post" 
+                               				 id="excelUploadForm" name="excelUploadForm"
+                               				 action= "${pageContext.request.contextPath}/order/excelUpload"> 
                     							<div class="col-sm-8">
 	                    							<div class="fileupload fileupload-new" data-provides="fileupload">
-			                                             <span class="btn btn-info btn-file">
-			                                             <span class="fileupload-new"><i class="fa fa-paperclip"></i> Select file</span>
-			                                             <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-			                                             <input type="file" class="default" />
+			                                             <span class="btn btn-info btn-file" >
+			                                             <span class="fileupload-new"><i class="fa fa-paperclip" style="color: white;"></i> Select file</span>
+			                                             <span class="fileupload-exists"><i class="fa fa-undo"  style="color: white;"></i> Change</span>
+			                                             <input type="file" class="default" id="excelFile" name="excelFile" />
 			                                             </span>
 			                                                 <span class="fileupload-preview" style="margin-left:5px;"></span>
 			                                                 <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none; margin-left:5px;"></a>
 				                                    </div> 
                     							</div>
-			                                    <div class="col-sm-4">
-			                                 	 <button class="btn btn-block btn-success" type="button"><i class="fa fa-upload"></i> 업로드</button>
+			                                    <div class="col-sm-3">
+			                                 	 <button class="btn btn-block btn-success" type="button" onclick="check()" ><i class="fa fa-upload"  style="color: white;"></i> 업로드</button>
 			                                    </div>
-                    						</div>
 			                     		 </form>
-                    				</div>
-                   				</section>
-				        	</div>
-				        </div>
-				        <!-- end:excel file uploader -->
+			                      </div>
                    </div>
                 </section>
                 <!-- end:info -->
@@ -86,8 +86,8 @@
                 <!-- start:data -->
                 <section class="panel">
                     <div class="panel-body">
-                    	<div class="adv-table">
-                       			<table class="display table table-hover table-condensed text-center" id="example">
+                    	<div id="excel_container">
+                    		<table class="table table-bordered table-condensed tb-excel" id="example">
 	                            	<thead>
 		                                 <tr>
 		                                 	<th class="text-center"><input id="example-select-all" type="checkbox"></th>
@@ -99,57 +99,58 @@
 		                                    <th class="text-center">중량(g)</th>
 		                                    <th class="text-center">우체국요금</th>
 		                                    <th class="text-center">DreamEMS요금</th>
-		                                    <th></th>
+		                                    <th class="text-center">No</th>
+		                                    <th class="text-center">날짜</th>
+		                                    <th class="text-center">송장번호</th>
+		                                    <th class="text-center">받는사람</th>
+		                                    <th class="text-center">국가</th>
+		                                    <th class="text-center">중량(g)</th>
+		                                    <th class="text-center">우체국요금</th>
+		                                    <th class="text-center">DreamEMS요금</th>
 		                                 </tr>
 		                            </thead>
                             		<tbody>
 		                                <tr>
 		                                	<td></td>
 		                                	<td>1</td>
-		                                	<td>2016-06-20</td>
-		                                	<td><a href="#"><strong>EG710143161KR</strong></a></td>
+		                                	<td class="f_hp warning single-line" contenteditable="true" style="background: rgb(254, 221, 219); color: #FF0000;">2016-06-20</td>
+		                                	<td>EG710143161KR</td>
 		                                	<td>아무개</td>
 		                                	<td>CN</td>
 		                                	<td>19750g</td>
 		                                	<td>83300원</td>
 		                                	<td>64974원</td>
-		                                    <td>
-		                                        <button class="btn btn-info btn-sm"><i class="fa fa-pencil"></i></button>
-		                                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o "></i></button>
-		                                        <div class="btn-group">
-					                               <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown"><i class="fa fa-print"></i><span class="caret"></span></button>
-					                               <ul class="dropdown-menu dropdown-info" role="menu">
-					                                   <li><a href="#">A4</a></li>
-					                                   <li><a href="#">소형라벨</a></li>
-					                               </ul>
-					                           </div>
-		                                    </td>
+		                                	<td>1</td>
+		                                	<td class="f_hp warning single-line" contenteditable="true" style="background: rgb(254, 221, 219); color: #FF0000;">2016-06-20</td>
+		                                	<td>EG710143161KR</td>
+		                                	<td>아무개</td>
+		                                	<td>CN</td>
+		                                	<td>19750g</td>
+		                                	<td>83300원</td>
+		                                	<td>64974원</td>
 		                                </tr>
 		                                <tr>
 		                                	<td></td>
 		                                	<td>2</td>
 		                                	<td>2016-06-20</td>
-		                                	<td><a href="#"><strong>EG71124213KR</strong></a></td>
+		                                	<td>EG71124213KR</td>
 		                                	<td>아무개</td>
 		                                	<td>CN</td>
 		                                	<td>12350g</td>
 		                                	<td>2300원</td>
 		                                	<td>14974원</td>
-		                                    <td>
-		                                        <button class="btn btn-info btn-sm"><i class="fa fa-pencil"></i></button>
-		                                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o "></i></button>
-		                                        <div class="btn-group">
-					                               <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown"><i class="fa fa-print"></i><span class="caret"></span></button>
-					                               <ul class="dropdown-menu dropdown-info" role="menu">
-					                                   <li><a href="#">A4</a></li>
-					                                   <li><a href="#">소형라벨</a></li>
-					                               </ul>
-					                           </div>
-		                                    </td>
+		                                	<td>2</td>
+		                                	<td>2016-06-20</td>
+		                                	<td>EG71124213KR</td>
+		                                	<td>아무개</td>
+		                                	<td>CN</td>
+		                                	<td>12350g</td>
+		                                	<td>2300원</td>
+		                                	<td>14974원</td>
 		                                </tr>
                             		</tbody>
 	                        	</table>
-	                        </div>
+                    	</div>
                    </div>
                 </section>
                 <!-- end:data -->
@@ -163,6 +164,55 @@
     <script src="${pageContext.request.contextPath}/static/assets/dropzone/dropzone.js"></script>
     <script src="${pageContext.request.contextPath}/static/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/assets/bootstrap-fileupload/bootstrap-fileupload.css">
+
+<script type="text/javascript">
+function checkFileType(filePath) {
+    var fileFormat = filePath.split(".");
+    if (fileFormat.indexOf("xlsx") > -1) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+function check() {
+    var file = $("#excelFile").val();
+    if (file == "" || file == null) {
+        alert("파일을 선택해주세요.");
+        return false;
+    } else if (!checkFileType(file)) {
+        alert("엑셀 파일만 업로드 가능합니다.");
+        return false;
+    }
+
+    if (confirm("업로드 하시겠습니까?")) {
+    	
+    	//var form = $('#excelUploadForm')[0];
+        //var formData = new FormData(form);
+        var formData =  new FormData($('#excelUploadForm')[0]);
+        //formData.append("fileObj", $("#excelFile")[0].files[0]);
+        
+        $.ajax({
+            	url: '/order/excelUpload',
+                processData: false,
+                contentType: false,
+                data: formData,
+                type: 'POST',
+                success: function(data) {
+                    alert("모든 데이터가 업로드 되었습니다.");
+                }
+            });
+
+    }
+}
+
+$(document).ready(function() {
+
+	
+	
+} );	
+</script>
 
 </body>
 </html>	

@@ -1,8 +1,29 @@
+
+
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <style>
+
+.no-border{border: none;}
+.br-right{border-right: 1px solid #000;}
+.va-top{ vertical-align: top }
+.va-middle{vertical-align: middle;}
+.text-green {color: #1ca425;}
+.text-blue{color: #1970ec;}
+
+.ls-sm{ letter-spacing: -1.5px; }
+.text-lg { font-size: 13px !important; font-weight: bold }
+.ft-bold{font-weight: bold}
+
+.ta_left {text-align: left; padding-left: 4px;}
+.ta_right {text-align: right; padding-right: 4px;}
+
+div.invoice{padding: 5% 5% 5% 5%; height: 40%;}
+
 /* 송장 */
 	/* .td{font-family: 'Noto Sans KR', 'Noto Sans SC', 'Microsoft Yahei', sans-serif !important}
 	.text_green { color: #1ca425 }
