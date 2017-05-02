@@ -3,6 +3,7 @@ package com.dreamEMS.web.controller;
 import com.dreamEMS.constant.ApiConstant;
 import com.dreamEMS.model.entity.*;
 import com.dreamEMS.service.ApiService;
+import com.dreamEMS.service.OrderService;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,16 @@ import java.util.Map;
 @RequestMapping("/order")
 public class OrderController {
 
+    @Autowired
     private ApiService apiService;
 
     @Autowired
-    public OrderController(ApiService apiService) { this.apiService = apiService; }
+    private OrderService orderService;
+
+    /*@Autowired
+    public OrderController(ApiService apiService) { this.apiService = apiService; }*/
+
+
 
 
 	@GetMapping("/home")
@@ -103,24 +110,26 @@ public class OrderController {
     public ResponseEntity<?> test() {
 
         Map<String,Object> resultMap = new HashedMap();
-        List<Nation> nationList = apiService.getNationList(ApiConstant.PREMIUMCD_EMS);
-        List<EmsSearchNewEngZipCodeInfo> zipCodeInfoList = apiService.getEmsSearchNewEngZipCodeInfoList("이문로",5,1);
-        List<JuDo> juDoList = apiService.getJuDoList("CN");
-        List<SiDo> siDoList = apiService.getSiDoList("CN","BEIJING");
-        List<ZipCode> zipCodeList = apiService.getZipCodeList("CN","BEIJING","BEIJING");
-        EmsTotProcCmd emsTotProcCmd = apiService.getEmsTotProcCmd(ApiConstant.PREMIUMCD_EMS,"CN", 30000, "n", 0, "em");
-        String custno = apiService.getCustno();
-        String apprno = apiService.getApprno(custno);
+//        List<Nation> nationList = apiService.getNationList(ApiConstant.PREMIUMCD_EMS);
+//        List<EmsSearchNewEngZipCodeInfo> zipCodeInfoList = apiService.getEmsSearchNewEngZipCodeInfoList("이문로",5,1);
+//        List<JuDo> juDoList = apiService.getJuDoList("CN");
+//        List<SiDo> siDoList = apiService.getSiDoList("CN","BEIJING");
+//        List<ZipCode> zipCodeList = apiService.getZipCodeList("CN","BEIJING","BEIJING");
+//        EmsTotProcCmd emsTotProcCmd = apiService.getEmsTotProcCmd(ApiConstant.PREMIUMCD_EMS,"CN", 30000, "n", 0, "em");
+//        String custno = apiService.getCustno();
+//        String apprno = apiService.getApprno(custno);
 
+        List<TestTb> tbList = orderService.getTestTbList();
 
-        resultMap.put("nationList",nationList);
-        resultMap.put("zipCodeInfoList",zipCodeInfoList);
-        resultMap.put("juDoList",juDoList);
-        resultMap.put("siDoList",siDoList);
-        resultMap.put("zipCodeList",zipCodeList);
-        resultMap.put("emsTotProcCmd",emsTotProcCmd);
-        resultMap.put("custno",custno);
-        resultMap.put("apprno",apprno);
+//        resultMap.put("nationList",nationList);
+//        resultMap.put("zipCodeInfoList",zipCodeInfoList);
+//        resultMap.put("juDoList",juDoList);
+//        resultMap.put("siDoList",siDoList);
+//        resultMap.put("zipCodeList",zipCodeList);
+//        resultMap.put("emsTotProcCmd",emsTotProcCmd);
+//        resultMap.put("custno",custno);
+//        resultMap.put("apprno",apprno);
+        resultMap.put("tbList",tbList);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
