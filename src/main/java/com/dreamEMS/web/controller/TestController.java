@@ -51,6 +51,11 @@ public class TestController {
         return "site.login";
     }
     
+    @RequestMapping(value = "/print", method=RequestMethod.GET)
+    public String print() {
+        return "site.print";
+    }
+    
     @RequestMapping(value = "/error/404")
     public String error() {
         return "error.404";

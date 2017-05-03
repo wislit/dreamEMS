@@ -36,25 +36,20 @@
         				<div class="row"> 
         					<div class="col-sm-3 col-sm-offset-1">
 	        					<div class="btn-group">
-	                                <button type="button" class="btn btn-info active" >EMS 일반</button>
-	                                <button type="button" class="btn btn-info">EMS 프리미엄</button>
+	                                <button type="button" class="btn btn-info active ems-type" >EMS 일반</button>
+	                                <button type="button" class="btn btn-info ems-type">EMS 프리미엄</button>
 	                            </div>
                             </div>
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
 	                            <div class="form-group">
-	                            	<label class="control-label col-sm-1">국가</label>
-	                            	<div class="col-sm-5">
-			                            <select class="form-control">
-		                                     <option>w34kuwlfjas;ldjasasdasfdasdas;flajw;dqewwqrof</option>
-		                                     <option>2</option>
-		                                     <option>3</option>
-		                                     <option>4</option>
-		                                     <option>5</option>
+	                            	<label class="control-label col-sm-2">국가</label>
+	                            	<div class="col-sm-10">
+			                            <select class="form-control" id="nation" style="width:250px !important;">
 			                            </select>
 	                            	</div>
 	                            </div>
 	                        </div>
-	                        <div class="col-sm-3">
+	                        <div class="col-sm-4">
 			                      	<label class="control-label">무게</label>
 	                            <div class="input-group col-sm-7">
 	                                <input type="text" class="form-control">
@@ -133,8 +128,27 @@
 <script src="${pageContext.request.contextPath}/static/assets/datepicker/js/bootstrap-datepicker.js"></script>
 
 <script type="text/javascript">
- $(document).ready(function() {
+function getDesc() {
+    $.getJSON("${pageContext.request.contextPath}/nationList",
+    	function(data) {
+        var html = '';
+        var len = data.length;
+        for (var i = 0; i < len; i++) {
+            html += '<option value="' + data[i].nationCd + '">['
+                    + data[i].nationCd +"] "+ data[i].nationNm + " (" +data[i].nationFn + ')</option>';
+        }
+        $('select#nation').html(html);
+    });
+    
+}
+
+$(document).ready(function() {
+	
+		 getDesc();
  		$('#dp1,#dp2').datepicker({});
+ 		$(".ems-type").on("click",function(){
+ 			$(".ems-type.active").removeClass("active");
+ 		});
 
 var nowTemp = new Date();
       var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);

@@ -20,6 +20,13 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/view/footer.jsp" />
 	</definition>
 	
+	<definition name="site.print" template="/WEB-INF/tiles/layout/basic.jsp">
+		<put-attribute name="title" value="Dream EMS" />
+		<put-attribute name="header" value="" />
+		<put-attribute name="body" value="/WEB-INF/tiles/view/home/print.jsp" />
+		<put-attribute name="footer" value="" />
+	</definition>
+	
 	<definition name="error" template="/WEB-INF/tiles/layout/basic.jsp">
 		<put-attribute name="title" value="Dream EMS" />
 		<put-attribute name="header" value="" />
