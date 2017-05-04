@@ -407,8 +407,8 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public EmsApplyReturnData receiptEms(String custno, String apprno, LinkMapTable linkMapTable) {
-        String plainStr = "custno="+custno;
+    public EmsApplyReturnData receiptEms(String custno, String apprno, Order order) {
+        String plainStr = this.getPlainStr(custno,apprno,order);
         String regData = this.getEncryptData(ApiConstant.REGKEY,plainStr);
 
         StringBuffer apiUrl = new StringBuffer();
@@ -427,13 +427,145 @@ public class ApiServiceImpl implements ApiService {
 
 
 
-    private String getPlainStr(String custno, String apprno, LinkMapTable linkMapTable){
+    private String getPlainStr(String custno, String apprno, Order order){
         StringBuffer plainStr = new StringBuffer();
         plainStr.append("custno=");
         plainStr.append(custno);
         plainStr.append("&apprno=");
         plainStr.append(apprno);
         plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&senderzipcode=");
+        plainStr.append(order.getSenderZipCode());
+        plainStr.append("&senderaddr1=");
+        plainStr.append(order.getSenderAddr1());
+        plainStr.append("&senderaddr2=");
+        plainStr.append(order.getSenderAddr2());
+        plainStr.append("&sendertelno1=");
+        plainStr.append(order.getSenderTelNo1());
+        plainStr.append("&sendertelno2=");
+        plainStr.append(order.getSenderTelNo2());
+        plainStr.append("&sendertelno3=");
+        plainStr.append(order.getSenderTelNo3());
+        plainStr.append("&sendertelno4=");
+        plainStr.append(order.getSenderTelNo4());
+        plainStr.append("&sendermobile1=");
+        plainStr.append(order.getSenderMobile1());
+        plainStr.append("&sendermobile2=");
+        plainStr.append(order.getSenderMobile2());
+        plainStr.append("&sendermobile3=");
+        plainStr.append(order.getSenderMobile3());
+        plainStr.append("&sendermobile4=");
+        plainStr.append(order.getSenderMobile4());
+        plainStr.append("&senderemail=");
+        plainStr.append(order.getSenderMail());
+        plainStr.append("&snd_message=");
+        plainStr.append(order.getSndMessage());
+        plainStr.append("&premiumcd=");
+        plainStr.append(order.getPremiumCd());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+        plainStr.append("&sender=");
+        plainStr.append(order.getSender());
+
 
 
 

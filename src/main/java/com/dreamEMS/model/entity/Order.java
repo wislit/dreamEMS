@@ -29,7 +29,7 @@ public class Order implements Serializable {
     private String premiumCd;		//우편물구분(2)
     private String receiveName;		//수취인명(35)
     private String receiveTelNo;	//수취인 전체 전화번호(40)
-    private String CountryCd;		//도착국가코드(2)
+    private String countryCd;		//도착국가코드(2)
     private String receiveZipCode;	//도착지 우편번호(20) *US만 필수 나머지 선택항목
     private String receiveAddr3;	//도착지 주소3(300 상세)
     private String totWeight;		//총중량(7)
