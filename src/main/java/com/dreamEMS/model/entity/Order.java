@@ -97,7 +97,7 @@ public class Order implements Serializable {
     private String orderPrsnHTelNo;	//주문자 전체 이동통신(40)
     private String orderPrsnEmailId;//주문자 이메일(40)
     private String weight;			//무게(10)
-    private String orgin;			//생산지(20)
+    private String origin;			//생산지(20)
     private String emGubun;			//배송물구분(12)
     private String ecommerceYN;		//전자상거래여부(1)
     private String bizRegNo;		//사업자번호(10)

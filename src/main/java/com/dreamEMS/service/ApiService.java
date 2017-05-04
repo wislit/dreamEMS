@@ -103,6 +103,6 @@ public interface ApiService {
     String getApprno(String custno);
 
 
-    EmsApplyReturnData receiptEms(String custno, String apprno, Order order);
+    OrderResponse receiptEms(String custno, String apprno, Order order);
 
 }
