@@ -30,6 +30,10 @@
         <mysql-connector-java.version>5.1.40</mysql-connector-java.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <commons-collections4.version>4.1</commons-collections4.version>
+
+        <!-- Maven compiler properties -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -181,6 +185,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Jenkins Maven Build -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
