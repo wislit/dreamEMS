@@ -1,6 +1,7 @@
 package com.dreamEMS.service.impl;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -95,14 +96,14 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public boolean saveOrder(Order order) {
-		order.setOrderNo(new Date().getTime() );
+		String orderNo = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format(System.currentTimeMillis());
+		order.setOrderNo( orderNo );
+		
 		String custNo = apiservice.getCustno();
 		order.setCustNo(custNo);
 		order.setApprNo(apiservice.getApprno(custNo));
 		
-		orderRepository.insertOrder(order);
-		
-		return false;
+		return orderRepository.insertOrder(order) > 0;
 	}
 
 	@Override

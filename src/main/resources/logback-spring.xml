@@ -29,7 +29,21 @@ jdbc.connection : Logs connection open and close events
       <pattern> %d %5p [%c:%L] %m%n</pattern>
     </encoder>
   </appender>
-  
+  <appender name="dailyRollingFileAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<prudent>true</prudent>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>dreamEMS.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+ 
+		<encoder>
+			<pattern>%d %5p [%c:%L] %m%n</pattern>
+		</encoder>
+	</appender>
   <logger name="jdbc" level="OFF"/>
   
   <logger name="jdbc.sqlonly" level="DEBUG" additivity="false">>
@@ -42,6 +56,6 @@ jdbc.connection : Logs connection open and close events
   
   <root level="INFO">
     <appender-ref ref="STDOUT" />
-<!-- 	<appender-ref ref="dailyRollingFileAppender" /> -->
+	<appender-ref ref="dailyRollingFileAppender" />
   </root>
 </configuration>

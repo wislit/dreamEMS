@@ -31,7 +31,7 @@ class ExceptionHandlerControllerAdvice {
 		 log.error(  req.getRequestURI() + " : " + ex.getMessage() );
 		 
 		 Object rvl = null;
-		 String contentType = req.getHeader("Content-Type").split(";")[0];
+		 
 		 HttpStatus rvlStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		 Errors rvlError = Errors.SERVER_INTERNAL_ERROR;
 		 
@@ -41,22 +41,26 @@ class ExceptionHandlerControllerAdvice {
 		 }
 		 
 		 ModelMap model = new ModelMap();
-		 	model.addAttribute("timestamp",  new Timestamp(System.currentTimeMillis()).getTime() );
-		 	model.addAttribute("status", rvlStatus.value());
-		 	model.addAttribute("error", ex.getMessage());
-		 	model.addAttribute("exception", ex.getClass());
-		 	model.addAttribute("message",  ex.getMessage());
-		 	model.addAttribute("path", req.getRequestURL());
-		 	model.addAttribute("isDetail", true);
-	        model.addAttribute("detail", rvlError);
+		 model.addAttribute("timestamp",  new Timestamp(System.currentTimeMillis()).getTime() );
+		 model.addAttribute("status", rvlStatus.value());
+		 model.addAttribute("error", ex.getMessage());
+		 model.addAttribute("exception", ex.getClass());
+		 model.addAttribute("message",  ex.getMessage());
+		 model.addAttribute("path", req.getRequestURL());
+		 model.addAttribute("isDetail", true);
+		 model.addAttribute("detail", rvlError);
+
+		 if ( !req.getHeader("Content-Type").isEmpty() ){
+			 
+			 String contentType = req.getHeader("Content-Type").split(";")[0];
+			 // Content-Type 확인, json 만 View를 따로 처리함.
+			 if(contentType!=null && MediaType.APPLICATION_JSON_VALUE.equals(contentType))
+				 rvl = new ResponseEntity<ModelMap>(model, rvlStatus);
+		 }else {
+			 //json 이 아닐경우 error page 로 이동
+			 rvl = new ModelAndView("error", model);
+		 }
 	        
-	 	// Content-Type 확인, json 만 View를 따로 처리함.
-        if(contentType!=null && MediaType.APPLICATION_JSON_VALUE.equals(contentType)){
-        	rvl = new ResponseEntity<ModelMap>(model, rvlStatus);
-        } else {
-            //json 이 아닐경우 error page 로 이동
-        	rvl = new ModelAndView("error", model);
-        }
         return rvl;
     }
 

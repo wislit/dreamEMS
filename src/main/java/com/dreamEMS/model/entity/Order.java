@@ -87,7 +87,7 @@ public class Order implements Serializable {
      *	우체국 Templete 항목
      */
     @Pattern(regexp = "([\\p{Alnum}]{1,50})")
-    private Long orderNo;			//업체측 주문번호(50) *UNIQUE KEY
+    private String orderNo;			//업체측 주문번호(50) *UNIQUE KEY
     
     
     
