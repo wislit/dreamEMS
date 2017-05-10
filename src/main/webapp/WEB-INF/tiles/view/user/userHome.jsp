@@ -103,38 +103,6 @@
 <script src="${pageContext.request.contextPath}/static/assets/data-tables/DT_bootstrap.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
 <script type="text/javascript" charset="utf-8"> 
-function ajaxSuccess(reponse){
-		$.alert({
-	    content:  i18n("msg."+reponse.code),
-	    type: 'green',
-	    buttons: {
-	        ok: {
-	            btnClass: 'btn-success',
-	            action: function(){
-	            	location.reload();
-	            }
-	        }
-	    }
-	});
-}
-function ajaxError(xhr){
-	var errorMsg = xhr.status +' : ' +  xhr.responseJSON.message;
-	if (xhr.responseJSON.isDetail){ 
-		errorMsg = errorMsg + "<br>" + i18n("err."+xhr.responseJSON.detail.code);
-	}
-	
-	$.alert({
-		    content: errorMsg,
-		    //i18n("err."+xhr.responseJSON.code),
-		    type: 'red',
-		    buttons: {
-		        ok: {
-		            btnClass: 'btn-danger',
-		        }
-		    }
-		});
-}    
-    
     $(document).ready(function() {
         
         var btnStr = "<button class='btn btn-info btn-sm edit'><i class='fa fa-pencil'></i></button><span> </span>"

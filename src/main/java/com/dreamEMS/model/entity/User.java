@@ -19,6 +19,9 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @ToString
+/*@FieldMatch.List({
+	 @FieldMatch(first = "password", second = "confirmPassword"),
+	})*/
 public class User implements Serializable {
 
     private static final long serialVersionUID = 7698862379923111158L;
@@ -38,5 +41,11 @@ public class User implements Serializable {
     private boolean credentialsNonExpired;
     private boolean accountNonLocked;
     private Collection<? extends GrantedAuthority> authorities;
+    
+    
+    private String senderTelNo;
+    private String sender;
+    private String senderZipCode;
+    private String senderAddr;
 
 }

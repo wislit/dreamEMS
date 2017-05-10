@@ -1,5 +1,6 @@
 package com.dreamEMS.service;
 
+import com.dreamEMS.model.entity.Order;
 import com.dreamEMS.model.entity.TestTb;
 import java.util.List;
 import java.io.File;
@@ -10,5 +11,11 @@ import java.io.File;
 public interface OrderService {
 
     List<TestTb> getTestTbList();
-	public void excelUpload(File destFile);
+	public List<Order> excelUpload(File destFile);
+	boolean validateProperty(String property, Order value);
+	boolean saveOrder(Order order);               
+	boolean modifyOrder(Order order);               
+	boolean deleteOrder(Order order);               
+	boolean getOrder(String orderNo);               
+	
 }

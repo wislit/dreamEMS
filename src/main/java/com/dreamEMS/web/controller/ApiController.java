@@ -22,7 +22,7 @@ public class ApiController {
 	@GetMapping("/nationList")
 	public ResponseEntity<?> nationList() {
 
-        List<Nation> nationList = apiService.getNationList();
+        List<Nation> nationList = apiService.getNationList("31");
 
         return ResponseEntity
                 .status(HttpStatus.OK)

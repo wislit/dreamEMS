@@ -12,7 +12,8 @@
 		position: relative;
 		overflow: scroll;
 	}
-table.tb-excel{border: 0px; position: absolute; left: -2px;}
+.item-warning{background: rgb(254, 221, 219); color: #FF0000;}
+/* table.tb-excel{border: 0px; position: absolute; left: -2px;} */
 </style>
 <!-- start:main -->
 <div class="container"><!-- footer.jsp에 container </div> 있음 마지막에 닫는태그 안써도됨 -->
@@ -49,9 +50,9 @@ table.tb-excel{border: 0px; position: absolute; left: -2px;}
 					                	<h4><span class="label label-danger">접수하기전에 읽어주세요</span></h4>
 				                	</div>
 				                    <ul>
-				                        <li>엑셀양식을 다운로드 받아 작성해 주시기 바랍니다<br>
-				                         	<a class="btn btn-info btn-sm" href="${pageContext.request.contextPath}/download/dreamEMS_template" role="button" ><i class="fa fa-download"></i> ems간편 템플릿 <span class="label label-warning">추천</span></a>
-				                         	<a class="btn btn-info btn-sm" href="${pageContext.request.contextPath}/download/ems_template" role="button" ><i class="fa fa-download"></i> 기존 우체국용 템플릿</a>
+				                        <li>엑셀양식을 다운로드 받아 작성해 주시기 바랍니다
+				                         	<a class="btn btn-info btn-sm" href="${pageContext.request.contextPath}/download/dreamEMS_template" role="button" ><i class="fa fa-download"></i> ems간편 템플릿 </a>
+				                         	<%-- <a class="btn btn-info btn-sm" href="${pageContext.request.contextPath}/download/ems_template" role="button" ><i class="fa fa-download"></i> 기존 우체국용 템플릿</a> <span class="label label-warning">추천</span>--%>
 				                         	</li>
 				                         <li>비서류 일반EMS 배송헤대해 대량접수가 가능합니다</li>
 				                         <li>EMS 프리미엄 배송을 원하실 경우 사무실로 연락주시기 바랍니다.</li>
@@ -86,31 +87,30 @@ table.tb-excel{border: 0px; position: absolute; left: -2px;}
                 <!-- start:data -->
                 <section class="panel">
                     <div class="panel-body">
-                    	<div id="excel_container">
                     		<table class="table table-bordered table-condensed tb-excel" id="example">
 	                            	<thead>
 		                                 <tr>
 		                                 	<th class="text-center"><input id="example-select-all" type="checkbox"></th>
-		                                    <th class="text-center">No</th>
-		                                    <th class="text-center">날짜</th>
-		                                    <th class="text-center">송장번호</th>
-		                                    <th class="text-center">받는사람</th>
-		                                    <th class="text-center">국가</th>
-		                                    <th class="text-center">중량(g)</th>
-		                                    <th class="text-center">우체국요금</th>
-		                                    <th class="text-center">DreamEMS요금</th>
-		                                    <th class="text-center">No</th>
-		                                    <th class="text-center">날짜</th>
-		                                    <th class="text-center">송장번호</th>
-		                                    <th class="text-center">받는사람</th>
-		                                    <th class="text-center">국가</th>
-		                                    <th class="text-center">중량(g)</th>
-		                                    <th class="text-center">우체국요금</th>
-		                                    <th class="text-center">DreamEMS요금</th>
+		                                    <th class="text-center">No.</th>
+		                                    <th class="text-center">상품구분</th>
+		                                    <th class="text-center">수취인명</th>
+		                                    <th class="text-center">수취인 연락처</th>
+		                                    <th class="text-center">수취인 국가코드</th>
+		                                    <th class="text-center">수취인 우편번호</th>
+		                                    <th class="text-center">수취인 주소</th>
+		                                    <th class="text-center">총중량</th>
+		                                    <th class="text-center">내용품명</th>
+		                                    <th class="text-center">내용품 1개당가격</th>
+		                                    <th class="text-center">개수</th>
+		                                    <th class="text-center">HSCODE</th>
+		                                    <th class="text-center">주문인 우편번호</th>
+		                                    <th class="text-center">주문인 주소</th>
+		                                    <th class="text-center">주문인명</th>
+		                                    <th class="text-center">주문인 연락처</th>
 		                                 </tr>
 		                            </thead>
                             		<tbody>
-		                                <tr>
+		                                <!-- <tr>
 		                                	<td></td>
 		                                	<td>1</td>
 		                                	<td class="f_hp warning single-line" contenteditable="true" style="background: rgb(254, 221, 219); color: #FF0000;">2016-06-20</td>
@@ -147,10 +147,9 @@ table.tb-excel{border: 0px; position: absolute; left: -2px;}
 		                                	<td>12350g</td>
 		                                	<td>2300원</td>
 		                                	<td>14974원</td>
-		                                </tr>
+		                                </tr> -->
                             		</tbody>
 	                        	</table>
-                    	</div>
                    </div>
                 </section>
                 <!-- end:data -->
@@ -200,15 +199,163 @@ function check() {
                 data: formData,
                 type: 'POST',
                 success: function(data) {
-                    alert("모든 데이터가 업로드 되었습니다.");
+                    drawEMSExcelTable(data);
                 }
             });
 
     }
 }
 
-$(document).ready(function() {
+function checkErrorCell(td, cellData, rowData, row, col, item){
+	if(rowData.errorList[item]){
+        $(td).addClass("item-warning");
+        $(td).attr("contenteditable", true);
+	} 
+}
 
+function drawEMSExcelTable(data) {
+	
+	var t = $('#example').DataTable({
+		
+		scrollY:        "500px",
+        scrollX:        true,
+        /* scrollCollapse: true, */
+        paging:         false,
+		filter:false,
+    	ordering: false,
+    	columnDefs: [ {
+            className: 'select-checkbox',
+            targets:   0,
+            render: function (data, type, full, meta){
+                return '<input type="checkbox">';
+            }
+        }
+        ],
+		data: data,
+    	columns: [
+    		{ data: null},
+    		{ data: null, sortable: false},
+            { data: "premiumCd",
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "premiumCd");
+            	}
+    		},
+            { data: "receiveName",
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "receiveName");
+            	}
+    		},
+            { data: "receiveTelNo",
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "receiveTelNo");
+            	}
+    		 },
+            { data: "countryCd",
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "countryCd");
+            	}
+    		 },
+            { data: "receiveZipCode",
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "receiveZipCode");
+            	}
+    		 },
+            { data: "receiveAddr3",
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "receiveAddr3");
+            	}
+    		 },
+            { data: "totWeight",
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "totWeight");
+            	}
+    		 },
+            { data: "contents" ,
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "contents");
+            	}
+    		},
+            { data: "value" ,
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "value");
+            	}
+    		},
+            { data: "number" ,
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "number");
+            	}
+    		},
+            { data: "hsCode" ,
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "hsCode");
+            	}
+    		},
+            { data: "orderPrsnZipCd",
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "orderPrsnZipCd");
+            	}
+    		 },
+            { data: "orderPrsnAddr2",
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "orderPrsnAddr2");
+            	}
+    		 },
+            { data: "orderPrsnNm" ,
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "orderPrsnNm");
+            	}
+    		},
+            { data: "orderPrsnTelNo" ,
+            	createdCell: function (td, cellData, rowData, row, col) {
+            		checkErrorCell(td, cellData, rowData, row, col, "orderPrsnTelNo");
+            	}
+    		}
+        ]
+    });
+	
+	t.on( 'draw.dt', function ( e, settings ) {
+		$("[contenteditable=true]").on("focusout", function(){
+			 var cell = $(this);
+			 var cell2 = t.cell(this).node();
+			 var value = this.textContent;
+			 var propertyName = t.columns(this).dataSrc()[0];
+			 
+			 var data = {};
+			 data[propertyName] = value;
+			 data["property"] = propertyName;
+			 
+			 $.ajax({
+	            	url: '/order/validate',
+	                data: data ,
+	                type: 'POST',
+	                success: function(data) {
+	                    if(!data){
+	                    	cell.removeClass("item-warning");
+	                    	cell.attr("contenteditable", false);
+	                    }
+	                }
+	            });
+        });
+	} );
+	
+	
+    t.on(  'draw.dt', function () {
+        t.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+}
+
+$(document).ready(function() {
+	
+	var rows_selected = [];
+	$('#example-select-all').on('click', function(){
+        // Get all rows with search applied
+        var rows = $('#example').DataTable().rows({ 'search': 'applied' }).nodes();
+        // Check/uncheck checkboxes for all rows in the table
+        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+     });
+	
 	
 	
 } );	

@@ -1,5 +1,6 @@
 package com.dreamEMS.repository.mybatis;
 
+import com.dreamEMS.model.entity.Order;
 import com.dreamEMS.model.entity.TestTb;
 import com.dreamEMS.repository.OrderRepository;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,4 +14,9 @@ import java.util.List;
 public interface OrderMapper extends OrderRepository {
     @Override
     List<TestTb> getTestTbList();
+    Integer insertOrder(Order order);
+    Integer updateOrder(Order order);
+    Integer deleteOrder(Order order);
+    Integer selectOrder(String orderNo);
+
 }

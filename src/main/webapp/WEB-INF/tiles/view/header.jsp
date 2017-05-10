@@ -318,6 +318,7 @@ isadmin ${isAdmin}
 <script class="include" type="text/javascript"
 	src="${pageContext.request.contextPath}/static/js/jquery.dcjqaccordion.2.7.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/js/respond.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/dreamEMS.common.js"></script>
 
 <script src="${pageContext.request.contextPath}/static/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/data-tables/DT_bootstrap.js"></script>

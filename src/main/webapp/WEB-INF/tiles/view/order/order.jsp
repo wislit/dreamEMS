@@ -57,8 +57,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
                     <div class="col-md-12"><!-- TODO : col-md-12 가 뭔지모름  -->
                         <div class="panel">
                             <div class="panel-body">
-                            	<div class="div-label-1">
-                            	 <form class="form-horizontal" role="form">
+                            	 <form class="form-horizontal" role="form" id="registForm">
 <table class="tb-print2">
 
 	<colgroup>
@@ -89,7 +88,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="va-middle" colspan="4">Date & Time Posted 접수년월일시</td>
     <td class="va-middle" colspan="4">
            	<!-- <span class="input-group-addon input-group-addon-info"><i class="fa fa-calendar"></i></span> -->
-            <input type="text" class="form-control input-sm" id="dp1" >
+            <input type="text" class="form-control input-sm" id="dp1" name="orderDate" >
     </td>
   </tr>
   <tr>
@@ -102,7 +101,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="" colspan="5">
             <label for="" class="col-sm-3 control-label text-blue">Tel. No.</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" disabled="">
+                <input type="text" class="form-control" disabled="" name="senderTelNo" value="010-1234-5678">
             </div>
     <td class="text-lg" rowspan="3">
     	<span style="font-size: 9px">To</span><br><br>받<br><br>는<br><br>사<br><br>람
@@ -110,7 +109,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="" colspan="8">
             <label for="" class="col-sm-3 control-label text-blue">Tel. No.</label>
             <div class="col-sm-8">
-                <input type="text" placeholder="수취인연락처" class="form-control">
+                <input type="text" placeholder="수취인연락처" class="form-control" name="receiveTelNo" value="18606888808">
             </div>
     </td>
   </tr>
@@ -118,13 +117,13 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="" colspan="5">
             <label for="" class="col-sm-3 control-label text-blue">Name(영문)</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="" name="" disabled="">
+                <input type="text" class="form-control" id="" name="sender" disabled="" value="Hanseong Logis"> 
             </div>
     </td>
     <td class="" colspan="8">
             <label for="" class="col-sm-3 control-label text-blue">Name(영문)</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="" placeholder="수취인 이름" name="">
+                <input type="text" class="form-control" id="" placeholder="수취인 이름" name="receiveName" value="王帅">
             </div>
     </td>
   </tr>
@@ -133,22 +132,22 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     	<div class="col-sm-12" style="margin-bottom: 5px; padding: 0px;">
     		<label for="" class="col-sm-3 control-label text-blue">우편번호</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="" disabled="" >
+                <input type="text" class="form-control" id="" disabled="" name="senderZipCode" value="08281">
             </div>
     	</div> 
             <label for="" class="col-sm-3 control-label text-blue">Address</label>
             <div class="col-sm-8">
-                <textarea class="form-control" rows="5" disabled="" ></textarea>
+                <textarea class="form-control" rows="5" disabled="" name="senderAddr2">서울 구로구 구로동 468 1층</textarea>
             </div>
     </td>
     <td class="no-border ta-left va-top br-right" colspan="8">
     		<label for="inputEmail1" class="col-sm-3 control-label text-blue">국가</label>
             <div class="col-sm-4">
             	<div class="col-sm-12" style="margin-bottom: 5px; padding: 0px;">
-	                <select class="form-control" id="nation" style="width:140px !important;">
+	                <select class="form-control" id="nation" style="width:140px !important;" name="countryCd">
 	                	<option value="">국가선택</option>
 	                	<optgroup label="[ 자주 보내는 국가 목록 ]">
-							<option value="CN">[CN] 중국 (CHINA)</option>
+							<option value="CN" selected="selected">[CN] 중국 (CHINA)</option>
 							<option value="HK">[HK] 홍콩 (HONG KONG)</option>
 							<option value="MO">[MO] 마카오 (MACAO)</option>
 							<option value="US">[US] 미국 (USA)</option>
@@ -180,13 +179,13 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
             <div class="col-sm-12" style="margin-bottom: 5px; padding: 0px;">
     			<label for="" class="col-sm-3 control-label text-blue">우편번호</label>
 	            <div class="col-sm-4">
-	                <input type="text" class="form-control" id="" placeholder="수취인 우편번호">
+	                <input type="text" class="form-control" id="" placeholder="수취인 우편번호" name="receiveZipCode">
 	            </div>
 	    	</div> 
 	    	<div class="col-sm-12" style="margin-bottom: 5px; padding: 0px;">
 		    	<label for="" class="col-sm-3 control-label text-blue">Address</label>
 	            <div class="col-sm-8">
-	                <textarea class="form-control" rows="5" placeholder="수취인 주소"></textarea>
+	                <textarea class="form-control" rows="5" placeholder="수취인 주소" name="receiveAddr3">上海市金山区亭林镇和平东路224号</textarea>
 	            </div>
             </div>
             <div class="col-sm-6 col-sm-offset-3 ">
@@ -203,20 +202,25 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="va-middle" colspan="3"  rowspan="2">
     	<div class="col-sm-4" style="padding: 0px;">Weight<br>중량</div>
     	<div class="input-group has-error">
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" name="totWeight" value="18800">
             <span class="input-group-addon input-group-addon-default">g</span>
         </div>
 	</td>
     <td class="va-middle" colspan="3" rowspan="2">
     	<div class="col-sm-4" style="padding: 0px;">Postage<br>우편요금</div>
     	<div class="input-group has-error">
-            <input type="text" class="form-control" disabled="">
+            <input type="text" class="form-control" disabled="" name="emsCharge" value="79900">
             <span class="input-group-addon input-group-addon-default">원</span>
         </div>
     </td>
   </tr>
   <tr class="col-item">
-    <td class="va-middle" colspan="3">Contents 내용 품명(반드시 영문으로 구체적으로 기재)</td>
+    <td class="va-middle" colspan="3">Contents 내용 품명(반드시 영문으로 구체적으로 기재)
+    <input type="hidden" name="contents" id="ip-contents">
+    <input type="hidden" name="number" id="ip-number">
+    <input type="hidden" name="value" id="ip-value">
+    <input type="hidden" name="hsCode" id="ip-hsCode">
+    </td>
     <td class="va-middle">Quantity<br>(개수)</td>
     <td class="va-middle">Net Weight<br>(순중량)</td>
     <td class="va-middle">Value<br>(가격:US$)</td>
@@ -224,11 +228,11 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="va-middle">Country of<br>Origin(생산지)</td>
   </tr>
   <tr class="">
-    <td class="" colspan="3"><input type="text" class="form-control" id="" placeholder="내용품명"></td>
-    <td class=""><input type="text" class="form-control" id="" value="1"></td>
+    <td class="" colspan="3"><input type="text" class="form-control" id="" placeholder="내용품명" name="contents1" value="Stationery"></td>
+    <td class=""><input type="text" class="form-control" id="" value="1" name="number1"></td>
     <td class=""></td>
-    <td class=""><input type="text" class="form-control" id="" placeholder="USD"></td>
-    <td class="" colspan="2"><input style="font-size: 11px;" type="text" class="form-control" id="" placeholder="HSCODE"></td>
+    <td class=""><input type="text" class="form-control" id="" placeholder="USD" name="value1" value="21"></td>
+    <td class="" colspan="2"><input style="font-size: 11px;" type="text" class="form-control" id="" placeholder="HSCODE" name="hsCode1"></td>
     <td class=""></td>
     <td class="" colspan="3" rowspan="6">
     </td>
@@ -237,28 +241,28 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="va-middle text-lg" style="font-size: 20px;" rowspan="2"> N </td>
   </tr>
   <tr class="">
-    <td class="" colspan="3"><input type="text" class="form-control" id="" disabled="" ></td>
-    <td class=""><input type="text" class="form-control" id="" disabled="" ></td>
+    <td class="" colspan="3"><input type="text" class="form-control" id="" disabled="" name="contents2"></td>
+    <td class=""><input type="text" class="form-control" id="" disabled="" name="number2"></td>
     <td class=""></td>
-    <td class=""><input type="text" class="form-control" id="" disabled="" ></td>
-    <td class="" colspan="2"><input type="text" style="font-size: 11px;" class="form-control" id="" disabled="" ></td>
+    <td class=""><input type="text" class="form-control" id="" disabled="" name="value2"></td>
+    <td class="" colspan="2"><input type="text" style="font-size: 11px;" class="form-control" id="" disabled=""  name="hsCode2"></td>
     <td class=""></td>
   </tr>
   <tr class="">
-    <td class="" colspan="3"><input type="text" class="form-control" id="" disabled="" ></td>
-    <td class=""><input type="text" class="form-control" id="" disabled="" ></td>
+    <td class="" colspan="3"><input type="text" class="form-control" id="" disabled="" name="contents3"></td>
+    <td class=""><input type="text" class="form-control" id="" disabled="" name="number3"></td>
     <td class=""></td>
-    <td class=""><input type="text" class="form-control" id="" disabled="" ></td>
-    <td class="" colspan="2"><input type="text" style="font-size: 11px;" class="form-control" id="" disabled="" ></td>
+    <td class=""><input type="text" class="form-control" id="" disabled="" name="value3"></td>
+    <td class="" colspan="2"><input type="text" style="font-size: 11px;" class="form-control" id="" disabled=""  name="hsCode3"></td>
     <td class=""></td>
     <td class="va-middle ls-md" colspan="3" rowspan="4"></td>
   </tr>
   <tr class="">
-    <td class="" colspan="3"><input type="text" class="form-control" id="" disabled="" ></td>
-    <td class=""><input type="text" class="form-control" id="" disabled="" ></td>
+    <td class="" colspan="3"><input type="text" class="form-control" id="" disabled="" name="contents4"></td>
+    <td class=""><input type="text" class="form-control" id="" disabled="" name="number4"></td>
     <td class=""></td>
-    <td class=""><input type="text" class="form-control" id="" disabled="" ></td>
-    <td class="" colspan="2"><input type="text" style="font-size: 11px;" class="form-control" id="" disabled="" ></td>
+    <td class=""><input type="text" class="form-control" id="" disabled="" name="value4"></td>
+    <td class="" colspan="2"><input type="text" style="font-size: 11px;" class="form-control" id="" disabled=""  name="hsCode4"></td>
     <td class=""></td>
   </tr>
   <tr class="">
@@ -282,16 +286,16 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
 	         <div class="col-sm-12">
     	<div class="radio">
            <label>
-           		<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> Sample 상품견본
+           		<input type="radio" name="premiumCd" id="optionsRadios1" value="31" checked="checked"> Sample 상품견본
            </label>
            <label>
-           		<input type="radio" name="optionsRadios" id="optionsRadios1" value="option2" checked=""> Gift 선물
+           		<input type="radio" name="premiumCd" id="optionsRadios1" value="32"> Gift 선물
            </label>
            <label>
-           		<input type="radio" name="optionsRadios" id="optionsRadios1" value="option3" checked=""> Merchandise 상품
+           		<input type="radio" name="premiumCd" id="optionsRadios1" value="33"> Merchandise 상품
            </label>
            <label>
-           		<input type="radio" name="optionsRadios" id="optionsRadios1" value="option4" checked=""> 수출면장건
+           		<input type="radio" name="premiumCd" id="optionsRadios1" value="34"> 수출면장건
            </label>
         </div>
         </div>
@@ -299,6 +303,8 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
   </tr>
 </table>
 </form>
+<div class="col-sm-4 col-sm-offset-4">
+	<button class="btn btn-primary btn-block btn-lg" id="submitOrder"><i class="fa fa-edit"></i>접수</button>
 </div>
                             </div>
                         </div>
@@ -312,6 +318,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <!-- start:javascript for this page -->
     <script src="${pageContext.request.contextPath}/static/assets/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/assets/datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="${pageContext.request.contextPath}/static/assets/restful-client/jquery.rest.js"></script>
     
     <script>
     
@@ -336,6 +343,42 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
         	
         	getDesc();
         	$('#dp1').datepicker({});
+        	
+        	$("#submitOrder").click(function() {
+        		
+        		var contents = $('input[name=contents1]').val() + ";" +
+				        		$('input[name=contents2]').val() + ";" +
+				        		$('input[name=contents3]').val() + ";" +
+				        		$('input[name=contents4]').val();
+        		var value  = $('input[name=value1]').val() + ";" +
+				        		$('input[name=value2]').val() + ";" +
+				        		$('input[name=value3]').val() + ";" +
+				        		$('input[name=value4]').val();
+        		var number = $('input[name=number1]').val() + ";" +
+				        		$('input[name=number2]').val() + ";" +
+				        		$('input[name=number3]').val() + ";" +
+				        		$('input[name=number4]').val();
+        		var hsCode = $('input[name=hsCode1]').val() + ";" +
+				        		$('input[name=hsCode2]').val() + ";" +
+				        		$('input[name=hsCode3]').val() + ";" +
+				        		$('input[name=hsCode4]').val();
+
+        		
+				$('input[name=contents]').val(contents);
+				$('input[name=value]').val(value);
+				$('input[name=number]').val(number);
+				$('input[name=hsCode]').val(hsCode);
+				        		
+           	 var create = $.create('/order', JSON.stringify($("#registForm").serializeObject()) );
+           	 create.then(ajaxSuccess, function(xhr){
+           		 
+           		var errors = xhr.responseJSON;
+           		for ( var index in errors) {
+           			$('input[name='+errors[index]+']').val("error입다요")
+				}
+           	 });
+   		});
+        	
         });
 
     </script>
