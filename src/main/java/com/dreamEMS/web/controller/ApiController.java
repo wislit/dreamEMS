@@ -20,9 +20,12 @@ public class ApiController {
 	@Autowired ApiService apiService;
 	
 	@GetMapping("/nationList")
-	public ResponseEntity<?> nationList() {
+	public ResponseEntity<?> nationList(
+	        @RequestParam(value = "premiumcd", required = false) String premiumcd
+    ) {
 
-        List<Nation> nationList = apiService.getNationList("31");
+        //List<Nation> nationList = apiService.getNationList("31");
+        List<Nation> nationList = apiService.getNationList(premiumcd);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

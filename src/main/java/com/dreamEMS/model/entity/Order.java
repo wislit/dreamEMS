@@ -176,7 +176,7 @@ public class Order implements Serializable {
     @Pattern(regexp = "[\\d\\;]{0,10}")
     private String weight;			//무게(10)
     @Pattern(regexp = "[A-Z\\;]{0,20}")
-    private String orgin;			//생산지(20)
+    private String origin;			//생산지(20)
     @Pattern(regexp = "[\\p{Alpha}\\;]{1,40}")
     private String emGubun;			//배송물구분(12)
     @Pattern(regexp = "(Y|N)")
