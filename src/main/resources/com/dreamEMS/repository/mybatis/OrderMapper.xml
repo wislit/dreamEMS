@@ -72,6 +72,7 @@
     <insert id="insertOrder" parameterType="com.dreamEMS.model.entity.Order">
         INSERT INTO ems.order (cust_no,
                         appr_no,
+                        user_no,
                         sender,
                         sender_zip_code,
                         sender_addr2,
@@ -95,9 +96,19 @@
                         value,
                         hs_code,
                         origin,
-                        em_gubun)
+                        em_gubun,
+                        req_no,
+                        receive_seq,
+                        regi_no,
+                        pre_recev_prc,
+                        prc_pay_meth_cd,
+                        treat_po_regi_po_cd,
+                        treat_po_regi_po_eng_nm,
+                        print
+                        )
 				VALUES (#{custNo},
 				        #{apprNo},
+				        #{userNo},
 				        #{sender},
 				        #{senderZipCode},
 				        #{senderAddr2},
@@ -121,7 +132,40 @@
 				        #{value},
 				        #{hsCode},
 				        #{origin},
-				        #{emGubun})
+				        #{emGubun},
+				        #{reqNo},
+				        #{receiveSeq},
+				        #{regiNo},
+				        #{preRecevPrc},
+				        #{prcPayMethCd},
+				        #{treatPoRegiPoCd},
+				        #{treatPoRegiPoEngNm},
+				        #{print}
+        )
     </insert>
+    
+    <select id="selectAllOrder" resultType="Order">
+        SELECT
+          *
+        FROM
+           ems.order
+        <if test="userNo != null">
+        WHERE
+          user_no = #{userNo}
+        AND print = 0
+        </if>
+    </select>
+    
+    <select id="selectAllPrintOrder" resultType="Order">
+        SELECT
+          *
+        FROM
+           ems.order
+        <if test="userNo != null">
+        WHERE
+          user_no = #{userNo}
+        AND print = 1
+        </if>
+    </select>
 
 </mapper>

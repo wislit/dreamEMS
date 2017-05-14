@@ -43,9 +43,10 @@ public class User implements Serializable {
     private Collection<? extends GrantedAuthority> authorities;
     
     
-    private String senderTelNo;
-    private String sender;
-    private String senderZipCode;
-    private String senderAddr;
+    private String sender = "test";
+    private String senderZipCode = "402701";
+    private String senderAddr1 = "jaYng-dong 123";
+    private String senderAddr2 = "GwangJin, Seoul";
+    private String senderTelNo = "010-1234-5678";
 
 }

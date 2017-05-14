@@ -1,18 +1,5 @@
 package com.dreamEMS.service.impl;
 
-import com.dreamEMS.constant.ApiConstant;
-import com.dreamEMS.model.dto.Errors;
-import com.dreamEMS.model.entity.*;
-import com.dreamEMS.service.ApiService;
-import com.dreamEMS.web.exception.DreamEMSException;
-import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
@@ -21,9 +8,35 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import com.dreamEMS.constant.ApiConstant;
+import com.dreamEMS.model.dto.Errors;
+import com.dreamEMS.model.entity.EmsSearchNewEngZipCodeInfo;
+import com.dreamEMS.model.entity.EmsTotProcCmd;
+import com.dreamEMS.model.entity.JuDo;
+import com.dreamEMS.model.entity.Nation;
+import com.dreamEMS.model.entity.Order;
+import com.dreamEMS.model.entity.OrderResponse;
+import com.dreamEMS.model.entity.SEED128;
+import com.dreamEMS.model.entity.SiDo;
+import com.dreamEMS.model.entity.ZipCode;
+import com.dreamEMS.service.ApiService;
+import com.dreamEMS.web.exception.APIException;
+import com.dreamEMS.web.exception.DreamEMSException;
+
+import lombok.extern.apachecommons.CommonsLog;
+
 /**
  * Created by wislit on 2017. 4. 11..
  */
+@CommonsLog
 @Service
 public class ApiServiceImpl implements ApiService {
 
@@ -178,7 +191,6 @@ public class ApiServiceImpl implements ApiService {
                 info.setTotalPage(Integer.parseInt(items5.item(0).getFirstChild().getNodeValue()));
                 info.setCountPerPage(Integer.parseInt(items6.item(0).getFirstChild().getNodeValue()));
                 info.setCurrentPage(Integer.parseInt(items7.item(0).getFirstChild().getNodeValue()));
-
                 zipCodeInfoList.add(info);
             }
 
@@ -406,20 +418,26 @@ public class ApiServiceImpl implements ApiService {
         return apprno;
     }
 
-    @Override
+    @Override 
     public OrderResponse receiptEms(String custno, String apprno, Order order) {
         OrderResponse orderResponse = null;
-        String plainStr = this.getPlainStr(custno,apprno,order);
+        String plainStr = this.getPlainStr2(custno,apprno,order);
+        log.info(plainStr);
         String regData = this.getEncryptData(ApiConstant.REGKEY,plainStr);
 
         StringBuffer apiUrl = new StringBuffer();
         // TODO: 2017-04-23 라이브 적용시 url 변경
         //apiUrl.append("http://eship.epost.go.kr/api.EmsApplyInsertReceiveTempCmdNew.ems?regkey=");    //라이브 url
-        apiUrl.append("http://eship.epost.go.kr/api.EmsApplyInsertReceiveTempCmdNewDev.ems?regkey=");   //테스트 url
+        apiUrl.append("http://eship.epost.go.kr/api.EmsApplyInsertReceiveTempCmdNewDEV.ems?key=");   //테스트 url
         apiUrl.append(ApiConstant.REGKEY);
+        //apiUrl.append("6c1591025283e7f4");
         apiUrl.append("&regData=");
         apiUrl.append(regData);
-
+        //apiUrl.append("d30c973e3e4b5eb75462423c0aa100bc0ea16fc031987");
+        
+        //.ems?key=test& regData=d30c973e3e4b5eb75462423c0aa100bc0ea16fc031987
+        //http://eship.epost.go.kr/api.EmsApplyInsertReceiveTempCmdNew.ems?key=test& regData=d30c973e3e4b5eb75462423c0aa100bc0ea16fc031987
+        
         try {
             String xmlStr = this.callApi(apiUrl.toString(),"GET");
             System.out.println(xmlStr);
@@ -427,25 +445,32 @@ public class ApiServiceImpl implements ApiService {
             Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
             //최상위 노드 찾기
             Element element = doc.getDocumentElement();
-            //원하는 태그 찾아오기
-            NodeList items1 = element.getElementsByTagName("reqno");
-            NodeList items2 = element.getElementsByTagName("receiveseq");
-            NodeList items3 = element.getElementsByTagName("regino");
-            NodeList items4 = element.getElementsByTagName("prerecevprc");
-            NodeList items5 = element.getElementsByTagName("prcpaymethcd");
-            NodeList items6 = element.getElementsByTagName("treatporegipocd");
-            NodeList items7 = element.getElementsByTagName("treatporegipoengnm");
-            NodeList items8 = element.getElementsByTagName("orderno");
-
-            orderResponse = new OrderResponse();
-            orderResponse.setReqNo(items1.item(0).getFirstChild().getNodeValue());
-            orderResponse.setReceiveSeq(items2.item(0).getFirstChild().getNodeValue());
-            orderResponse.setRegiNo(items3.item(0).getFirstChild().getNodeValue());
-            orderResponse.setPreRecevPrc(items4.item(0).getFirstChild().getNodeValue());
-            orderResponse.setPrcPayMethCd(items5.item(0).getFirstChild().getNodeValue());
-            orderResponse.setTreatPoRegiPoCd(items6.item(0).getFirstChild().getNodeValue());
-            orderResponse.setTreatPoRegiPoEngNm(items7.item(0).getFirstChild().getNodeValue());
-            orderResponse.setOrderNo(items8.item(0).getFirstChild().getNodeValue());
+            
+            if( element.getElementsByTagName("error_code").getLength() > 0 ){
+            	String errMsg = element.getElementsByTagName("message").item(0).getFirstChild().getNodeValue();
+            	throw new APIException(errMsg);
+            }else{
+            	//원하는 태그 찾아오기
+            	NodeList items1 = element.getElementsByTagName("reqno");
+            	NodeList items2 = element.getElementsByTagName("receiveseq");
+            	NodeList items3 = element.getElementsByTagName("regino");
+            	NodeList items4 = element.getElementsByTagName("prerecevprc");
+            	NodeList items5 = element.getElementsByTagName("prcpaymethcd");
+            	NodeList items6 = element.getElementsByTagName("treatporegipocd");
+            	NodeList items7 = element.getElementsByTagName("treatporegipoengnm");
+            	NodeList items8 = element.getElementsByTagName("orderno");
+            	
+            	orderResponse = new OrderResponse();
+            	orderResponse.setReqNo(items1.item(0).getFirstChild().getNodeValue());
+            	orderResponse.setReceiveSeq(items2.item(0).getFirstChild().getNodeValue());
+            	orderResponse.setRegiNo(items3.item(0).getFirstChild().getNodeValue());
+            	orderResponse.setPreRecevPrc(items4.item(0).getFirstChild().getNodeValue());
+            	orderResponse.setPrcPayMethCd(items5.item(0).getFirstChild().getNodeValue());
+            	orderResponse.setTreatPoRegiPoCd(items6.item(0).getFirstChild().getNodeValue());
+            	orderResponse.setTreatPoRegiPoEngNm(items7.item(0).getFirstChild().getNodeValue());
+            	orderResponse.setOrderNo(items8.item(0).getFirstChild().getNodeValue());
+            }
+            
 
         } catch (Exception e){
             e.printStackTrace();
@@ -456,7 +481,76 @@ public class ApiServiceImpl implements ApiService {
     }
 
 
-
+    private String getPlainStrNotNull(String item, String value){
+    	StringBuffer plainStr = new StringBuffer();
+    	if ( value != null && !"".equals(value) ){
+    		plainStr.append(item);
+    		plainStr.append(value);
+			return plainStr.toString();
+		}
+    	return "";
+    }
+    
+    private String getPlainStr2(String custno, String apprno, Order order){
+        StringBuffer plainStr = new StringBuffer();
+        plainStr.append(getPlainStrNotNull("custno=", order.getCustNo()));
+        plainStr.append(getPlainStrNotNull("&apprno=", order.getApprNo()));
+        plainStr.append(getPlainStrNotNull("&sender=", order.getSender()));
+        plainStr.append(getPlainStrNotNull("&senderzipcode=", order.getSenderZipCode()));
+        plainStr.append(getPlainStrNotNull("&senderaddr1=", order.getSenderAddr1()));
+        plainStr.append(getPlainStrNotNull("&senderaddr2=", order.getSenderAddr2()));
+        plainStr.append(getPlainStrNotNull("&sendertelno1=", order.getSenderTelNo1()));
+        plainStr.append(getPlainStrNotNull("&sendertelno2=", order.getSenderTelNo2()));
+        plainStr.append(getPlainStrNotNull("&sendertelno3=", order.getSenderTelNo3()));
+        plainStr.append(getPlainStrNotNull("&sendertelno4=", order.getSenderTelNo4()));
+        plainStr.append(getPlainStrNotNull("&sendermobile1=", order.getSenderMobile1()));
+        plainStr.append(getPlainStrNotNull("&sendermobile2=", order.getSenderMobile2()));
+        plainStr.append(getPlainStrNotNull("&sendermobile3=", order.getSenderMobile3()));
+        plainStr.append(getPlainStrNotNull("&sendermobile4=", order.getSenderMobile4()));
+        plainStr.append(getPlainStrNotNull("&senderemail=", order.getSenderMail()));
+        plainStr.append(getPlainStrNotNull("&snd_message=", order.getSndMessage()));
+        plainStr.append(getPlainStrNotNull("&premiumcd=", order.getPremiumCd()));
+        plainStr.append(getPlainStrNotNull("&receivename=", order.getReceiveName()));
+        plainStr.append(getPlainStrNotNull("&receivezipcode=", order.getReceiveZipCode()));
+        plainStr.append(getPlainStrNotNull("&receiveaddr1=", order.getReceiveAddr1()));
+        plainStr.append(getPlainStrNotNull("&receiveaddr2=", order.getReceiveAddr2()));
+        plainStr.append(getPlainStrNotNull("&receiveaddr3=", order.getReceiveAddr3()));
+        plainStr.append(getPlainStrNotNull("&receivetelno1=", order.getReceiveTelNo1()));
+        plainStr.append(getPlainStrNotNull("&receivetelno2=", order.getReceiveTelNo2()));
+        plainStr.append(getPlainStrNotNull("&receivetelno3=", order.getReceiveTelNo3()));
+        plainStr.append(getPlainStrNotNull("&receivetelno4=", order.getReceiveTelNo4()));
+        plainStr.append(getPlainStrNotNull("&receivetelno=", order.getReceiveTelNo()));
+        plainStr.append(getPlainStrNotNull("&receivemail=", order.getReceiveMail()));
+        plainStr.append(getPlainStrNotNull("&countrycd=", order.getCountryCd()));
+        plainStr.append(getPlainStrNotNull("&orderno=", order.getOrderNo()));
+        plainStr.append(getPlainStrNotNull("&em_ee=", order.getEmEE()));
+        plainStr.append(getPlainStrNotNull("&totweight=", order.getTotWeight()));
+        plainStr.append(getPlainStrNotNull("&boyn=", order.getBoYN()));
+        plainStr.append(getPlainStrNotNull("&boprc=", order.getBoPrc()));
+        plainStr.append(getPlainStrNotNull("&orderprsnzipcd=", order.getOrderPrsnZipCd()));
+        plainStr.append(getPlainStrNotNull("&orderprsnaddr1=", order.getOrderPrsnAddr1()));
+        plainStr.append(getPlainStrNotNull("&contents=", order.getContents()));
+        plainStr.append(getPlainStrNotNull("&number=", order.getNumber()));
+        plainStr.append(getPlainStrNotNull("&weight=", order.getWeight()));
+        plainStr.append(getPlainStrNotNull("&value=", order.getValue()));
+        plainStr.append(getPlainStrNotNull("&hs_code=", order.getHsCode()));
+        plainStr.append(getPlainStrNotNull("&origin=", order.getOrigin()));
+        plainStr.append(getPlainStrNotNull("&EM_gubun=", order.getEmGubun()));
+        
+        /*plainStr.append(getPlainStrNotNull("&orderprsnaddr2=", order.getCustNo()));
+        plainStr.append(getPlainStrNotNull("&orderprsnnm=", order.getCustNo()));
+        plainStr.append(getPlainStrNotNull("&orderprsntelnno=", order.getCustNo()));
+        plainStr.append(getPlainStrNotNull("&orderprsntelfno=", order.getCustNo()));
+        plainStr.append(getPlainStrNotNull("&orderprsntelmno=", order.getCustNo()));
+        plainStr.append(getPlainStrNotNull("&orderprsntellno=", order.getCustNo()));
+        plainStr.append(getPlainStrNotNull("&orderprsntelno=", order.getCustNo()));
+        plainStr.append(getPlainStrNotNull("&orderprsnhtelfno=", order.getCustNo()));
+        plainStr.append(getPlainStrNotNull("&orderprsnhtelmno=", order.getCustNo()));
+        plainStr.append(getPlainStrNotNull("&orderprsnhtellno=", order.getCustNo()));
+        plainStr.append(getPlainStrNotNull("&orderprsnhtelno=", order.getCustNo()));
+        plainStr.append(getPlainStrNotNull("&orderprsnemailid=", order.getCustNo()));*/
+        return plainStr.toString();
+    }
 
     private String getPlainStr(String custno, String apprno, Order order){
         StringBuffer plainStr = new StringBuffer();

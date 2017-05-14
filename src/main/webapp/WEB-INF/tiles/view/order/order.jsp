@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <style>
@@ -78,7 +79,12 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
 		<col style="width:4.3%;"/>
 	</colgroup>
   <tr>
-    <td class="no-border" colspan="2"></td>
+    <td class="no-border" colspan="2">
+    	<input type="hidden" name="userNo" value="<sec:authentication property="principal.no"/>">
+    	<input type="hidden" name="premiumCd" value="31">
+    	<!-- TODO : 이건 어떻게 구분하나 -->
+    	<input type="hidden" name="emEE" value="em">
+    </td>
     <td class="no-border" colspan="5" rowspan="3" >
     </td>
     <td class="no-border" colspan="8" style="height: 50px;"></td>
@@ -286,16 +292,16 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
 	         <div class="col-sm-12">
     	<div class="radio">
            <label>
-           		<input type="radio" name="premiumCd" id="optionsRadios1" value="31" checked="checked"> Sample 상품견본
+           		<input type="radio" name="emGubun" id="optionsRadios1" value="Merchandise" checked="checked"> Sample 상품견본
            </label>
            <label>
-           		<input type="radio" name="premiumCd" id="optionsRadios1" value="32"> Gift 선물
+           		<input type="radio" name="emGubun" id="optionsRadios1" value="Merchandise"> Gift 선물
            </label>
            <label>
-           		<input type="radio" name="premiumCd" id="optionsRadios1" value="33"> Merchandise 상품
+           		<input type="radio" name="emGubun" id="optionsRadios1" value="Merchandise"> Merchandise 상품
            </label>
            <label>
-           		<input type="radio" name="premiumCd" id="optionsRadios1" value="34"> 수출면장건
+           		<input type="radio" name="emGubun" id="optionsRadios1" value="Merchandise"> 수출면장건
            </label>
         </div>
         </div>
@@ -370,7 +376,20 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
 				$('input[name=hsCode]').val(hsCode);
 				        		
            	 var create = $.create('/order', JSON.stringify($("#registForm").serializeObject()) );
-           	 create.then(ajaxSuccess, function(xhr){
+           	 create.then(function(reponse) {
+           		$.alert({
+           		    content:  i18n("msg."+reponse.code),
+           		    type: 'green',
+           		    buttons: {
+           		        ok: {
+           		            btnClass: 'btn-success',
+           		            action: function(){
+           		            	location.href = "/order/home";
+           		            }
+           		        }
+           		    }
+           		});
+			}, function(xhr){
            		 
            		var errors = xhr.responseJSON;
            		for ( var index in errors) {

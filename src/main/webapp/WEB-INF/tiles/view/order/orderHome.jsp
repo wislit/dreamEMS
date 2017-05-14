@@ -44,7 +44,7 @@
                     <ul id="orderTab" class="nav nav-tabs">
                         <li class="active"><a href="#beforePrint" data-toggle="tab">미출력 <span class="badge bg-important">14</span></a></li>
                         <li class=""><a href="#afterPrint" data-toggle="tab">기출력</a></li>
-                        <li class=""><a href="#pickUp" data-toggle="tab">픽업목록</a></li>
+                        <!-- <li class=""><a href="#pickUp" data-toggle="tab">픽업목록</a></li> -->
                         <li class="" style="float:right">
                         	<div class="btn-group">
                        			<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="fa fa-print"></i> 일괄출력 <span class="caret"></span></button>
@@ -61,7 +61,7 @@
                     	<!-- start:before print -->
                         <div class="tab-pane fade active in" id="beforePrint">  
 	                   		<div class="adv-table">
-                       			<table class="display table table-hover table-condensed text-center" id="example">
+                       			<table class="display table table-hover table-condensed text-center" id="orderList">
 	                            	<thead>
 		                                 <tr>
 		                                 	<th class="text-center"><input id="example-select-all" type="checkbox"></th>
@@ -77,50 +77,6 @@
 		                                 </tr>
 		                            </thead>
                             		<tbody>
-		                                <tr>
-		                                	<td></td>
-		                                	<td>1</td>
-		                                	<td>2016-06-20</td>
-		                                	<td><a href="#"><strong>EG710143161KR</strong></a></td>
-		                                	<td>아무개</td>
-		                                	<td>CN</td>
-		                                	<td>19750g</td>
-		                                	<td>83300원</td>
-		                                	<td>64974원</td>
-		                                    <td>
-		                                        <button class="btn btn-info btn-sm"><i class="fa fa-pencil"></i></button>
-		                                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o "></i></button>
-		                                        <div class="btn-group">
-					                               <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown"><i class="fa fa-print"></i><span class="caret"></span></button>
-					                               <ul class="dropdown-menu dropdown-info" role="menu">
-					                                   <li><a href="#">A4</a></li>
-					                                   <li><a href="#">소형라벨</a></li>
-					                               </ul>
-					                           </div>
-		                                    </td>
-		                                </tr>
-		                                <tr>
-		                                	<td></td>
-		                                	<td>2</td>
-		                                	<td>2016-06-20</td>
-		                                	<td><a href="#"><strong>EG71124213KR</strong></a></td>
-		                                	<td>아무개</td>
-		                                	<td>CN</td>
-		                                	<td>12350g</td>
-		                                	<td>2300원</td>
-		                                	<td>14974원</td>
-		                                    <td>
-		                                        <button class="btn btn-info btn-sm"><i class="fa fa-pencil"></i></button>
-		                                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o "></i></button>
-		                                        <div class="btn-group">
-					                               <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown"><i class="fa fa-print"></i><span class="caret"></span></button>
-					                               <ul class="dropdown-menu dropdown-info" role="menu">
-					                                   <li><a href="#">A4</a></li>
-					                                   <li><a href="#">소형라벨</a></li>
-					                               </ul>
-					                           </div>
-		                                    </td>
-		                                </tr>
                             		</tbody>
 	                        	</table>
 	                        </div>
@@ -129,7 +85,26 @@
                          
                          <!-- start:after print -->
                         <div class="tab-pane fade" id="afterPrint">
-                   			기출력        	
+                   			<div class="adv-table">
+                       			<table class="display table table-hover table-condensed text-center" id="printList">
+	                            	<thead>
+		                                 <tr>
+		                                 	<th class="text-center"><input id="example-select-all2" type="checkbox"></th>
+		                                    <th class="text-center">No</th>
+		                                    <th class="text-center">날짜</th>
+		                                    <th class="text-center">송장번호</th>
+		                                    <th class="text-center">받는사람</th>
+		                                    <th class="text-center">국가</th>
+		                                    <th class="text-center">중량(g)</th>
+		                                    <th class="text-center">우체국요금</th>
+		                                    <th class="text-center">DreamEMS요금</th>
+		                                    <th></th>
+		                                 </tr>
+		                            </thead>
+                            		<tbody>
+                            		</tbody>
+	                        	</table>
+	                        </div>        	
                         </div>
                         <!-- end:after print -->
                         
@@ -153,10 +128,33 @@
 <script type="text/javascript" charset="utf-8"> 
     $(document).ready(function() {
     	// Array holding selected row IDs
+    	var btnStr = "<button class='btn btn-info btn-sm'><i class='fa fa-pencil'></i></button>"
+            +"<button class='btn btn-danger btn-sm'><i class='fa fa-trash-o '></i></button>"
+            +"<div class='btn-group'>"
+            +"<button type='button' class='btn btn-success dropdown-toggle btn-sm' data-toggle='dropdown'><i class='fa fa-print'></i><span class='caret'></span></button>"
+            +"<ul class='dropdown-menu dropdown-success' role='menu'>"
+            +"<li><a href='#'>A4</a></li>"
+            +"<li><a href='#'>소형라벨</a></li>"
+            +"</ul>"
+            +"</div>";
+            
+       var btnStr2 = "<button class='btn btn-danger btn-sm'><i class='fa fa-trash-o '></i></button>"
+           +"<div class='btn-group'>"
+           +"<button type='button' class='btn btn-success dropdown-toggle btn-sm' data-toggle='dropdown'><i class='fa fa-print'></i><span class='caret'></span></button>"
+           +"<ul class='dropdown-menu dropdown-success' role='menu'>"
+           +"<li><a href='#'>A4</a></li>"
+           +"<li><a href='#'>소형라벨</a></li>"
+           +"</ul>"
+           +"</div>";     
+            
     	var rows_selected = [];
-        var table = $('#example').DataTable( {
+        var table = $('#orderList').DataTable( {
         	filter:false,
         	ordering: false,
+        	ajax: {
+        		url : "${pageContext.request.contextPath}/order/list", 
+	        	dataSrc: ""
+        	},
         	columnDefs: [ {
                 orderable: false,
                 className: 'select-checkbox',
@@ -164,8 +162,74 @@
                 render: function (data, type, full, meta){
                     return '<input type="checkbox">';
                 }
-            } ]
+            } ],
+            columns: [
+        		{ data: null
+        		},
+        		{ data: null,
+                    orderable: false
+        		},
+                { data: "orderDate" },
+                { data: "regiNo"},
+                { data: "receiveName"},
+                { data: "countryCd"},
+                { data: "totWeight"},
+                { data: "preRecevPrc"},
+                { data: "preRecevPrc"},
+                {
+                    data: null,
+                    defaultContent: btnStr,
+                  }
+            ]
         } );
+        
+        var table2 = $('#printList').DataTable( {
+        	filter:false,
+        	ordering: false,
+        	autoWidth : false,
+        	ajax: {
+        		url : "${pageContext.request.contextPath}/order/printList", 
+	        	dataSrc: ""
+        	},
+        	columnDefs: [ {
+                orderable: false,
+                className: 'select-checkbox',
+                targets:   0,
+                render: function (data, type, full, meta){
+                    return '<input type="checkbox">';
+                }
+            } ],
+            columns: [
+        		{ data: null
+        		},
+        		{ data: null,
+                    orderable: false
+        		},
+                { data: "orderDate" },
+                { data: "regiNo"},
+                { data: "receiveName"},
+                { data: "countryCd"},
+                { data: "totWeight"},
+                { data: "preRecevPrc"},
+                { data: "preRecevPrc"},
+                {
+                    data: null,
+                    defaultContent: btnStr2,
+                  }
+            ]
+        } );
+        
+        table.on( 'draw.dt', function () {
+        	table.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
+        
+        table2.on( 'draw.dt', function () {
+        	table2.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
         
      	// Handle click on "Select all" control
         $('#example-select-all').on('click', function(){
@@ -174,6 +238,13 @@
            // Check/uncheck checkboxes for all rows in the table
            $('input[type="checkbox"]', rows).prop('checked', this.checked);
         });
+     	
+        $('#example-select-all2').on('click', function(){
+            // Get all rows with search applied
+            var rows = table2.rows({ 'search': 'applied' }).nodes();
+            // Check/uncheck checkboxes for all rows in the table
+            $('input[type="checkbox"]', rows).prop('checked', this.checked);
+         });
 
     	/* 체크된 데이터 얻는방법?
     	// Handle form submission event

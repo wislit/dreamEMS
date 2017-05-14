@@ -110,46 +110,13 @@
 		                                 </tr>
 		                            </thead>
                             		<tbody>
-		                                <!-- <tr>
-		                                	<td></td>
-		                                	<td>1</td>
-		                                	<td class="f_hp warning single-line" contenteditable="true" style="background: rgb(254, 221, 219); color: #FF0000;">2016-06-20</td>
-		                                	<td>EG710143161KR</td>
-		                                	<td>아무개</td>
-		                                	<td>CN</td>
-		                                	<td>19750g</td>
-		                                	<td>83300원</td>
-		                                	<td>64974원</td>
-		                                	<td>1</td>
-		                                	<td class="f_hp warning single-line" contenteditable="true" style="background: rgb(254, 221, 219); color: #FF0000;">2016-06-20</td>
-		                                	<td>EG710143161KR</td>
-		                                	<td>아무개</td>
-		                                	<td>CN</td>
-		                                	<td>19750g</td>
-		                                	<td>83300원</td>
-		                                	<td>64974원</td>
-		                                </tr>
-		                                <tr>
-		                                	<td></td>
-		                                	<td>2</td>
-		                                	<td>2016-06-20</td>
-		                                	<td>EG71124213KR</td>
-		                                	<td>아무개</td>
-		                                	<td>CN</td>
-		                                	<td>12350g</td>
-		                                	<td>2300원</td>
-		                                	<td>14974원</td>
-		                                	<td>2</td>
-		                                	<td>2016-06-20</td>
-		                                	<td>EG71124213KR</td>
-		                                	<td>아무개</td>
-		                                	<td>CN</td>
-		                                	<td>12350g</td>
-		                                	<td>2300원</td>
-		                                	<td>14974원</td>
-		                                </tr> -->
                             		</tbody>
 	                        	</table>
+                   </div>
+                   <div class="row">
+            			<div class="col-sm-4 col-sm-offset-4">
+				        	<a class="btn btn-primary btn-block btn-lg" href="${pageContext.request.contextPath}/order" role="button" >엑셀 접수</a>
+				        </div>
                    </div>
                 </section>
                 <!-- end:data -->
@@ -216,9 +183,9 @@ function checkErrorCell(td, cellData, rowData, row, col, item){
 function drawEMSExcelTable(data) {
 	
 	var t = $('#example').DataTable({
-		
-		scrollY:        "500px",
-        scrollX:        true,
+		destroy: true,
+		/* scrollY:        "500px",
+        scrollX:        true, */
         /* scrollCollapse: true, */
         paging:         false,
 		filter:false,
@@ -235,9 +202,9 @@ function drawEMSExcelTable(data) {
     	columns: [
     		{ data: null},
     		{ data: null, sortable: false},
-            { data: "premiumCd",
+            { data: "emGubun",
             	createdCell: function (td, cellData, rowData, row, col) {
-            		checkErrorCell(td, cellData, rowData, row, col, "premiumCd");
+            		checkErrorCell(td, cellData, rowData, row, col, "emGubun");
             	}
     		},
             { data: "receiveName",
@@ -356,7 +323,54 @@ $(document).ready(function() {
         $('input[type="checkbox"]', rows).prop('checked', this.checked);
      });
 	
+	/* 
+	// 접수
+	var prevent_submit = false;
+	$(document).on('click', '#btn_submit_order', function(){
+
+		if ($(this).hasClass('disabled')) return false;
+
+		var submit_check = [];
+		$(".submit_check:checked").each(function() {
+			submit_check.push(this.value);
+		});
+
+		var data = {'excelData': excelData, 'submit_check': submit_check};
+		console.log(data);
+		if(!prevent_submit) {
+			prevent_submit = true;
+			$.ajax({
+				url: __HOST__ + "/api/v1/order/new/excel_order/type/" + excelType,
+				type: "POST",
+				data: JSON.stringify(data),
+				headers: {"Authorization": getCookieByName("coo_wizboard_user_token")},
+				dataType: 'json',
+				success: function (ret) {
+					console.log(ret);
+					if (ret.type == "SUCC_SUBMIT") {
+						alert_modal(ret.count + " 건 접수되었습니다.", function() {
+							location.reload();
+							prevent_submit = false;
+						});
+					}
+				},
+				error: function (response) {
+					prevent_submit = false;
+					console.log("ERROR", response.responseText);
+				},
+				beforeSend: function () {
+					var loading_span = '<span id="loading_span" style="top:150px; left: 50%; font-size: 30px;"><i class="fa fa-spinner fa-pulse"></i></span>';
+					$('#excel_container').append(loading_span);
+				},
+				complete: function () {
+					if ($('#loading_span').length != 0)
+						$('#loading_span').fadeOut(100).remove();
+				}
+			});
+		}
+	});
 	
+	*/
 	
 } );	
 </script>

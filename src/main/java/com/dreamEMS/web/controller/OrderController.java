@@ -2,6 +2,7 @@ package com.dreamEMS.web.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +34,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.dreamEMS.model.dto.Msg;
 import com.dreamEMS.model.entity.Book;
 import com.dreamEMS.model.entity.Order;
+import com.dreamEMS.model.entity.OrderResponse;
 import com.dreamEMS.model.entity.TestTb;
 import com.dreamEMS.service.ApiService;
 import com.dreamEMS.service.OrderService;
@@ -57,9 +60,31 @@ public class OrderController {
 
 
 	@GetMapping("/home")
-    public String home() {
+    public String home(Model model) {
+		
+		//https://www.mkyong.com/spring-security/get-current-logged-in-username-in-spring-security/
 		return "tiles.order.orderHome";
     }
+	
+	@GetMapping("/list")
+    public ResponseEntity<?> list() {
+
+		List<Order> orderList = orderService.getAllOrder();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(orderList);
+    }
+	
+	@GetMapping("/printList")
+    public ResponseEntity<?> printList() {
+
+		List<Order> printOrderList = orderService.getAllPrintOrder();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(printOrderList);
+    }
+	
+	
 	@GetMapping
     public String order() {
 		return "tiles.order.order";
@@ -117,13 +142,10 @@ public class OrderController {
             return error;*/
         }
         
-        
         //db
-        
-        //api
-        
+        orderService.saveOrder(order);
 
-        return ResponseEntity.ok(Msg.SAVE_USER);
+        return ResponseEntity.ok(Msg.SUCCESS);
     }
     
     @PutMapping("/{orderNo}")

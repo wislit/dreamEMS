@@ -50,15 +50,13 @@ class ExceptionHandlerControllerAdvice {
 		 model.addAttribute("isDetail", true);
 		 model.addAttribute("detail", rvlError);
 
-		 if ( !req.getHeader("Content-Type").isEmpty() ){
-			 
+		 rvl = new ModelAndView("error", model);
+
+		 if ( req.getHeader("Content-Type") != null ){
 			 String contentType = req.getHeader("Content-Type").split(";")[0];
 			 // Content-Type 확인, json 만 View를 따로 처리함.
 			 if(contentType!=null && MediaType.APPLICATION_JSON_VALUE.equals(contentType))
 				 rvl = new ResponseEntity<ModelMap>(model, rvlStatus);
-		 }else {
-			 //json 이 아닐경우 error page 로 이동
-			 rvl = new ModelAndView("error", model);
 		 }
 	        
         return rvl;

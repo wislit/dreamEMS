@@ -34,12 +34,13 @@ public class Order implements Serializable {
     *	DreamEMS Templete 필수항목
     */
     
+    private Long userNo;
     private Date orderDate;			//접수일
     private String postCharge;
     private String emsCharge;
     @NotNull
     @Pattern(regexp = "(31|32)")
-    private String premiumCd;		//우편물구분(2)
+    private String premiumCd;		//우편물구분(2) 31:EMS 32:프리미엄
     @NotNull
     @Pattern(regexp = "[\\p{Alnum}\\p{IsHan}\\.\\,\\_\\-\\/\\s]{1,35}")
     private String receiveName;		//수취인명(35)
@@ -88,7 +89,12 @@ public class Order implements Serializable {
      */
     @Pattern(regexp = "([\\p{Alnum}]{1,50})")
     private String orderNo;			//업체측 주문번호(50) *UNIQUE KEY
-    
+    /*@Email
+    @Pattern(regexp = "[\\p{Alnum}\\.\\@\\<\\>\\-\\_]{1,40}")*/
+    private String senderMail = "sender@mail.com";		//발송인 이메일(40)
+    /*@Email
+    @Pattern(regexp = "[\\p{Alnum}\\.\\@\\<\\>\\-\\_]{1,40}")*/
+    private String receiveMail = "receiver@mail.com";		//수취인 이메일(40)
     
     
     @Pattern(regexp = "[\\d]{10}")
@@ -120,9 +126,7 @@ public class Order implements Serializable {
     private String senderMobile3;	//발송인 이동통신3(4)
     @Pattern(regexp = "[\\d]{1,4}")
     private String senderMobile4;	//발송인 이동통신4(4)
-    @Email
-    @Pattern(regexp = "[\\p{Alnum}\\.\\@\\<\\>\\-\\_]{1,40}")
-    private String senderMail;		//발송인 이메일(40)
+    
     @Pattern(regexp = "[\\p{Alnum}\\.\\,\\_\\-\\/\\s]{0,100}")
     private String sndMessage;		//배송 메세지(100)
     
@@ -139,11 +143,9 @@ public class Order implements Serializable {
     private String receiveTelNo3;	//수취인 전화번호3(4)
     @Pattern(regexp = "[\\d]{1,4}")
     private String receiveTelNo4;	//수취인 전화번호4(4)
-    @Email
-    @Pattern(regexp = "[\\p{Alnum}\\.\\@\\<\\>\\-\\_]{1,40}")
-    private String receiveMail;		//수취인 이메일(40)
+    
     @Pattern(regexp = "(ee|em)")
-    private String emEE;			//국제우편물종류코드(2)
+    private String emEE;			//국제우편물종류코드(2) ee:서류 em:비서류
     @Pattern(regexp = "(Y|N)")
     private String boYN = "N";			//보험가입여부(1)
     @Pattern(regexp = "[\\d]{1,15}")
@@ -199,11 +201,50 @@ public class Order implements Serializable {
     private String xprtNo4;			//수출신고번호4(15)
     @Pattern(regexp = "[\\d\\;]{0,5}")
     private String recomporegipocd;	//추천우체국기호    
+    
+    
+    /**
+     	우체국 등록시 리턴받는 항목
+     */
+    private String reqNo;                   // 접수번호
+    private String receiveSeq;              // 주문번호
+    private String regiNo;                  // 송장번호
+    private String preRecevPrc;             // 우편요금
+    private String prcPayMethCd;            // 요금납부방법 - 현금(10)/후납(12)
+    private String treatPoRegiPoCd;         // 우편용국기호
+    private String treatPoRegiPoEngNm;      // 우체국영문명
    
     public void addError(String err) {
 		this.errorList.put(err, true);
 	}
     
+    private boolean print = false;
+    
+    public void setContents(String content){
+    	content = content.replaceAll("\\;{1,3}$" , "");
+    	this.contents = content;
+    }
+    
+    public void setValue(String value){
+    	value = value.replaceAll("\\;{1,3}$" , "");
+    	this.value = value;
+    }
+    
+    public void setNumber(String number){
+    	
+    	if( number != null){
+    		number = number.replaceAll("\\;{1,3}$" , "");
+    		this.number = number;
+    	}
+    }
+    
+    public void setHsCode(String hsCode){
+    	
+    	if( hsCode != null){
+    		hsCode = hsCode.replaceAll("\\;{1,3}$" , "");
+    		this.hsCode = hsCode;
+    	}
+    }
     
     
 }

@@ -21,7 +21,8 @@ public class CustomUserDetails extends User implements UserDetails {
         if (user != null
                 && !StringUtils.isBlank(user.getId())
                 && !StringUtils.isBlank(user.getPassword())) {
-            setId(user.getId());
+            setNo(user.getNo());
+        	setId(user.getId());
         	setUsername(user.getUsername());
             setPassword(user.getPassword());
             setEnabled(user.isEnabled());

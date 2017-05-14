@@ -30,11 +30,11 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 	
 		request.getSession().setMaxInactiveInterval(60 * 60);
 		
-		User user = userService.getUserById(request.getParameter("id")).get();
-		SecurityContextHolder.getContext().setAuthentication(
-				new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
+		//User user = userService.getUserById(request.getParameter("id")).get();
+		//SecurityContextHolder.getContext().setAuthentication(
+				//new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
 		
-		log.info(user);
+		//log.info(user);
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 
