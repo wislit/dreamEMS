@@ -34,6 +34,7 @@
         <!-- Maven compiler properties -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <start-class>com.dreamEMS.Application</start-class>
     </properties>
 
     <dependencies>
@@ -186,7 +187,18 @@
                 <!-- Set the character encoding for the JVM -->
                 <configuration>
                     <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
+                    <mainClass>com.dreamEMS.Application</mainClass>
                 </configuration>
+                <executions>
+			      <execution>
+			        <goals>
+			          <goal>repackage</goal>
+			        </goals>
+			        <configuration>
+			          <mainClass>${spring.boot.mainclass}</mainClass>
+			        </configuration>
+			      </execution>
+			    </executions>
             </plugin>
 
             <!-- Jenkins Maven Build -->

@@ -122,7 +122,7 @@ public class OrderModelTest {
     	 System.out.println(test);
     }
      
-     @Test
+     //@Test
      public void saveOrder(){
     	 Order order = new Order();
     	 order.setPremiumCd("31");

@@ -32,7 +32,7 @@ public class UserServiceTest {
      
      private User user1;
 
-     @Before
+     //@Before
      public void setup() {
           user1 = new User();
           user1.setId("ems");
@@ -45,7 +45,7 @@ public class UserServiceTest {
           user1.setAuthorities(AuthorityUtils.createAuthorityList("USER","ADMIN"));
      }
       
-     @Test
+    // @Test
      public void createUserTest() {
           userService.deleteUserById(user1);
           userService.saveUser(user1);

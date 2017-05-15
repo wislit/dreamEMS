@@ -28,7 +28,7 @@ public class UserMapperTest {
       
      @Autowired UserMapper userMapper;
       
-     @Test
+     //@Test
      public void readUserTest() {
           User user = userMapper.selectUserById("ems");
           assertThat("ems", is(user.getId()));
@@ -36,7 +36,7 @@ public class UserMapperTest {
           assertThat("1234", is(user.getPassword()));
      }
       
-     @Test
+     //@Test
      public void readAuthorityTest() {
           List<GrantedAuthority> authorities = userMapper.selectAuthority("ems");
           Iterator<GrantedAuthority> it = authorities.iterator();
