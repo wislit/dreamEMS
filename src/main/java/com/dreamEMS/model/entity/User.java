@@ -42,11 +42,10 @@ public class User implements Serializable {
     private boolean accountNonLocked;
     private Collection<? extends GrantedAuthority> authorities;
     
-    
-    private String sender = "test";
-    private String senderZipCode = "402701";
-    private String senderAddr1 = "jaYng-dong 123";
-    private String senderAddr2 = "GwangJin, Seoul";
-    private String senderTelNo = "010-1234-5678";
+    private String sender;
+    private String senderZipCode;
+    private String senderAddr1;
+    private String senderAddr2;
+    private String senderTelNo;
 
 }

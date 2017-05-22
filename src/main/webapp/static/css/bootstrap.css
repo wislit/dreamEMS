@@ -2704,6 +2704,7 @@ select[multiple].input-lg {
     padding-top: 7px;
     margin-bottom: 0;
     text-align: right;
+    font-size: 13px;
   }
 }
 .form-horizontal .has-feedback .form-control-feedback {
