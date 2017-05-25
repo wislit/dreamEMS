@@ -1,0 +1,154 @@
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+@page {
+    size: A4;
+    margin: 0;
+}
+
+body.print {
+  background: rgb(204,204,204); 
+}
+.print page[size="A4"] {
+  background: white;
+  width: 21cm;
+  height: 29.7cm;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
+.print page[size="label"] {
+  background: white;
+  width: 271mm;
+  height: 110mm;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
+
+
+.print td{
+overflow:hidden;
+word-break:normal;
+
+font-family:'Noto Sans KR', 'Noto Sans SC', 'Microsoft Yahei',  sans-serif !important ;
+border: 1px solid #000;
+text-align: center;
+
+margin: 0;
+padding: 0;
+}
+
+.print .no-border{border: none;}
+.print .br-right{border-right: 1px solid #000;}
+.print .br-left{border-left: 1px solid #000; }
+.print .br-bottom{border-bottom: 1px solid #000;}
+.print .va-top{ vertical-align: top }
+.print .va-middle{vertical-align: middle;}
+.print .ft-left{float: left; padding-left: 4px;}
+.print .ft-right{float: right; padding-right: 4px;}
+
+.print .text-green {color: #1ca425;}
+.print .text-blue{color: #1970ec;}
+.print .ta-left {text-align: left; padding-left: 4px;}
+.print .ta-right {text-align: right; padding-right: 4px;}
+.print .text-lg { font-size: 13px; font-weight: bold; }
+.print .ls-sm{ letter-spacing: -1.5px; }
+.print .ls-md{letter-spacing: -0.5px; }
+
+
+
+.print .default{padding: 5% 5% 5% 5%; height: 40%; border-bottom: 1px dashed  #000;}
+
+.print .default1{padding: 1%;}
+
+.print .invoice{float: left; padding: 0 0 0 5%; width: 42.5%;}
+.print .invoice td.base-h{height: 50px;}
+.print .invoice .va-middle{line-height: 25px;}
+
+.print .footer{float: left; padding: 4% 5% 0 5%; width: 90%;}
+/* .div-label-footer{float: right; width: 33%; position: absolute; right: -80px; top: 210px; transform: rotate(-90deg);} */  
+
+.print .div-label-footer{float: right; width: 20%; position: absolute; right: 320px; top: 210px; transform: rotate(-90deg);}  
+
+.print .div-label-1{float: left; padding: 1% 1.5%; width: 58.5%;}
+
+.print .invoice2{float: left; padding: 0.5% 1.2%; width: 26%;}
+
+.print .test1{line-height: 0.9;}
+
+
+.print .tb-print h1,h2,h3,h4,h5,h6 .tb-print2 h1,h2,h3,h4,h5,h6{margin: 0; letter-spacing: -1px;}
+.print .tb-print, .tb-print2{border-collapse:collapse;border-spacing:0; width: 100%;}
+
+.print .tb-print .ft-col1{float:left; width: 30%;}
+.print .tb-print .ft-col2{float:left; width: 68%;}
+.print .tb-print2 .ft-col1{letter-spacing: -1px;}
+.print .tb-print2 .ft-col2{}
+
+.print .tb-print .ft-col-gp1{width: 28.4%;}
+.print .tb-print .ft-col-gp2{width: 42.5%;}
+.print .tb-print .ft-col-gp3{width: 14.8%;}
+.print .tb-print .ft-col-gp4{width: 14.3%;}
+.print .tb-print2 .ft-col-gp1{width: 20%;}
+.print .tb-print2 .ft-col-gp2{width: 51.8%;}
+.print .tb-print2 .ft-col-gp3{width: 15.6%;}
+.print .tb-print2 .ft-col-gp4{width: 13.3%;}
+
+.print .tb-print .barcode-num{font-size: 20px;}
+.print .tb-print2 .barcode-num{font-size: 16px;}
+.print .tb-print3 .barcode-num{font-size: 23px;}
+.print .tb-print .barcode-img{height: 50px;}
+.print .tb-print2 .barcode-img{height: 40px;} 
+
+.print .addr-h{height: 110px !important;}
+.print .tb-print2 .addr-h{height: 80px !important;}
+.print .tb-print2 .ls-xs{letter-spacing: -1.2px;}
+.print .tb-print2 .ls-sm{letter-spacing: -1.9px;}
+
+.print tr.col-item{letter-spacing: -1.1px; font-size: 8px; line-height: 1.1;}
+.print .tb-print2 tr.col-item{line-height: .9; letter-spacing: -2px;}
+.print .tb-print2 .view-a4{display: none;}
+
+.print td.item-td {
+	border-bottom: 1px dashed #CCC;
+	border-top: 1px dashed #CCC;
+	/* font-size: 12px; */
+}
+.print .tb-print2 .item-tr { 
+	line-height: 1;
+}
+
+.print .tb-print td{height: 19px; font-size: 10px; }
+.print .tb-print2 td{height: 12px; font-size: 10px; }
+.print .tb-print3 td{height: 18px; font-size: 12px; }
+.print .invoice2 td{height: 8px; font-size: 8px; line-height: 1;}
+.print .receipt2 td{height: 14px; font-size: 12px; }
+
+
+@media print {
+    body, page[size="A4"] {
+    margin: 0;
+    box-shadow: 0;
+  }
+    tbody::after {
+        content: ''; display: block;
+        page-break-after: always;
+        page-break-inside: avoid;
+        page-break-before: avoid;        
+    }
+    div.div-a4{
+      width : 190mm;
+    }
+    div.div-a4.invoice{
+      width : 95mm;
+    }
+    div.none{
+    	display: none;
+    }
+    div.div-label-1{
+      width : 162mm;
+    }
+    .div-label-footer{float: right; width: 36.5%; position: absolute; right: -130px; top: 185px;
+        transform: rotate(-90deg);}  
+  
+}
