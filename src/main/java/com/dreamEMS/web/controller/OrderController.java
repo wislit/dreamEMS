@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.dreamEMS.model.dto.Msg;
 import com.dreamEMS.model.entity.Book;
+import com.dreamEMS.model.entity.EmsTotProcCmd;
 import com.dreamEMS.model.entity.Order;
 import com.dreamEMS.model.entity.TestTb;
 import com.dreamEMS.service.ApiService;
@@ -243,6 +244,16 @@ public class OrderController {
         
         Boolean isError = orderService.validateProperty(property, value);
         return isError;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/proc/{countryCd}/{totWeight}")
+    public Object validate(@PathVariable("countryCd") String countryCd, 
+    						@PathVariable("totWeight") int totWeight)  throws Exception{
+        
+    	EmsTotProcCmd emsTotProcCmd = apiService.getEmsTotProcCmd("31", countryCd, totWeight, "N", 0, "ee");
+        		
+        return emsTotProcCmd.getEmsTotProc();
     }
 
 

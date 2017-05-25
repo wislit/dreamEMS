@@ -50,8 +50,8 @@
                         	<div class="btn-group">
                        			<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="fa fa-print"></i> 일괄출력 <span class="caret"></span></button>
 			                       <ul class="dropdown-menu dropdown-success" role="menu">
-			                           <li><a href="#">A4</a></li>
-			                           <li><a href="#">소형라벨</a></li>
+			                           <li onclick='ready()'><a href="#">A4</a></li>
+			                           <li onclick='ready()'><a href="#">소형라벨</a></li>
 			                       </ul>
                   			 </div><!-- /btn-group -->
                         </li>
@@ -418,8 +418,8 @@ function updateDialog(orderNo) {
 
     $(document).ready(function() {
     	// Array holding selected row IDs
-    	var btnStr = "<button class='btn btn-info btn-sm'><i class='fa fa-pencil'></i></button> "
-            +"<button class='btn btn-danger btn-sm'><i class='fa fa-trash-o '></i></button> "
+    	var btnStr = "<button class='btn btn-info btn-sm' onclick='ready()'><i class='fa fa-pencil'></i></button> "
+            +"<button class='btn btn-danger btn-sm' onclick='ready()'><i class='fa fa-trash-o '></i></button> "
             +"<div class='btn-group'>"
             +"<button type='button' class='btn btn-success dropdown-toggle btn-sm' data-toggle='dropdown'><i class='fa fa-print'></i><span class='caret'></span></button>"
             +"<ul class='dropdown-menu dropdown-success' role='menu'>"
@@ -428,7 +428,7 @@ function updateDialog(orderNo) {
             +"</ul>"
             +"</div>";
             
-       var btnStr2 = "<button class='btn btn-danger btn-sm'><i class='fa fa-trash-o '></i></button> "
+       var btnStr2 = "<button class='btn btn-danger btn-sm' onclick='ready()'><i class='fa fa-trash-o '></i></button> "
            +"<div class='btn-group'>"
            +"<button type='button' class='btn btn-success dropdown-toggle btn-sm' data-toggle='dropdown'><i class='fa fa-print'></i><span class='caret'></span></button>"
            +"<ul class='dropdown-menu dropdown-success' role='menu'>"

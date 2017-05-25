@@ -115,7 +115,7 @@
                    </div>
                    <div class="row">
             			<div class="col-sm-4 col-sm-offset-4">
-				        	<a class="btn btn-primary btn-block btn-lg" href="${pageContext.request.contextPath}/order" role="button" >엑셀 접수</a>
+				        	<a class="btn btn-primary btn-block btn-lg" href="#" role="button" onclick="ready()">엑셀 접수</a>
 				        </div>
                    </div>
                 </section>

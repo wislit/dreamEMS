@@ -204,7 +204,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
 	            </div>
             </div>
             <div class="col-sm-6 col-sm-offset-3 ">
-            <a href="#myModal" data-toggle="modal" class="btn btn-block btn-default">
+            <a href="#myModal" data-toggle="modal" class="btn btn-block btn-default" onclick='ready()'>
             	받는사람 불러오기
        		 </a>
        		 </div>
@@ -224,7 +224,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="va-middle" colspan="3" rowspan="2">
     	<div class="col-sm-4" style="padding: 0px;">Postage<br>우편요금</div>
     	<div class="input-group">
-            <input type="text" class="form-control warning" disabled="" value="">
+            <input type="text" class="form-control warning" disabled="" value="" name="proc">
             <span class="input-group-addon input-group-addon-default">원</span>
         </div>
     </td>
@@ -279,7 +279,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
   <tr class="">
     <td class="" colspan="6">
     	 <div class="col-sm-8 col-sm-offset-2">
-           <a href="#myModal" data-toggle="modal" class="btn btn-block btn-default">
+           <a href="#myModal" data-toggle="modal" class="btn btn-block btn-default" onclick='ready()'>
            		세관신고서 품목 불러오기
       		</a>
      	</div>
@@ -438,8 +438,25 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
         		var cd = $(this).val();
         		$("#countryCd1").html(cd.charAt(0));
 				$("#countryCd2").html(cd.charAt(1));
-			})
+				checkProc();
+			});
+        	
+        	$("input[name=totWeight]").on("change", function() {
+        		checkProc();
+        	});
       });
+        
+        function checkProc() {
+        	var totWeight = $("input[name=totWeight]").val();
+    		var countryCd = $("#nation option:selected").val();
+    		
+    		if( countryCd != "" && totWeight > 0){
+        		$.read(  '/order/proc/'+ countryCd + "/" + totWeight,
+        				  function (proc) {
+        			$("input[name=proc]").val(proc);
+        		} );
+    		}
+		}
 
     </script>
     <!-- end:javascript for this page -->

@@ -1,3 +1,15 @@
+function ready() {
+	$.alert({
+	    content:  "준비중",
+	    type: 'blue',
+	    buttons: {
+	        ok: {
+	            btnClass: 'btn-info'
+	        }
+	    }
+	});
+}
+
 function ajaxSuccess(reponse){
 		$.alert({
 	    content:  i18n("msg."+reponse.code),
