@@ -62,7 +62,7 @@ public class Order implements Serializable {
     @Pattern(regexp = "[\\d]{1,7}")
     private String totWeight;		//총중량(7)
     @NotNull
-    @Pattern(regexp = "[\\p{Alnum}\\.\\,\\_\\-\\/\\s\\;]{1,32}")
+    @Pattern(regexp = "[\\p{Alpha}\\.\\,\\_\\-\\/\\s\\;]{1,32}")
     private String contents;		//내용품명(32)
     @NotNull
     @Pattern(regexp = "[\\d\\;]{1,7}")
