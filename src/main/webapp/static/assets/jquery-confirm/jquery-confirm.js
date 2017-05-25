@@ -1158,8 +1158,9 @@ var jconfirm, Jconfirm;
         '</div>' +
         '<div class="jconfirm-clear">' +
         '</div></div></div></div></div></div></div>',
-        title: 'DreamEMS',
-        titleClass: 'jconfirm-title-font',
+        //title: 'DreamEMS',
+        //titleClass: 'jconfirm-title-font',
+        //icon: 'fa fa-paper-plane',
         type: 'default',
         typeAnimated: true,
         draggable: false,
@@ -1178,7 +1179,6 @@ var jconfirm, Jconfirm;
         },
         contentLoaded: function () {
         },
-        icon: 'fa fa-paper-plane',
         bgOpacity: null,
         theme: 'light',
         animation: 'zoom',

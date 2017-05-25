@@ -29,6 +29,11 @@ public class CustomUserDetails extends User implements UserDetails {
             setAccountNonExpired(user.isAccountNonExpired());
             setAccountNonLocked(user.isAccountNonLocked());
             setCredentialsNonExpired(user.isCredentialsNonExpired());
+            setSender(user.getSender());
+            setSenderAddr1(user.getSenderAddr1());
+            setSenderAddr2(user.getSenderAddr2());
+            setSenderTelNo(user.getSenderTelNo());
+            setSenderZipCode(user.getSenderZipCode());
             //setAuthorities(user.getAuthorities()); 
             //this.authorities = Collections.unmodifiableSet(new HashSet<>(CollectionUtils.emptyIfNull(authorities)));
         } else {

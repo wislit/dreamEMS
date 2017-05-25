@@ -16,9 +16,9 @@ public interface OrderService {
 	boolean validateProperty(String property, Order value);
 	boolean saveOrder(Order order);               
 	boolean modifyOrder(Order order);               
-	boolean deleteOrder(Order order);               
-	boolean getOrder(String orderNo);
+	boolean deleteOrder(String orderNo);               
 	List<Order> getAllOrder();               
 	List<Order> getAllPrintOrder();               
 	
+	Order getOrder(String orderNo);               
 }

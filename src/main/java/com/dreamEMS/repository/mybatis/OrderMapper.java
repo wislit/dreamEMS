@@ -22,4 +22,5 @@ public interface OrderMapper extends OrderRepository {
     List<Order> selectAllOrder(@Param("userNo") Long userNo);
     List<Order> selectAllPrintOrder(@Param("userNo") Long userNo);
 
+    Order selectOrder(Order order);
 }

@@ -70,7 +70,8 @@
      -->
     
     <insert id="insertOrder" parameterType="com.dreamEMS.model.entity.Order">
-        INSERT INTO ems.order (cust_no,
+        INSERT INTO ems.order (order_date,
+        				cust_no,
                         appr_no,
                         user_no,
                         sender,
@@ -106,7 +107,8 @@
                         treat_po_regi_po_eng_nm,
                         print
                         )
-				VALUES (#{custNo},
+				VALUES (#{orderDate},
+						#{custNo},
 				        #{apprNo},
 				        #{userNo},
 				        #{sender},
@@ -149,11 +151,12 @@
           *
         FROM
            ems.order
-        <if test="userNo != null">
         WHERE
-          user_no = #{userNo}
-        AND print = 0
+       		print = 0
+        <if test="userNo != null">
+          AND user_no = #{userNo}
         </if>
+        order by order_date desc
     </select>
     
     <select id="selectAllPrintOrder" resultType="Order">
@@ -161,11 +164,35 @@
           *
         FROM
            ems.order
-        <if test="userNo != null">
         WHERE
-          user_no = #{userNo}
-        AND print = 1
+        	print = 1
+        <if test="userNo != null">
+        	AND user_no = #{userNo}
+        </if>
+        order by order_date desc
+    </select>
+    
+    <select id="selectOrder" resultType="Order">
+        SELECT
+          *
+        FROM
+           ems.order
+        WHERE
+        	order_no = #{orderNo}
+        <if test="userNo != null">
+           AND user_no = #{userNo}
         </if>
     </select>
+    
+    <delete id="deleteOrder">
+        DELETE FROM
+          ems.order
+        WHERE
+         order_no = #{orderNo}
+         <if test="userNo != null">
+        AND
+          user_no = #{userNo}
+        </if>
+    </delete>
 
 </mapper>

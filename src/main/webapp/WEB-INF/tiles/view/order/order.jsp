@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <style>
@@ -34,6 +35,8 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
 .text-lg { font-size: 16px; font-weight: bold; }
 .ls-sm{ letter-spacing: -1.5px; }
 .ls-md{letter-spacing: -0.5px; }
+
+.warning { border: 1px solid rgb(243, 57, 70); background-color: rgb(253, 250, 245);}
 </style>
         <!-- start:main -->
         <div class="container">
@@ -94,42 +97,46 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="va-middle" colspan="4">Date & Time Posted 접수년월일시</td>
     <td class="va-middle" colspan="4">
            	<!-- <span class="input-group-addon input-group-addon-info"><i class="fa fa-calendar"></i></span> -->
-            <input type="text" class="form-control input-sm" id="dp1" name="orderDate" >
+           <!--  <input type="text" class="form-control input-sm" id="dp1" name="orderDate" > -->
+           <jsp:useBean id="now" class="java.util.Date"/>    
+			<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" />
     </td>
   </tr>
   <tr>
     <td class="va-middle" colspan="4">Post office code 우편용국기호</td>
-    <td class="va-middle" colspan="4">1000114</td>
+    <td class="va-middle" colspan="4"></td>
   </tr>
   <tr>
     <td class="text-lg" rowspan="3">
     	<span style="font-size: 9px">From</span><br><br>보<br>내<br>는<br><br>사<br>람</td>
     <td class="" colspan="5">
             <label for="" class="col-sm-3 control-label text-blue">Tel. No.</label>
-            <div class="col-sm-8">
-                <input type="text" class="form-control" disabled="" name="senderTelNo" value="010-1234-5678">
+            <div class="col-sm-8 control-label" style="text-align: left;">
+            	<sec:authentication property="principal.senderTelNo"/>
+                <input type="hidden" class="form-control" disabled="" name="senderTelNo" value="<sec:authentication property="principal.senderTelNo"/>">
             </div>
     <td class="text-lg" rowspan="3">
     	<span style="font-size: 9px">To</span><br><br>받<br><br>는<br><br>사<br><br>람
     </td>
     <td class="" colspan="8">
             <label for="" class="col-sm-3 control-label text-blue">Tel. No.</label>
-            <div class="col-sm-8">
-                <input type="text" placeholder="수취인연락처" class="form-control" name="receiveTelNo" value="18606888808">
+            <div class="col-sm-8"> 
+                <input type="text" placeholder="수취인연락처" class="form-control warning" name="receiveTelNo" value="">
             </div>
     </td>
   </tr>
   <tr>
     <td class="" colspan="5">
             <label for="" class="col-sm-3 control-label text-blue">Name(영문)</label>
-            <div class="col-sm-8">
-                <input type="text" class="form-control" id="" name="sender" disabled="" value="Hanseong Logis"> 
+            <div class="col-sm-8 control-label" style="text-align: left;">
+            	<sec:authentication property="principal.sender"/>
+                <input type="hidden" class="form-control" id="" name="sender" disabled="" value="<sec:authentication property="principal.sender"/>"> 
             </div>
     </td>
     <td class="" colspan="8">
             <label for="" class="col-sm-3 control-label text-blue">Name(영문)</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="" placeholder="수취인 이름" name="receiveName" value="王帅">
+                <input type="text" class="form-control warning" id="" placeholder="수취인 이름" name="receiveName" value="">
             </div>
     </td>
   </tr>
@@ -137,23 +144,25 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="no-border va-top addr-h" colspan="5">
     	<div class="col-sm-12" style="margin-bottom: 5px; padding: 0px;">
     		<label for="" class="col-sm-3 control-label text-blue">우편번호</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="" disabled="" name="senderZipCode" value="08281">
+            <div class="col-sm-4 control-label" style="text-align: left;">
+            	<sec:authentication property="principal.senderZipCode"/>
+                <input type="hidden" class="form-control" id="" disabled="" name="senderZipCode" value="<sec:authentication property="principal.senderZipCode"/>">
             </div>
     	</div> 
             <label for="" class="col-sm-3 control-label text-blue">Address</label>
-            <div class="col-sm-8">
-                <textarea class="form-control" rows="5" disabled="" name="senderAddr2">서울 구로구 구로동 468 1층</textarea>
+            <div class="col-sm-8 control-label" style="text-align: left;"> 
+            	<sec:authentication property="principal.senderAddr1"/> <sec:authentication property="principal.senderAddr2"/>
+            	<input type="hidden" class="form-control" id="" disabled="" name="senderZipCode" value="<sec:authentication property="principal.senderTelNo"/>">
             </div>
     </td>
     <td class="no-border ta-left va-top br-right" colspan="8">
     		<label for="inputEmail1" class="col-sm-3 control-label text-blue">국가</label>
             <div class="col-sm-4">
             	<div class="col-sm-12" style="margin-bottom: 5px; padding: 0px;">
-	                <select class="form-control" id="nation" style="width:140px !important;" name="countryCd">
+	                <select class="form-control warning" id="nation" style="width:140px !important;" name="countryCd">
 	                	<option value="">국가선택</option>
 	                	<optgroup label="[ 자주 보내는 국가 목록 ]">
-							<option value="CN" selected="selected">[CN] 중국 (CHINA)</option>
+							<option value="CN">[CN] 중국 (CHINA)</option>
 							<option value="HK">[HK] 홍콩 (HONG KONG)</option>
 							<option value="MO">[MO] 마카오 (MACAO)</option>
 							<option value="US">[US] 미국 (USA)</option>
@@ -191,7 +200,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
 	    	<div class="col-sm-12" style="margin-bottom: 5px; padding: 0px;">
 		    	<label for="" class="col-sm-3 control-label text-blue">Address</label>
 	            <div class="col-sm-8">
-	                <textarea class="form-control" rows="5" placeholder="수취인 주소" name="receiveAddr3">上海市金山区亭林镇和平东路224号</textarea>
+	                <textarea class="form-control warning" rows="5" placeholder="수취인 주소" name="receiveAddr3"></textarea>
 	            </div>
             </div>
             <div class="col-sm-6 col-sm-offset-3 ">
@@ -207,25 +216,21 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     </td>
     <td class="va-middle" colspan="3"  rowspan="2">
     	<div class="col-sm-4" style="padding: 0px;">Weight<br>중량</div>
-    	<div class="input-group has-error">
-            <input type="text" class="form-control" name="totWeight" value="18800">
+    	<div class="input-group">
+            <input type="text" class="form-control warning" name="totWeight" value="">
             <span class="input-group-addon input-group-addon-default">g</span>
         </div>
 	</td>
     <td class="va-middle" colspan="3" rowspan="2">
     	<div class="col-sm-4" style="padding: 0px;">Postage<br>우편요금</div>
-    	<div class="input-group has-error">
-            <input type="text" class="form-control" disabled="" name="emsCharge" value="79900">
+    	<div class="input-group">
+            <input type="text" class="form-control warning" disabled="" value="">
             <span class="input-group-addon input-group-addon-default">원</span>
         </div>
     </td>
   </tr>
   <tr class="col-item">
     <td class="va-middle" colspan="3">Contents 내용 품명(반드시 영문으로 구체적으로 기재)
-    <input type="hidden" name="contents" id="ip-contents">
-    <input type="hidden" name="number" id="ip-number">
-    <input type="hidden" name="value" id="ip-value">
-    <input type="hidden" name="hsCode" id="ip-hsCode">
     </td>
     <td class="va-middle">Quantity<br>(개수)</td>
     <td class="va-middle">Net Weight<br>(순중량)</td>
@@ -234,20 +239,20 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="va-middle">Country of<br>Origin(생산지)</td>
   </tr>
   <tr class="">
-    <td class="" colspan="3"><input type="text" class="form-control" id="" placeholder="내용품명" name="contents1" value="Stationery"></td>
-    <td class=""><input type="text" class="form-control" id="" value="1" name="number1"></td>
+    <td class="" colspan="3"><input type="text" class="form-control warning" id="" placeholder="내용품명" name="contents" value=""></td>
+    <td class=""><input type="text" class="form-control" id="" value="1" name="number"></td>
     <td class=""></td>
-    <td class=""><input type="text" class="form-control" id="" placeholder="USD" name="value1" value="21"></td>
-    <td class="" colspan="2"><input style="font-size: 11px;" type="text" class="form-control" id="" placeholder="HSCODE" name="hsCode1"></td>
+    <td class=""><input type="text" class="form-control warning" id="" placeholder="USD" name="value" value=""></td>
+    <td class="" colspan="2"><input style="font-size: 11px;" type="text" class="form-control" id="" placeholder="HSCODE" name="hsCode"></td>
     <td class=""></td>
     <td class="" colspan="3" rowspan="6">
     </td>
     <td class="va-middle ls-md" rowspan="2">Country code<br>도착국명 약호</td>
-    <td class="va-middle text-lg" style="font-size: 20px;" rowspan="2"> C </td>
-    <td class="va-middle text-lg" style="font-size: 20px;" rowspan="2"> N </td>
+    <td class="va-middle text-lg" style="font-size: 20px;" rowspan="2" id="countryCd1">  </td>
+    <td class="va-middle text-lg" style="font-size: 20px;" rowspan="2" id="countryCd2">  </td>
   </tr>
   <tr class="">
-    <td class="" colspan="3"><input type="text" class="form-control" id="" disabled="" name="contents2"></td>
+    <td class="" colspan="3"><input type="text" class="form-control" id=""  name="contents2"></td>
     <td class=""><input type="text" class="form-control" id="" disabled="" name="number2"></td>
     <td class=""></td>
     <td class=""><input type="text" class="form-control" id="" disabled="" name="value2"></td>
@@ -255,7 +260,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class=""></td>
   </tr>
   <tr class="">
-    <td class="" colspan="3"><input type="text" class="form-control" id="" disabled="" name="contents3"></td>
+    <td class="" colspan="3"><input type="text" class="form-control" id=""  name="contents3"></td>
     <td class=""><input type="text" class="form-control" id="" disabled="" name="number3"></td>
     <td class=""></td>
     <td class=""><input type="text" class="form-control" id="" disabled="" name="value3"></td>
@@ -264,7 +269,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="va-middle ls-md" colspan="3" rowspan="4"></td>
   </tr>
   <tr class="">
-    <td class="" colspan="3"><input type="text" class="form-control" id="" disabled="" name="contents4"></td>
+    <td class="" colspan="3"><input type="text" class="form-control" id=""  name="contents4"></td>
     <td class=""><input type="text" class="form-control" id="" disabled="" name="number4"></td>
     <td class=""></td>
     <td class=""><input type="text" class="form-control" id="" disabled="" name="value4"></td>
@@ -282,6 +287,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="" colspan="3">
     	<div class="col-sm-12">
            <a href="javascript:;" onclick="window.open('http://ems.epost.go.kr/front.EmsSearchHscode.postal','','width=600,height=550,left=0,top=0,scrollbars=yes')" class="btn btn-block btn-default">
+           		<i class="fa fa-search"></i>
            		HS CODE
       		</a>
      	</div>
@@ -292,16 +298,16 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
 	         <div class="col-sm-12">
     	<div class="radio">
            <label>
-           		<input type="radio" name="emGubun" id="optionsRadios1" value="Merchandise" checked="checked"> Sample 상품견본
+           		<input type="radio" name="emGubun" id="optionsRadios1" value="Sample" checked="checked"> Sample 상품견본
            </label>
            <label>
-           		<input type="radio" name="emGubun" id="optionsRadios1" value="Merchandise"> Gift 선물
+           		<input type="radio" name="emGubun" id="optionsRadios1" value="Gift"> Gift 선물
            </label>
            <label>
            		<input type="radio" name="emGubun" id="optionsRadios1" value="Merchandise"> Merchandise 상품
            </label>
            <label>
-           		<input type="radio" name="emGubun" id="optionsRadios1" value="Merchandise"> 수출면장건
+           		<input type="radio" name="emGubun" id="optionsRadios1" value="Document"> 수출면장건
            </label>
         </div>
         </div>
@@ -310,7 +316,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
 </table>
 </form>
 <div class="col-sm-4 col-sm-offset-4">
-	<button class="btn btn-primary btn-block btn-lg" id="submitOrder"><i class="fa fa-edit"></i>접수</button>
+	<button class="btn btn-primary btn-block btn-lg" id="submitOrder"><i class="fa fa-edit"></i> 접수</button>
 </div>
                             </div>
                         </div>
@@ -352,19 +358,19 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
         	
         	$("#submitOrder").click(function() {
         		
-        		var contents = $('input[name=contents1]').val() + ";" +
+        		var contents = $('input[name=contents]').val() + ";" +
 				        		$('input[name=contents2]').val() + ";" +
 				        		$('input[name=contents3]').val() + ";" +
 				        		$('input[name=contents4]').val();
-        		var value  = $('input[name=value1]').val() + ";" +
+        		var value  = $('input[name=value]').val() + ";" +
 				        		$('input[name=value2]').val() + ";" +
 				        		$('input[name=value3]').val() + ";" +
 				        		$('input[name=value4]').val();
-        		var number = $('input[name=number1]').val() + ";" +
+        		var number = $('input[name=number]').val() + ";" +
 				        		$('input[name=number2]').val() + ";" +
 				        		$('input[name=number3]').val() + ";" +
 				        		$('input[name=number4]').val();
-        		var hsCode = $('input[name=hsCode1]').val() + ";" +
+        		var hsCode = $('input[name=hsCode]').val() + ";" +
 				        		$('input[name=hsCode2]').val() + ";" +
 				        		$('input[name=hsCode3]').val() + ";" +
 				        		$('input[name=hsCode4]').val();
@@ -393,12 +399,47 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
            		 
            		var errors = xhr.responseJSON;
            		for ( var index in errors) {
-           			$('input[name='+errors[index]+']').val("error입다요")
+           			$('[name='+errors[index]+']').attr("title","error").tooltip('fixTitle').tooltip('show');
 				}
            	 });
    		});
         	
-        });
+        	$(".warning").on("change", function() {
+        		
+        		 var input = $(this);
+				 var value = input.val();
+				 var propertyName = input.attr("name");
+				 
+				 var data = {};
+				 data[propertyName] = value;
+				 data["property"] = propertyName;
+				 
+				 $.ajax({
+		            	//url: '/order/validate?property='+propertyName,
+		            	url: '/order/validate/'+propertyName,
+		                data: JSON.stringify(data),
+		                type: 'POST',
+		                success: function(data) {
+		                    if(!data){
+		                    	input.removeClass("warning");
+		                    	input.removeAttr("title").tooltip('destroy');
+		                    }else{
+		                    	input.addClass("warning");
+		                    	input.attr("title","error").tooltip('fixTitle').tooltip('show');
+		                    }
+		                }
+		            });
+			});
+        	
+        	
+        	$('.form-control').tooltip({placement: 'left'});
+        	
+        	$("select[name=countryCd]").on("change", function() {
+        		var cd = $(this).val();
+        		$("#countryCd1").html(cd.charAt(0));
+				$("#countryCd2").html(cd.charAt(1));
+			})
+      });
 
     </script>
     <!-- end:javascript for this page -->

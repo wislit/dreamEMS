@@ -45,8 +45,8 @@
                         <a class="navbar-brand" href="/"><i class="fa  fa-paper-plane"></i><span> </span> Dream<strong>EMS</strong></a>
                     </div>
                     <!-- end:navbar-header -->
-                    <ul class="nav navbar-nav navbar-left top-menu">
-                        <!-- start dropdown 1 -->
+                    <!-- <ul class="nav navbar-nav navbar-left top-menu">
+                        start dropdown 1
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <i class="fa fa-tasks"></i>
@@ -87,10 +87,10 @@
                                     <a href="#">See All Tasks</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
                         <!-- end dropdown 1 -->
                         <!-- start dropdown 3 -->
-                        <li id="header_notification_bar" class="dropdown">
+                        <!-- <li id="header_notification_bar" class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <i class="fa fa-bell-o"></i>
                                 <span class="badge bg-warning">7</span>
@@ -139,7 +139,7 @@
                                     <a href="#">See all notifications</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
                         <!-- end dropdown 3 -->
                     </ul>
                     <ul class="nav navbar-nav navbar-right top-menu">
@@ -164,14 +164,14 @@
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <i class="fa fa-user icon-circle icon-success"></i>
-                                <span class="username">안지환</span>
+                                <span class="username"><sec:authentication property="principal.username"/></span>
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <div class="log-arrow-up"></div>
-                                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                                <!-- <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                                 <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                                <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
+                                <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li> -->
                                 <li><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-key"></i> Log Out</a></li>
                             </ul>
                         </li>

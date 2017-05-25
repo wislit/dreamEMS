@@ -4,106 +4,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/font-awesome.min.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/print.css" />
 <style>
-@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
-
-.no-border{border: none;}
-.br-right{border-right: 1px solid #000;}
-.br-left{border-left: 1px solid #000; }
-.br-bottom{border-bottom: 1px solid #000;}
-.va-top{ vertical-align: top }
-.va-middle{vertical-align: middle;}
-.ft-left{float: left; padding-left: 4px;}
-.ft-right{float: right; padding-right: 4px;}
-
-.text-green {color: #1ca425;}
-.text-blue{color: #1970ec;}
-.ta-left {text-align: left; padding-left: 4px;}
-.ta-right {text-align: right; padding-right: 4px;}
-.text-lg { font-size: 13px; font-weight: bold; }
-.ls-sm{ letter-spacing: -1.5px; }
-.ls-md{letter-spacing: -0.5px; }
-
-
-
-.default{padding: 5% 5% 5% 5%; height: 40%; border-bottom: 1px dashed  #000;}
-
-.invoice{float: left; padding: 0 0 0 5%; width: 42.5%;}
-.invoice td.base-h{height: 50px;}
-.invoice .va-middle{line-height: 25px;}
-
-.footer{float: left; padding: 4% 5% 0 5%; width: 90%;}
-/* .div-label-footer{float: right; width: 33%; position: absolute; right: -80px; top: 210px; transform: rotate(-90deg);} */  
-
-.div-label-footer{float: right; width: 20%; position: absolute; right: 320px; top: 210px; transform: rotate(-90deg);}  
-
-.div-label-1{float: left; padding: 1% 1.5%; width: 58.5%;}
-
-.invoice2{float: left; padding: 0.5% 1.2%; width: 26%;}
-
-.test1{line-height: 0.9;}
-
-
-.tb-print h1,h2,h3,h4,h5,h6 .tb-print2 h1,h2,h3,h4,h5,h6{margin: 0; letter-spacing: -1px;}
-.tb-print, .tb-print2{border-collapse:collapse;border-spacing:0; width: 100%;}
-
-.tb-print .ft-col1{float:left; width: 30%;}
-.tb-print .ft-col2{float:left; width: 68%;}
-.tb-print2 .ft-col1{letter-spacing: -1px;}
-.tb-print2 .ft-col2{}
-
-.tb-print .ft-col-gp1{width: 28.4%;}
-.tb-print .ft-col-gp2{width: 42.5%;}
-.tb-print .ft-col-gp3{width: 14.8%;}
-.tb-print .ft-col-gp4{width: 14.3%;}
-.tb-print2 .ft-col-gp1{width: 20%;}
-.tb-print2 .ft-col-gp2{width: 51.8%;}
-.tb-print2 .ft-col-gp3{width: 15.6%;}
-.tb-print2 .ft-col-gp4{width: 13.3%;}
-
-.tb-print .barcode-num{font-size: 20px;}
-.tb-print2 .barcode-num{font-size: 16px;}
-.tb-print .barcode-img{height: 50px;}
-.tb-print2 .barcode-img{height: 40px;} 
-
-.addr-h{height: 110px !important;}
-.tb-print2 .addr-h{height: 80px !important;}
-.tb-print2 .ls-xs{letter-spacing: -1.2px;}
-.tb-print2 .ls-sm{letter-spacing: -1.9px;}
-
-tr.col-item{letter-spacing: -1.1px; font-size: 8px; line-height: 1.1;}
-.tb-print2 tr.col-item{line-height: .9; letter-spacing: -2px;}
-.tb-print2 .view-a4{display: none;}
-
-td.item-td {
-	border-bottom: 1px dashed #CCC;
-	border-top: 1px dashed #CCC;
-	/* font-size: 12px; */
-}
-.tb-print2 .item-tr { 
-	line-height: 1;
-}
-
-td{
-overflow:hidden;
-word-break:normal;
-
-font-family:'Noto Sans KR', 'Noto Sans SC', 'Microsoft Yahei',  sans-serif !important ;
-border: 1px solid #000;
-text-align: center;
-
-margin: 0;
-padding: 0;
-}
-.tb-print td{height: 19px; font-size: 10px; }
-.tb-print2 td{height: 12px; font-size: 10px; }
-.invoice2 td{height: 8px; font-size: 8px; line-height: 1;}
-.receipt2 td{height: 14px; font-size: 12px; }
-
-@page {
-    size: A4;
-    margin: 0;
-}
 <c:if test="${param.label }">
 @page {
     size: 271mm 110mm;
@@ -111,57 +13,8 @@ padding: 0;
 }
 </c:if>
 
-
-body {
-  background: rgb(204,204,204); 
-}
-page[size="A4"] {
-  background: white;
-  width: 21cm;
-  height: 29.7cm;
-  display: block;
-  margin: 0 auto;
-  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-}
-page[size="label"] {
-  background: white;
-  width: 271mm;
-  height: 110mm;
-  display: block;
-  margin: 0 auto;
-  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-}
-
-@media print {
-    body, page[size="A4"] {
-    margin: 0;
-    box-shadow: 0;
-  }
-    tbody::after {
-        content: ''; display: block;
-        page-break-after: always;
-        page-break-inside: avoid;
-        page-break-before: avoid;        
-    }
-    div.div-a4{
-      width : 190mm;
-    }
-    div.div-a4.invoice{
-      width : 95mm;
-    }
-    div.none{
-    	display: none;
-    }
-    div.div-label-1{
-      width : 162mm;
-    }
-    .div-label-footer{float: right; width: 36.5%; position: absolute; right: -130px; top: 185px;
-        transform: rotate(-90deg);}  
-  
-}
-
 </style>
-<body>
+<body class="print">
 <div class="none"> 
     <a href="#" onClick="window.print();">Print</a>
 </div>
@@ -541,7 +394,7 @@ page[size="label"] {
     </td>
    </tr>
    <tr>
-    <td class="" colspan="5">
+    <td class="" colspan="5"> 
     	<div class="test1 ta-left" style="float: left; width: 43%;">Notify party :</div>
     	<div class="test1 ta-left" style="float: left; width: 53%;">Port of loading : KOREA</div>
     	<div class="test1 ta-left" style="float: left; width: 23%;">Carrier :</div>

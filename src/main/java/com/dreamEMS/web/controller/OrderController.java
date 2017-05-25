@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,16 +35,18 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.dreamEMS.model.dto.Msg;
 import com.dreamEMS.model.entity.Book;
 import com.dreamEMS.model.entity.Order;
-import com.dreamEMS.model.entity.OrderResponse;
 import com.dreamEMS.model.entity.TestTb;
 import com.dreamEMS.service.ApiService;
 import com.dreamEMS.service.OrderService;
+
+import lombok.extern.apachecommons.CommonsLog;
 
 /**
  * 접수
  * @author 
  */
 @Controller
+@CommonsLog
 @RequestMapping("/order")
 public class OrderController {
 
@@ -95,18 +98,25 @@ public class OrderController {
     }
 
     @GetMapping("/{orderNo}")
-    public ResponseEntity<?> getOrderNo(@PathVariable Long orderNo) {
-		return null;
-    	/*return bookService
-                .getBookById(bookId)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new ResourceNotFoundException()
-                        .setResourceName(ResourceNameConstant.BOOK)
-                        .setId(bookId));*/
+    public ResponseEntity<?> getOrderNo(@PathVariable String orderNo) {
+    	Order order = orderService.getOrder(orderNo);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(order);
     }
 
     @PostMapping
     public ResponseEntity<?> postOrder(@Valid @RequestBody Order order, Errors errors) {
+    	
+    	/*log.info(order);
+    	log.info(new Date().toString());
+    	Date d = new Date();
+        
+        String s = d.toString();
+        log.info("현재날짜 : "+ s);
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        log.info("현재날짜 : "+ sdf.format(d));*/
        
         //If error, just return a 400 bad request, along with the error message
         /*if (errors.hasErrors()) {
@@ -160,15 +170,11 @@ public class OrderController {
     }
 
     @DeleteMapping("/{orderNo}")
-    public ResponseEntity<?> deleteOrder(@PathVariable Long orderNo) {
-        /*assertBookExist(bookId);
-
-        bookService.deleteBookById(bookId);
-
+    public ResponseEntity<?> deleteOrder(@PathVariable String orderNo) {
+    	boolean rt =  orderService.deleteOrder(orderNo);
         return ResponseEntity
-                .noContent()
-                .build();*/
-    	return null;
+                .status(HttpStatus.OK)
+                .body(rt);
     }
 
 
@@ -231,9 +237,9 @@ public class OrderController {
     }
     
     @ResponseBody
-    @RequestMapping(value = "/validate")
-    public Object validate(@RequestParam("property") String property, 
-    					@ModelAttribute Order value)  throws Exception{
+    @RequestMapping(value = "/validate/{property}")
+    public Object validate(@PathVariable("property") String property, 
+    					@RequestBody Order value)  throws Exception{
         
         Boolean isError = orderService.validateProperty(property, value);
         return isError;

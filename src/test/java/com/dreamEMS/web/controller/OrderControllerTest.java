@@ -161,9 +161,6 @@ public class OrderControllerTest {
 		 order.setWeight("2900");
 		 order.setHsCode("9105100000");
 		 order.setOrigin("KR");*/
-
-	   	 order.setOrderDate(new Date());
-	   	 
 	   	 
 	   	String jsonString = this.jsonStringFromObject(order);
 		

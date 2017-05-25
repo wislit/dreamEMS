@@ -177,7 +177,8 @@ function execDaumPostcode() {
 			// 우편번호와 주소 정보를 해당 필드에 넣는다.
 			//document.getElementById('senderzipcode').disabled = false;
 			document.getElementById('inputSenderZipCode').value = data.zonecode; //5자리 새우편번호 사용
-			document.getElementById('inputSenderAddr2').value = fullAddr;
+			//document.getElementById('inputSenderAddr2').value = fullAddr;
+			document.getElementById('inputSenderAddr2').value = data['addressEnglish'];
 
 			// 스타일 변경
 			$('#p_post, #p_address').removeClass('warning');

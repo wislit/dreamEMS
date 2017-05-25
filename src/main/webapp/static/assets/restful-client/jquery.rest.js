@@ -31,7 +31,7 @@
     $.restSetup = { 
       methodParam: '_method',
       useMethodOverride: false,
-      contentType : 'application/json;charset=utf-8',
+      //contentType : 'application/json;charset=utf-8',
       verbs: {
         create:  'POST',
         update:  'PUT',
@@ -141,7 +141,7 @@
 
         if ( methodOverride ) xhr.setRequestHeader('X-HTTP-Method-Override', methodOverride);
 
-        xhr.setRequestHeader("Content-type", contentType)
+        //xhr.setRequestHeader("Content-type", contentType)
         //ajaxSettings.data = context.data;
         if ( $.isFunction(userBeforeSend) ) userBeforeSend.call(context, xhr, ajaxSettings);
      }

@@ -19,5 +19,7 @@ public interface OrderRepository {
     Integer selectOrder(String orderNo);
     List<Order> selectAllOrder(@Param("userNo") Long userNo);
     List<Order> selectAllPrintOrder(@Param("userNo") Long userNo);
+    
+    Order selectOrder(Order order);
 
 }

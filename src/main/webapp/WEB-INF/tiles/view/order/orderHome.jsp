@@ -2,16 +2,17 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/print.css" />
 <body>
 <!-- start:main -->
 <div class="container"> <!-- footer.jsp에 container </div> 있음 마지막에 닫는태그 안써도됨 -->
 <div id="main">
 
     <!-- start:breadcrumb -->
-    <ol class="breadcrumb">
+    <%-- <ol class="breadcrumb">
         <li><a href="${pageContext.request.contextPath}/">Home</a></li>
         <li class="active">접수</li>
-    </ol>
+    </ol> --%>
     <!-- end:breadcrumb -->   
     
     <!-- start:order button -->
@@ -42,7 +43,7 @@
                 <div class="panel-body">
                 	<!-- start:tab nav -->
                     <ul id="orderTab" class="nav nav-tabs">
-                        <li class="active"><a href="#beforePrint" data-toggle="tab">미출력 <span class="badge bg-important">14</span></a></li>
+                        <li class="active"><a href="#beforePrint" data-toggle="tab">미출력<!-- <span class="badge bg-important">14</span> --></a></li>
                         <li class=""><a href="#afterPrint" data-toggle="tab">기출력</a></li>
                         <!-- <li class=""><a href="#pickUp" data-toggle="tab">픽업목록</a></li> -->
                         <li class="" style="float:right">
@@ -109,9 +110,9 @@
                         <!-- end:after print -->
                         
                         <!-- start:pick up -->
-                        <div class="tab-pane fade" id="pickUp">
+                        <!-- <div class="tab-pane fade" id="pickUp">
                         	픽업d
-                        </div>
+                        </div> -->
                         <!-- end:pick up -->
                         
                     </div><!-- /tab-content -->
@@ -121,29 +122,318 @@
 	</div><!-- /row -->
 </div>
 
+<div aria-hidden="true" role="dialog" tabindex="-1" id="user-modal" class="modal fade">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+              <h6 class="modal-title">&nbsp;</h6>
+          </div>
+          <div class="modal-body print">
+          	<div class="div-a4 default1">
+				<table class="tb-print3">
+				<colgroup>
+					<col style="width:3.5%;"/>
+					<col style="width:8.5%;"/>
+					<col style="width:17.3%;"/>
+					<col style="width:6%;"/>
+					<col style="width:6%;"/>
+					<col style="width:6.8%;"/>
+					<col style="width:3.5%;"/>
+					<col style="width:3.7%;"/>
+					<col style="width:7.4%;"/>
+					<col style="width:14%;"/>
+					<col style="width:5.1%;"/>
+					<col style="width:1%;"/>
+					<col style="width:9.6%;"/>
+					<col style="width:4.3%;"/>
+					<col style="width:4.3%;"/>
+				</colgroup>
+			  <tr>
+			    <td class="no-border" colspan="2"></td>
+			    <td class="no-border" colspan="5" rowspan="3" >
+			    	<span class="barcode-num" id="regiNo">EG710143073KR</span>
+			    	<object class="barcode-img" type="image/bmp" style="width: 98%;" data="data:image/bmp;base64,Qk12EwAAAAAAADYAAAAoAAAAsAAAABwAAAABABgAAAAAAEATAAATCwAAEwsAAAAAAAAAAAAA////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////"></object>
+			    </td>
+			    <td class="no-border" colspan="8" style="height: 50px;"></td>
+			  </tr>
+			  <tr>
+			    <td class="no-border" colspan="2" rowspan="2">Item No.<br>우편물 번호</td>
+			    <td class="va-middle" colspan="4">Date & Time Posted 접수년월일시</td>
+			    <td class="va-middle" colspan="4" id="orderDate">2016.06.20 &nbsp;&nbsp; 17:57:06</td>
+			  </tr>
+			  <tr>
+			    <td class="va-middle" colspan="4">Post office code 우편용국기호</td>
+			    <td class="va-middle" colspan="4" id="treatPoRegiPoCd">1000114</td>
+			  </tr>
+			  <tr>
+			    <td class="text-lg" rowspan="5">
+			    	<span style="font-size: 9px">From</span><br><br>보<br>내<br>는<br><br>사<br>람</td>
+			    <td class="ta-left" colspan="5">
+			    	<span class="text-blue">Tel. No. </span>
+			    	<span class="text-lg" id="senderTelNo">010-8292-9888</span></td>
+			    <td class="text-lg" rowspan="5">
+			    	<span style="font-size: 9px">To</span><br><br>받<br><br>는<br><br>사<br><br>람
+			    </td>
+			    <td class="ta-left" colspan="8">
+			    	<span class="text-blue">Tel. No. </span>
+			    	<span class="text-lg" id="receiveTelNo">18606888808</span>
+			    </td>
+			  </tr>
+			  <tr>
+			    <td class="ta-left" colspan="5">
+			    	<span class="text-blue">Name(영문)&nbsp;</span>
+			    	<span class="text-lg" id="sender">Hanseong Logis</span>
+			    </td>
+			    <td class="ta-left" colspan="8">
+			    	<span class="text-blue">Name(영문)&nbsp;</span>
+			    	<span class="text-lg" id="receiveName">黄铎</span>
+			    </td>
+			  </tr>
+			  <tr>
+			    <td class="no-border ta-left va-top addr-h" colspan="5">
+			    	<span class="text-blue">Address&nbsp;</span><br>
+					<span class="text-lg" id="senderAddr">서울 구로구 구로동 468 1층</span>
+			    </td>
+			    <td class="no-border ta-left va-top br-right" colspan="8">
+			    	<span class="text-blue">Address&nbsp;</span><br>
+					<span class="text-lg" id="receiveAddr3">上海市金山区亭林镇亭塔路47号</span>
+			    </td>
+			  </tr>
+			  <tr>
+			    <td class="va-middle no-border" style="line-height: 10px;" colspan="5">
+			    	<span class="text-blue ft-left">e-mail</span><br>
+			    	<span class="text-green ft-right" style="letter-spacing: -1px;">작성된 개인정보는 사전통관정보제공 시행국가에 전자적으로 전송됩니다.</span>
+			    </td>
+			    <td class="no-border br-right" colspan="8"></td>
+			  </tr>
+			  <tr>
+			    <td class="no-border" colspan="5">
+					<span class="text-blue ft-left" style="line-height:19px;">Postal code</span>
+					<span class="text-lg" id="senderZipCode">08281</span>
+					<span class="text-lg ft-right text-blue">Rep. of KOREA</span>
+				</td>
+			    <td class="no-border br-right" colspan="8">
+						<span class="text-blue ft-left" style="line-height:19px;">Postal code</span>
+						<span class="text-lg ft-left" id="receiveZipCode"></span>
+						<span class="text-lg ft-right" id="countryName" style="display:inline-block; white-space: nowrap; max-width: 150px;">
+						</span>
+						<span class="text-blue ft-right" style="line-height:19px;">Country</span>
+				</td>
+			  </tr>
+			  <tr>
+			    <td class="va-middle ta-left text-lg" colspan="9">
+			    	Customs Declaration 세관신고서 <span class="ft-right">CN23</span>
+			    </td>
+			    <td class="va-middle" colspan="3" style="line-height: 1.1">
+					<span style="display: inline-block; padding-left: 6px; float: left">Weight<br>중량</span>
+					<span style="display: inline-block; padding: 2px 6px 0 0; float: right; font-weight:bold;">
+						<span id="totWeight">18700</span> <span style="font-size: 11px">g</span>
+					</span>
+				</td>
+			    <td class="va-middle" colspan="3" style="line-height: 1.1">
+			    	<span style="display: inline-block; padding-left: 6px; float: left">Postage<br>우편요금</span>
+					<span style="display: inline-block; padding: 2px 6px 0 0; float: right; font-weight:bold;">
+						<span id="preRecevPrc">79900</span>  <span style="font-size: 11px">원</span>
+					</span>
+			    </td>
+			  </tr>
+			  <tr class="col-item">
+			    <td class="va-middle" colspan="3">Contents 내용 품명(반드시 영문으로 구체적으로 기재)</td>
+			    <td class="va-middle">Quantity<br>(개수)</td>
+			    <td class="va-middle">Net Weight<br>(순중량)</td>
+			    <td class="va-middle">Value<br>(가격:US$)</td>
+			    <td class="va-middle" colspan="2">HS Tariff<br>Number(Hs)</td>
+			    <td class="va-middle">Country of<br>Origin(생산지)</td>
+			    <td class="va-middle ta-left ls-md ls-xs" colspan="3" rowspan="2">Guarantee Service<br>배달보장서비스(도착국가기준)<br>(신청시 인터넷우체국 확인가능)</td>
+			    <td class="va-middle ls-md" rowspan="2">Country code<br>도착국명 약호</td>
+			    <td class="va-middle text-lg" style="font-size: 20px;" rowspan="2" id="countryCd1"> C </td>
+			    <td class="va-middle text-lg" style="font-size: 20px;" rowspan="2" id="countryCd2"> N </td>
+			  </tr>
+			  <tr class="item-tr">
+			    <td class="item-td va-middle ta-left" colspan="3" id="contents"></td>
+			    <td class="item-td va-middle" id="number"></td>
+			    <td class="item-td va-middle" id="weight"></td>
+			    <td class="item-td va-middle" id="value"></td>
+			    <td class="item-td va-middle" colspan="2" id="hsCode"></td>
+			    <td class="item-td "></td>
+			  </tr>
+			  <tr class="item-tr">
+			    <td class="item-td va-middle ta-left" colspan="3"></td>
+			    <td class="item-td va-middle"></td>
+			    <td class="item-td va-middle"></td>
+			    <td class="item-td va-middle"></td>
+			    <td class="item-td va-middle" colspan="2"></td>
+			    <td class="item-td va-middle"></td>
+			    <td class="va-top ta-left " colspan="3" rowspan="3">
+			    	요금납부방법 및 기타
+					<span class="ls-md" style="display: inline-block;"><i class="fa fa-square-o"></i>&nbsp;현금수납(<i class="fa fa-square-o"></i>감액 시 표시)</span><br>
+					<span class="ls-md" style="display: inline-block;"><i class="fa fa-check-square-o"></i>&nbsp;요금후납</span>
+			    </td>
+			    <td class="va-top ta-left" colspan="3" rowspan="3">Signature 담당자서명</td>
+			  </tr>
+			  <tr class="item-tr">
+			    <td class="item-td va-middle ta-left" colspan="3"></td>
+			    <td class="item-td va-middle"></td>
+			    <td class="item-td "></td>
+			    <td class="item-td va-middle"></td>
+			    <td class="item-td va-middle" colspan="2"></td>
+			    <td class="item-td"></td>
+			  </tr>
+			  <tr class="item-tr">
+			    <td class="item-td va-middle ta-left" colspan="3"></td>
+			    <td class="item-td va-middle"></td>
+			    <td class="item-td "></td>
+			    <td class="item-td va-middle"></td>
+			    <td class="item-td va-middle" colspan="2"></td>
+			    <td class="item-td "></td>
+			  </tr>
+			  <tr>
+			    <td class="va-middle ls-md ls-xs" colspan="5" id="emGubun">
+			    	<i class="fa fa-square-o" id="Sample"></i> Sample 상품견본&nbsp;&nbsp;&nbsp;
+			    	<i class="fa fa-check-square-o" id="Gift"></i> Gift 선물&nbsp;&nbsp;&nbsp;
+			    	<i class="fa fa-square-o" id="Merchandise"></i> Merchandise 상품&nbsp;&nbsp;&nbsp;
+			    	<i class="fa fa-square-o" id="Document"></i> 수출면장건
+			    </td>
+			    <td class="ls-sm va-top ls-xs" colspan="4" rowspan="2">Signature 발송인 서명(세관신고서,보험이용여부,받는사람 전화번호 기재필)</td>
+			    <td class="ls-sm va-top ls-xs" colspan="3" rowspan="2">
+			    	<div>보험이용여부(음식물, 전자제품 불가)(Shipping insurance)</div>
+			    	<div> 
+						<span><i class="fa fa-square-o"></i>&nbsp;YES</span>
+						<span style="display: inline-block; margin-left: 38px"><i class="fa fa-check-square-o"></i>&nbsp;NO</span>
+					</div>
+					
+			    </td> 
+			    <td class="ls-sm va-top ta-left ls-xs" colspan="3" rowspan="2">보험가액(Insurance value)</td>
+			  </tr>
+			  <tr>
+			    <td class="va-middle ls-xs" colspan="5">
+			    	<div style="float: left; width: 70%">
+			    		<span style="display: inline-block; border-bottom: 1px solid #000 ">순번(Specify each shipment. Shipment No.)</span>
+			    		<span style="display: inline-block;">총물수(Total item quantity)</span>
+			    	</div>
+			    	<div style="float: left; width: 1%; line-height: 27px;">:</div>
+			    	<div class="view-a4" style="float: left; width: 1%; line-height: 23px; padding-left: 3px;">:</div>
+			    	<div style="float: left; width: 20%">
+			    		<span style="display: inline-block; border-bottom: 1px solid #000; ">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)번째</span><br>
+			    		<span style="display: inline-block; ">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)개</span>
+			    	</div>
+			    
+			    	<!-- <span style="display: inline-block; border-bottom: 1px solid #000 ">순번(Specify each shipment. Shipment No.)</span>
+					<span style="display: inline-block; position: relative; top: 10px; font-weight: bold">:</span>
+					&nbsp;<span style="display: inline-block; border-bottom: 1px solid #000; float: right; margin-right: 10px;">&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)번째&nbsp;</span><br>
+					<span style="display: inline-block;">총물수(Total item quantity)</span>
+					&nbsp;<span style="display: inline-block; float: right; margin-right: 10px;">&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)개</span> -->
+			    
+			    	<!-- <span style="display: inline-block; padding: 0 0 4px 0; margin-left:6px; border-bottom: 1px solid #000">순번(Specify each shipment. Shipment No.)</span>
+					<span style="display: inline-block; position: relative; top: 10px; font-weight: bold">:</span>
+					&nbsp;<span style="display: inline-block; padding: 0 0 4px 0; margin-left:4px; border-bottom: 1px solid #000">&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)번째&nbsp;</span><br>
+					<span style="display: inline-block; margin-left:46px;">총물수(Total item quantity)</span>
+					&nbsp;<span style="display: inline-block; margin-left:52px;">&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)개</span> -->
+			    
+			    </td>
+			  </tr>
+			</table>
+			</div>
+          </div>
+          <div class="modal-footer">
+          	<div class="col-sm-8 col-sm-offset-2 text-center">
+		    	<div class="radio">
+		           <label>
+		           		<input type="radio" name="emGubun" value="false" checked="checked">세관신고서 형식(基本形)
+		           </label>
+		           <label>
+		           		<input type="radio" name="emGubun" value="true">영수증 형식
+		           </label>
+		        </div>
+	        </div>
+	        <div class="col-sm-8 col-sm-offset-2 text-center">
+			  <button type="button" class="btn btn-primary btn-lg" onclick="print(false)"> <i class="fa fa-print"></i> A4용지 출력</button>
+			  <button type="button" class="btn btn-primary btn-lg" onclick="print(true)"> <i class="fa fa-print"></i> 소형라벨지 출력</button>
+			  <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+		    </div>
+		 </div>
+     </div>
+  </div>
+</div>
+
     <!-- start:javascript for this page -->
 <%-- <script src="${pageContext.request.contextPath}/static/assets/advanced-datatable_old/media/js/jquery.dataTables.js"></script> --%>
 <script src="${pageContext.request.contextPath}/static/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/data-tables/DT_bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/restful-client/jquery.rest.js"></script>
 <script type="text/javascript" charset="utf-8"> 
+
+function print(label) {
+	
+	//receipt label
+	var receipt = $(":radio[name='emGubun']:checked").val();
+	window.open(
+			"/print?label="+label+"&receipt="+receipt, 
+			"print"
+		);
+}
+
+function updateDialog(orderNo) {
+	
+	$.read(
+			  '/order/'+orderNo,
+			  function (rep) {
+			    $("#regiNo").html(rep.regiNo);
+			    $("#treatPoRegiPoCd").html(rep.treatPoRegiPoCd);
+				$("#orderDate").html(rep.orderDate);
+				$("#senderTelNo").html(rep.senderMobile2 +"-"+ rep.senderMobile3 +"-"+ rep.senderMobile4);
+				$("#receiveTelNo").html(rep.receiveTelNo);
+				$("#sender").html(rep.sender);
+				$("#receiveName").html(rep.receiveName);
+				$("#senderAddr").html(rep.senderAddr2 + rep.senderAddr1);
+				$("#receiveAddr3").html(rep.receiveAddr3);
+				$("#senderZipCode").html(rep.senderZipCode);
+				$("#receiveZipCode").html(rep.receiveZipCode);
+				$("#countryCd1").html(rep.countryCd.charAt(0));
+				$("#countryCd2").html(rep.countryCd.charAt(1));
+				$("#countryName").html(rep.countryName);
+				$("#emGubun i").removeClass("fa-check-square-o"); //fa-check-square-o
+				$("#emGubun i").addClass("fa-square-o");
+				$("#"+rep.emGubun).removeClass("fa-square-o"); 
+				$("#"+rep.emGubun).addClass("fa-check-square-o"); 
+				$("#totWeight").html(rep.totWeight);
+				$("#preRecevPrc").html(rep.preRecevPrc);
+				$("#totWeight").html(rep.totWeight);
+				
+				//TODO 파싱필요
+				$("#contents").html(rep.contents);
+				$("#number").html(rep.number);
+				$("#weight").html(rep.weight);
+				$("#value").html(rep.value);
+				$("#hsCode").html(rep.hsCode);
+				
+			  }
+			);
+	
+	//var update = $.update('/user/'+ $("#user-form input[name=no]").val() , JSON.stringify($("#user-form").serializeObject()) );
+	//update.then(ajaxSuccess, ajaxError);
+	
+}
+
     $(document).ready(function() {
     	// Array holding selected row IDs
-    	var btnStr = "<button class='btn btn-info btn-sm'><i class='fa fa-pencil'></i></button>"
-            +"<button class='btn btn-danger btn-sm'><i class='fa fa-trash-o '></i></button>"
+    	var btnStr = "<button class='btn btn-info btn-sm'><i class='fa fa-pencil'></i></button> "
+            +"<button class='btn btn-danger btn-sm'><i class='fa fa-trash-o '></i></button> "
             +"<div class='btn-group'>"
             +"<button type='button' class='btn btn-success dropdown-toggle btn-sm' data-toggle='dropdown'><i class='fa fa-print'></i><span class='caret'></span></button>"
             +"<ul class='dropdown-menu dropdown-success' role='menu'>"
-            +"<li><a href='#'>A4</a></li>"
-            +"<li><a href='#'>소형라벨</a></li>"
+            +"<li name='printA4'><a>A4</a></li>"
+            +"<li name='printLabel'><a>소형라벨</a></li>"
             +"</ul>"
             +"</div>";
             
-       var btnStr2 = "<button class='btn btn-danger btn-sm'><i class='fa fa-trash-o '></i></button>"
+       var btnStr2 = "<button class='btn btn-danger btn-sm'><i class='fa fa-trash-o '></i></button> "
            +"<div class='btn-group'>"
            +"<button type='button' class='btn btn-success dropdown-toggle btn-sm' data-toggle='dropdown'><i class='fa fa-print'></i><span class='caret'></span></button>"
            +"<ul class='dropdown-menu dropdown-success' role='menu'>"
-           +"<li><a href='#'>A4</a></li>"
-           +"<li><a href='#'>소형라벨</a></li>"
+           +"<li name='printA4'><a>A4</a></li>"
+           +"<li name='printLabel'><a>소형라벨</a></li>"
            +"</ul>"
            +"</div>";     
             
@@ -169,8 +459,16 @@
         		{ data: null,
                     orderable: false
         		},
-                { data: "orderDate" },
-                { data: "regiNo"},
+                { data: "orderDate",
+                	render: function ( data, type, full, meta ) {
+                        return data.substring(0,10);
+                    	}
+        		},
+                { data: "regiNo",
+                	render: function ( data, type, full, meta ) {
+                    return '<a href=" #user-modal" class="detail" data-toggle="modal"><strong>'+data+'</strong></a>';
+                	}
+                },
                 { data: "receiveName"},
                 { data: "countryCd"},
                 { data: "totWeight"},
@@ -205,8 +503,16 @@
         		{ data: null,
                     orderable: false
         		},
-                { data: "orderDate" },
-                { data: "regiNo"},
+                { data: "orderDate",
+                	render: function ( data, type, full, meta ) {
+                        return data.substring(0,10);
+                    	}
+        		},
+                { data: "regiNo",
+                	render: function ( data, type, full, meta ) {
+                        return '<a href=" #user-modal" class="detail" data-toggle="modal"><strong>'+data+'</strong></a>';
+                    	}
+                },
                 { data: "receiveName"},
                 { data: "countryCd"},
                 { data: "totWeight"},
@@ -245,6 +551,50 @@
             // Check/uncheck checkboxes for all rows in the table
             $('input[type="checkbox"]', rows).prop('checked', this.checked);
          });
+        
+        $('#orderList tbody').on('click', 'tr .detail', function () {
+            var data = table.row( this.parentNode.parentNode ).data();
+            updateDialog(data.orderNo);
+            
+        } );
+        
+        $('#printList tbody').on('click', 'tr .detail', function () {
+            var data2 = table2.row( this.parentNode.parentNode ).data();
+            updateDialog(data2.orderNo);
+        } );
+        
+        function confirmPrintType(type,isLabel) {
+        	$.confirm({
+			    content:'<label>'+type+'에 송장을 출력하시겠습니까?</label><br><br>' +
+				        '<div><label><input type="radio" name="emGubun2" value="false" checked="checked">세관신고서 형식(基本形)</label></div>' +
+				        '<label><input type="radio" name="emGubun2" value="true">영수증 형식</label>'
+	        	,
+			    buttons: {
+				    confirm : {
+				    	btnClass: 'btn-info',				    	
+				    	action : function () {
+				    		//receipt label
+				    		var receipt = $(":radio[name='emGubun2']:checked").val();
+				    		window.open(
+				    				"/print?label="+isLabel+"&receipt="+receipt, 
+				    				"print"
+				    			);
+				        } 
+				    }, 
+			        cancel: function () {
+			        }
+			    }
+			});
+		}
+        
+        $('tbody').on('click', '[name=printLabel]', function () {
+        	confirmPrintType("전용 소형 라벨지",true);
+        	var data = t.row( this.parentNode.parentNode ).data();
+        });
+        $('tbody').on('click', '[name=printA4]', function () {
+        	confirmPrintType("A4 라벨지",false);
+        	var data = t.row( this.parentNode.parentNode ).data();
+        });
 
     	/* 체크된 데이터 얻는방법?
     	// Handle form submission event

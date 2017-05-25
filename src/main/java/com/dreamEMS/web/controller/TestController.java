@@ -40,7 +40,9 @@ public class TestController {
     public String home() {
     	Locale locale = LocaleContextHolder.getLocale();
         String message = messageSource.getMessage ("dreamEMS.test", null, locale );
-        return "site.index";
+        //return "site.index";
+        
+        return "redirect:/payment/home";
     }
     
     @RequestMapping(value = "/login", method=RequestMethod.GET)

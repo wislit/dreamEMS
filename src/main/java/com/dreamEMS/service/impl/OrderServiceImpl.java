@@ -3,6 +3,7 @@ package com.dreamEMS.service.impl;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -106,6 +107,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		String orderNo = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format(System.currentTimeMillis());
 		order.setOrderNo( orderNo );
+		order.setOrderDate(new Date());
 		
 		String custNo = apiService.getCustno();
 		String apprNo = apiService.getApprno(custNo);
@@ -155,40 +157,54 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public boolean deleteOrder(Order order) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean getOrder(String orderNo) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteOrder(String orderNo) {
+		
+		Long userNo = getUserNo();
+		
+		Order order = new Order();
+		order.setOrderNo(orderNo);
+		order.setUserNo(userNo);
+		return orderRepository.deleteOrder(order) > 0 ;
 	}
 
 	@Override
 	public List<Order> getAllOrder() {
-		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    
-		Long userNo = user.getNo(); //get logged in username
-	    if (user.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
-			userNo = null;
-		}
+		Long userNo = getUserNo();
 	    List<Order> orderList = orderRepository.selectAllOrder(userNo); 
 		return orderList;
 	}
 	
 	@Override
 	public List<Order> getAllPrintOrder() {
+		Long userNo = getUserNo();
+	    List<Order> orderList = orderRepository.selectAllPrintOrder(userNo); 
+		return orderList;
+	}
+
+	@Override
+	public Order getOrder(String orderNo) {
+		
+		Long userNo = getUserNo();
+
+		Order pOrder = new Order();
+		pOrder.setOrderNo(orderNo);
+		pOrder.setUserNo(userNo);
+		
+		Order order = orderRepository.selectOrder(pOrder); 
+		return order;
+	}
+	
+	private Long getUserNo(){
 		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	    
 		Long userNo = user.getNo(); //get logged in username
 	    if (user.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
 			userNo = null;
 		}
-	    List<Order> orderList = orderRepository.selectAllPrintOrder(userNo); 
-		return orderList;
+	    return userNo;
 	}
+	
+	
 	
 
 	

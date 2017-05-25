@@ -10,6 +10,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,6 +37,7 @@ public class Order implements Serializable {
     */
     
     private Long userNo;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss" , timezone ="GMT+9")
     private Date orderDate;			//접수일
     private String postCharge;
     private String emsCharge;
@@ -201,6 +204,8 @@ public class Order implements Serializable {
     private String xprtNo4;			//수출신고번호4(15)
     @Pattern(regexp = "[\\d\\;]{0,5}")
     private String recomporegipocd;	//추천우체국기호    
+    
+    private String countryName;		//도착국가명
     
     
     /**
