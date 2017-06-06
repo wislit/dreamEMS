@@ -102,7 +102,20 @@ public interface ApiService {
      */
     String getApprno(String custno);
 
-
+    /**
+     * 접수
+     * @param custno
+     * @param apprno
+     * @param order
+     * @return
+     */
     OrderResponse receiptEms(String custno, String apprno, Order order);
+
+    /**
+     * 종추적조회
+     * @param regiNo
+     * @return
+     */
+    Tracking getTracking(String regiNo);
 
 }

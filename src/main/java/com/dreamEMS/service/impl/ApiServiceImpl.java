@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import com.dreamEMS.model.entity.*;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -18,15 +19,6 @@ import org.xml.sax.InputSource;
 
 import com.dreamEMS.constant.ApiConstant;
 import com.dreamEMS.model.dto.Errors;
-import com.dreamEMS.model.entity.EmsSearchNewEngZipCodeInfo;
-import com.dreamEMS.model.entity.EmsTotProcCmd;
-import com.dreamEMS.model.entity.JuDo;
-import com.dreamEMS.model.entity.Nation;
-import com.dreamEMS.model.entity.Order;
-import com.dreamEMS.model.entity.OrderResponse;
-import com.dreamEMS.model.entity.SEED128;
-import com.dreamEMS.model.entity.SiDo;
-import com.dreamEMS.model.entity.ZipCode;
 import com.dreamEMS.service.ApiService;
 import com.dreamEMS.web.exception.APIException;
 import com.dreamEMS.web.exception.DreamEMSException;
@@ -380,7 +372,7 @@ public class ApiServiceImpl implements ApiService {
 
         } catch (Exception e){
             e.printStackTrace();
-            throw new DreamEMSException(Errors.SERVER_INTERNAL_ERROR, "Error from [ ApiServiceImpl.getEmsIdCustnoInfo ]");
+            throw new DreamEMSException(Errors.SERVER_INTERNAL_ERROR, "Error from [ ApiServiceImpl.getCustno ]");
         }
 
         return custno;
@@ -412,7 +404,7 @@ public class ApiServiceImpl implements ApiService {
 
         } catch (Exception e){
             e.printStackTrace();
-            throw new DreamEMSException(Errors.SERVER_INTERNAL_ERROR, "Error from [ ApiServiceImpl.getEmsIdCustnoInfo ]");
+            throw new DreamEMSException(Errors.SERVER_INTERNAL_ERROR, "Error from [ ApiServiceImpl.getApprno ]");
         }
 
         return apprno;
@@ -474,12 +466,84 @@ public class ApiServiceImpl implements ApiService {
 
         } catch (Exception e){
             e.printStackTrace();
-            throw new DreamEMSException(Errors.SERVER_INTERNAL_ERROR, "Error from [ ApiServiceImpl.getEmsIdCustnoInfo ]");
+            throw new DreamEMSException(Errors.SERVER_INTERNAL_ERROR, "Error from [ ApiServiceImpl.receiptEms ]");
         }
 
         return orderResponse;
     }
 
+    @Override
+    public Tracking getTracking(String regiNo) {
+
+        Tracking tracking = null;
+        StringBuffer apiUrl = new StringBuffer();
+        apiUrl.append("http://biz.epost.go.kr/KpostPortal/openapi?regkey=");   //종추적조회 url
+        apiUrl.append(ApiConstant.REGKEY_TRACKING);
+        apiUrl.append("&target=emsTrace");
+        apiUrl.append("&query=");
+        apiUrl.append(regiNo);
+
+        try {
+            String xmlStr = this.callApi(apiUrl.toString(),"GET");
+            System.out.println(xmlStr);
+            InputSource is = new InputSource(new StringReader(xmlStr));
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
+            //최상위 노드 찾기
+            Element element = doc.getDocumentElement();
+
+            if( element.getElementsByTagName("error_code").getLength() > 0 ){
+                String errMsg = element.getElementsByTagName("message").item(0).getFirstChild().getNodeValue();
+                throw new APIException(errMsg);
+            }else{
+                //원하는 태그 찾아오기
+                NodeList items1 = element.getElementsByTagName("sendernm");
+                NodeList items2 = element.getElementsByTagName("receivernm");
+                NodeList items3 = element.getElementsByTagName("regino");
+                NodeList items4 = element.getElementsByTagName("mailtypenm");
+                NodeList items5 = element.getElementsByTagName("mailkindnm");
+                NodeList items6 = element.getElementsByTagName("recvpostzipcd");
+                NodeList items7 = element.getElementsByTagName("recvposttelno");
+                NodeList items8 = element.getElementsByTagName("destcountrycd");
+                NodeList items9 = element.getElementsByTagName("destcountrynm");
+                NodeList items10 = element.getElementsByTagName("airdate");
+
+                // itemslist - item
+                NodeList items11 = element.getElementsByTagName("sortingdate");
+                NodeList items12 = element.getElementsByTagName("eventhms");
+                NodeList items13 = element.getElementsByTagName("delivrsltnm");
+                NodeList items14 = element.getElementsByTagName("nondelivreasnnm");
+                NodeList items15 = element.getElementsByTagName("eventnm");
+                NodeList items16 = element.getElementsByTagName("eventymd");
+
+                tracking = new Tracking();
+                tracking.setSenderNm(items1.item(0).getFirstChild().getNodeValue());
+                tracking.setReceiverNm(items2.item(0).getFirstChild().getNodeValue());
+                tracking.setRegiNo(items3.item(0).getFirstChild().getNodeValue());
+                tracking.setMailTypeNm(items4.item(0).getFirstChild().getNodeValue());
+                tracking.setMailKindNm(items5.item(0).getFirstChild().getNodeValue());
+                tracking.setRecvPostZipCd(items6.item(0).getFirstChild().getNodeValue());
+                tracking.setRecvPostTelNo(items7.item(0).getFirstChild().getNodeValue());
+                tracking.setDestCountryCd(items8.item(0).getFirstChild().getNodeValue());
+                tracking.setDestCountryNm(items9.item(0).getFirstChild().getNodeValue());
+                tracking.setAirDate(items10.item(0).getFirstChild().getNodeValue());
+
+                int i = items11.getLength() - 1;
+                tracking.setSortingDate(items11.item(i).getFirstChild().getNodeValue());
+                tracking.setEventHms(items12.item(i).getFirstChild().getNodeValue());
+                tracking.setDelivRsltNm(items13.item(i).getFirstChild().getNodeValue());
+                tracking.setNoDelivReasnNm(items14.item(i).getFirstChild().getNodeValue());
+                tracking.setEventNm(items15.item(i).getFirstChild().getNodeValue());
+                tracking.setEventYmd(items16.item(i).getFirstChild().getNodeValue());
+            }
+
+
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new DreamEMSException(Errors.SERVER_INTERNAL_ERROR, "Error from [ ApiServiceImpl.getTracking ]");
+        }
+
+        return tracking;
+    }
 
     private String getPlainStrNotNull(String item, String value){
     	StringBuffer plainStr = new StringBuffer();
