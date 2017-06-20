@@ -104,8 +104,7 @@
                         pre_recev_prc,
                         prc_pay_meth_cd,
                         treat_po_regi_po_cd,
-                        treat_po_regi_po_eng_nm,
-                        print
+                        treat_po_regi_po_eng_nm
                         )
 				VALUES (#{orderDate},
 						#{custNo},
@@ -141,8 +140,7 @@
 				        #{preRecevPrc},
 				        #{prcPayMethCd},
 				        #{treatPoRegiPoCd},
-				        #{treatPoRegiPoEngNm},
-				        #{print}
+				        #{treatPoRegiPoEngNm}
         )
     </insert>
     
@@ -152,7 +150,7 @@
         FROM
            ems.order
         WHERE
-       		print = 0
+       		print_flag = 0
         <if test="userNo != null">
           AND user_no = #{userNo}
         </if>
@@ -165,7 +163,7 @@
         FROM
            ems.order
         WHERE
-        	print = 1
+        	print_flag = 1
         <if test="userNo != null">
         	AND user_no = #{userNo}
         </if>

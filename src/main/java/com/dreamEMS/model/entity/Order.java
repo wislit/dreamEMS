@@ -223,7 +223,9 @@ public class Order implements Serializable {
 		this.errorList.put(err, true);
 	}
     
-    private boolean print = false;
+    private boolean printFlag = false;  // 송장출력 유무
+
+    private boolean sendFlag = false;   // 발송처리 유무
     
     public void setContents(String content){
     	content = content.replaceAll("\\;{1,3}$" , "");
