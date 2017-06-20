@@ -203,6 +203,13 @@ public class OrderServiceImpl implements OrderService {
 		}
 	    return userNo;
 	}
+
+	@Override
+	public List<Order> getOrders(List<String> orderNoList) {
+		Long userNo = getUserNo();
+		List<Order> orders = orderRepository.selectOrders(userNo , orderNoList); 
+		return orders;
+	}
 	
 	
 	

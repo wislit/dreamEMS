@@ -105,7 +105,23 @@
                         prc_pay_meth_cd,
                         treat_po_regi_po_cd,
                         treat_po_regi_po_eng_nm,
-                        print
+                        print,
+                        contents1,
+                        contents2,
+                        contents3,
+                        contents4,
+                        value1,
+                        value2,
+                        value3,
+                        value4,
+                        number1,
+                        number2,
+                        number3,
+                        number4,
+                        hs_code1,
+                        hs_code2,
+                        hs_code3,
+                        hs_code4
                         )
 				VALUES (#{orderDate},
 						#{custNo},
@@ -142,7 +158,23 @@
 				        #{prcPayMethCd},
 				        #{treatPoRegiPoCd},
 				        #{treatPoRegiPoEngNm},
-				        #{print}
+				        #{print},
+                        #{contents1},
+                        #{contents2},
+                        #{contents3},
+                        #{contents4},
+                        #{value1},
+                        #{value2},
+                        #{value3},
+                        #{value4},
+                        #{number1},
+                        #{number2},
+                        #{number3},
+                        #{number4},
+                        #{hsCode1},
+                        #{hsCode2},
+                        #{hsCode3},
+                        #{hsCode4}
         )
     </insert>
     
@@ -179,6 +211,20 @@
            ems.order
         WHERE
         	order_no = #{orderNo}
+        <if test="userNo != null">
+           AND user_no = #{userNo}
+        </if>
+    </select>
+    
+    <select id="selectOrders" resultType="Order">
+        SELECT
+          *
+        FROM
+           ems.order
+        WHERE order_no in
+        <foreach collection="orders" item="order"   open="(" close=")" separator=",">
+		      #{order}
+		 </foreach>
         <if test="userNo != null">
            AND user_no = #{userNo}
         </if>

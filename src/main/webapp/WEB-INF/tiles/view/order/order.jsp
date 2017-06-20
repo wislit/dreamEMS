@@ -230,6 +230,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     </td>
   </tr>
   <tr class="col-item">
+  	
     <td class="va-middle" colspan="3">Contents 내용 품명(반드시 영문으로 구체적으로 기재)
     </td>
     <td class="va-middle">Quantity<br>(개수)</td>
@@ -239,11 +240,16 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="va-middle">Country of<br>Origin(생산지)</td>
   </tr>
   <tr class="">
-    <td class="" colspan="3"><input type="text" class="form-control warning" id="" placeholder="내용품명" name="contents" value=""></td>
-    <td class=""><input type="text" class="form-control" id="" value="1" name="number"></td>
+    <td class="" colspan="3">
+    <input type="hidden" name="contents" />
+  	<input type="hidden" name="number" />
+  	<input type="hidden" name="value" />
+  	<input type="hidden" name="hsCode" />
+    <input type="text" class="form-control warning" id="" placeholder="내용품명" name="contents1" value=""></td>
+    <td class=""><input type="text" class="form-control" id="" value="1" name="number1"></td>
     <td class=""></td>
-    <td class=""><input type="text" class="form-control warning" id="" placeholder="USD" name="value" value=""></td>
-    <td class="" colspan="2"><input style="font-size: 11px;" type="text" class="form-control" id="" placeholder="HSCODE" name="hsCode"></td>
+    <td class=""><input type="text" class="form-control warning" id="" placeholder="USD" name="value1" value=""></td>
+    <td class="" colspan="2"><input style="font-size: 11px;" type="text" class="form-control" id="" placeholder="HSCODE" name="hsCode1"></td>
     <td class=""></td>
     <td class="" colspan="3" rowspan="6">
     </td>
@@ -353,29 +359,46 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
         //owl carousel
         $(document).ready(function() {
         	
+        	$("input[name=contents2], input[name=contents3], input[name=contents4]").on("change", function() {
+				if( $(this).val() != "" ){
+					$(this).parent().parent().find("input").removeAttr("disabled");
+					$(this).parent().parent().find("input[name*=value]").addClass("warning");
+				}else{
+					$(this).parent().parent().find("input").val("");
+					$(this).parent().parent().find("input").attr("disabled", "true");
+					$(this).removeAttr("disabled");
+				}
+				
+			} );
+        	
         	getDesc();
         	$('#dp1').datepicker({});
         	
         	$("#submitOrder").click(function() {
         		
-        		var contents = $('input[name=contents]').val() + ";" +
+        		var contents = $('input[name=contents1]').val() + ";" +
 				        		$('input[name=contents2]').val() + ";" +
 				        		$('input[name=contents3]').val() + ";" +
 				        		$('input[name=contents4]').val();
-        		var value  = $('input[name=value]').val() + ";" +
+        		var value  = $('input[name=value1]').val() + ";" +
 				        		$('input[name=value2]').val() + ";" +
 				        		$('input[name=value3]').val() + ";" +
 				        		$('input[name=value4]').val();
-        		var number = $('input[name=number]').val() + ";" +
+        		var number = $('input[name=number1]').val() + ";" +
 				        		$('input[name=number2]').val() + ";" +
 				        		$('input[name=number3]').val() + ";" +
 				        		$('input[name=number4]').val();
-        		var hsCode = $('input[name=hsCode]').val() + ";" +
+        		var hsCode = $('input[name=hsCode1]').val() + ";" +
 				        		$('input[name=hsCode2]').val() + ";" +
 				        		$('input[name=hsCode3]').val() + ";" +
 				        		$('input[name=hsCode4]').val();
 
-        		
+        		/* contents = contents.replace(/;{1,3}$/,"");
+        		value = value.replace(/;{1,3}$/,"");
+        		number = number.replace(/;{1,3}$/,"");
+        		hsCode = hsCode.replace(/;{1,3}$/,""); */
+				        		
+				        		
 				$('input[name=contents]').val(contents);
 				$('input[name=value]').val(value);
 				$('input[name=number]').val(number);
@@ -404,7 +427,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
            	 });
    		});
         	
-        	$(".warning").on("change", function() {
+        	$("body").on("change", ".warning" , function() {
         		
         		 var input = $(this);
 				 var value = input.val();

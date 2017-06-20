@@ -21,4 +21,5 @@ public interface OrderService {
 	List<Order> getAllPrintOrder();               
 	
 	Order getOrder(String orderNo);               
+	List<Order> getOrders(List<String> orderNoList);               
 }

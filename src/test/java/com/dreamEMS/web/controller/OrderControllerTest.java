@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -233,6 +234,17 @@ public class OrderControllerTest {
 		.andExpect(content().json(jsonString));
 		
 	}
+	
+	@Test
+	@WithUserDetails(value = "ems")
+    public void getOrders(){
+		String[] strArr		=		{"20170525151526101","20170525151052574","20170525121742349"};
+ 		List strList		=		Arrays.asList(strArr);
+
+
+ 		orderService.getOrders(strList);
+   	 
+    }
 	
 	
 	

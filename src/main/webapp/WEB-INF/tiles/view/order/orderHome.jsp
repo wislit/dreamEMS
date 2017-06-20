@@ -50,8 +50,8 @@
                         	<div class="btn-group">
                        			<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="fa fa-print"></i> 일괄출력 <span class="caret"></span></button>
 			                       <ul class="dropdown-menu dropdown-success" role="menu">
-			                           <li onclick='ready()'><a href="#">A4</a></li>
-			                           <li onclick='ready()'><a href="#">소형라벨</a></li>
+			                           <li onclick='printAll(false,"A4")'><a href="#">A4</a></li>
+			                           <li onclick='printAll(true,"label")'><a href="#">소형라벨</a></li>
 			                       </ul>
                   			 </div><!-- /btn-group -->
                         </li>
@@ -65,7 +65,7 @@
                        			<table class="display table table-hover table-condensed text-center" id="orderList">
 	                            	<thead>
 		                                 <tr>
-		                                 	<th class="text-center"><input id="example-select-all" type="checkbox"></th>
+		                                 	<th class="text-center"><input class="example-select-all" type="checkbox"></th>
 		                                    <th class="text-center">No</th>
 		                                    <th class="text-center">날짜</th>
 		                                    <th class="text-center">송장번호</th>
@@ -90,7 +90,7 @@
                        			<table class="display table table-hover table-condensed text-center" id="printList">
 	                            	<thead>
 		                                 <tr>
-		                                 	<th class="text-center"><input id="example-select-all2" type="checkbox"></th>
+		                                 	<th class="text-center"><input class="example-select-all" type="checkbox"></th>
 		                                    <th class="text-center">No</th>
 		                                    <th class="text-center">날짜</th>
 		                                    <th class="text-center">송장번호</th>
@@ -152,8 +152,8 @@
 			  <tr>
 			    <td class="no-border" colspan="2"></td>
 			    <td class="no-border" colspan="5" rowspan="3" >
-			    	<span class="barcode-num" id="regiNo">EG710143073KR</span>
-			    	<object class="barcode-img" type="image/bmp" style="width: 98%;" data="data:image/bmp;base64,Qk12EwAAAAAAADYAAAAoAAAAsAAAABwAAAABABgAAAAAAEATAAATCwAAEwsAAAAAAAAAAAAA////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////////////////////////////////////////////AAAAAAAA////AAAA////////AAAA////////////////AAAA////////////AAAAAAAA////AAAA////////////AAAAAAAA////AAAA////////////AAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAAAAAAAAAA////AAAA////////AAAAAAAA////AAAA////////////////AAAAAAAA////////AAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////////AAAAAAAA////////////AAAA////////AAAA////AAAAAAAAAAAAAAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAAAAAAAAAA////////AAAA////AAAAAAAA////////////AAAAAAAAAAAA////AAAAAAAA////////////AAAA////AAAAAAAAAAAA////AAAAAAAA////////AAAA////AAAA////////////////AAAAAAAA////////////AAAAAAAAAAAA////AAAA////AAAAAAAA////////////////////////////////////////"></object>
+			    	<span class="barcode-num" id="regiNo"></span>
+			    	<div class="barcode_area1" data="" style="padding: 0; width: 100%;" id="regiNoBcd"></div>
 			    </td>
 			    <td class="no-border" colspan="8" style="height: 50px;"></td>
 			  </tr>
@@ -247,23 +247,23 @@
 			    <td class="va-middle">Country of<br>Origin(생산지)</td>
 			    <td class="va-middle ta-left ls-md ls-xs" colspan="3" rowspan="2">Guarantee Service<br>배달보장서비스(도착국가기준)<br>(신청시 인터넷우체국 확인가능)</td>
 			    <td class="va-middle ls-md" rowspan="2">Country code<br>도착국명 약호</td>
-			    <td class="va-middle text-lg" style="font-size: 20px;" rowspan="2" id="countryCd1"> C </td>
-			    <td class="va-middle text-lg" style="font-size: 20px;" rowspan="2" id="countryCd2"> N </td>
+			    <td class="va-middle text-lg" style="font-size: 20px;" rowspan="2" id="countryCd1">  </td>
+			    <td class="va-middle text-lg" style="font-size: 20px;" rowspan="2" id="countryCd2">  </td>
 			  </tr>
 			  <tr class="item-tr">
-			    <td class="item-td va-middle ta-left" colspan="3" id="contents"></td>
-			    <td class="item-td va-middle" id="number"></td>
+			    <td class="item-td va-middle ta-left" colspan="3" id="contents1"></td>
+			    <td class="item-td va-middle" id="number1"></td>
 			    <td class="item-td va-middle" id="weight"></td>
-			    <td class="item-td va-middle" id="value"></td>
-			    <td class="item-td va-middle" colspan="2" id="hsCode"></td>
+			    <td class="item-td va-middle" id="value1"></td>
+			    <td class="item-td va-middle" colspan="2" id="hsCode1"></td>
 			    <td class="item-td "></td>
 			  </tr>
 			  <tr class="item-tr">
-			    <td class="item-td va-middle ta-left" colspan="3"></td>
-			    <td class="item-td va-middle"></td>
-			    <td class="item-td va-middle"></td>
-			    <td class="item-td va-middle"></td>
-			    <td class="item-td va-middle" colspan="2"></td>
+			    <td class="item-td va-middle ta-left" colspan="3" id="contents2"></td>
+			    <td class="item-td va-middle" id="number2"></td>
+			    <td class="item-td va-middle" id="weight2"></td>
+			    <td class="item-td va-middle" id="value2"></td>
+			    <td class="item-td va-middle" colspan="2" id="hsCode2"></td>
 			    <td class="item-td va-middle"></td>
 			    <td class="va-top ta-left " colspan="3" rowspan="3">
 			    	요금납부방법 및 기타
@@ -273,19 +273,19 @@
 			    <td class="va-top ta-left" colspan="3" rowspan="3">Signature 담당자서명</td>
 			  </tr>
 			  <tr class="item-tr">
-			    <td class="item-td va-middle ta-left" colspan="3"></td>
-			    <td class="item-td va-middle"></td>
-			    <td class="item-td "></td>
-			    <td class="item-td va-middle"></td>
-			    <td class="item-td va-middle" colspan="2"></td>
+			    <td class="item-td va-middle ta-left" colspan="3" id="contents3"></td>
+			    <td class="item-td va-middle" id="number3"></td>
+			    <td class="item-td va-middle" id="weight3"></td>
+			    <td class="item-td va-middle" id="value3"></td>
+			    <td class="item-td va-middle" colspan="2" id="hsCode3"></td>
 			    <td class="item-td"></td>
 			  </tr>
 			  <tr class="item-tr">
-			    <td class="item-td va-middle ta-left" colspan="3"></td>
-			    <td class="item-td va-middle"></td>
-			    <td class="item-td "></td>
-			    <td class="item-td va-middle"></td>
-			    <td class="item-td va-middle" colspan="2"></td>
+			    <td class="item-td va-middle ta-left" colspan="3" id="contents4"></td>
+			    <td class="item-td va-middle" id="number4"></td>
+			    <td class="item-td va-middle" id="weight4"></td>
+			    <td class="item-td va-middle" id="value4"></td>
+			    <td class="item-td va-middle" colspan="2" id="hsCode4"></td>
 			    <td class="item-td "></td>
 			  </tr>
 			  <tr>
@@ -362,24 +362,28 @@
 <script src="${pageContext.request.contextPath}/static/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/data-tables/DT_bootstrap.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/restful-client/jquery.rest.js"></script>
-<script type="text/javascript" charset="utf-8"> 
+<script src="${pageContext.request.contextPath}/static/js/jquery-barcode.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+var selectOrder;
 
 function print(label) {
 	
 	//receipt label
 	var receipt = $(":radio[name='emGubun']:checked").val();
 	window.open(
-			"/print?label="+label+"&receipt="+receipt, 
-			"print"
+			"/order/print?label="+label+"&receipt="+receipt+"&orderNoList="+ selectOrder
 		);
 }
 
 function updateDialog(orderNo) {
 	
+	selectOrder = orderNo;
+	
 	$.read(
 			  '/order/'+orderNo,
 			  function (rep) {
 			    $("#regiNo").html(rep.regiNo);
+			    $("#regiNoBcd").attr("data",rep.regiNo);
 			    $("#treatPoRegiPoCd").html(rep.treatPoRegiPoCd);
 				$("#orderDate").html(rep.orderDate);
 				$("#senderTelNo").html(rep.senderMobile2 +"-"+ rep.senderMobile3 +"-"+ rep.senderMobile4);
@@ -401,13 +405,31 @@ function updateDialog(orderNo) {
 				$("#preRecevPrc").html(rep.preRecevPrc);
 				$("#totWeight").html(rep.totWeight);
 				
-				//TODO 파싱필요
-				$("#contents").html(rep.contents);
-				$("#number").html(rep.number);
-				$("#weight").html(rep.weight);
-				$("#value").html(rep.value);
-				$("#hsCode").html(rep.hsCode);
+				$("#contents1").html(rep.contents1);
+				$("#number1").html(rep.number1);
+				$("#weight1").html(rep.weight1);
+				$("#value1").html(rep.value1);
+				$("#hsCode1").html(rep.hsCode1);
+
+				$("#contents2").html(rep.contents2);
+				$("#number2").html(rep.number2);
+				$("#weight2").html(rep.weight2);
+				$("#value2").html(rep.value2);
+				$("#hsCode2").html(rep.hsCode2);
 				
+				$("#contents3").html(rep.contents3);
+				$("#number3").html(rep.number3);
+				$("#weight3").html(rep.weight3);
+				$("#value3").html(rep.value3);
+				$("#hsCode3").html(rep.hsCode3);
+				
+				$("#contents4").html(rep.contents4);
+				$("#number4").html(rep.number4);
+				$("#weight4").html(rep.weight4);
+				$("#value4").html(rep.value4);
+				$("#hsCode4").html(rep.hsCode4);
+				
+				$(".barcode_area1").barcode(rep.regiNo, "code128", {"showHRI":false, "barHeight":25, "barWidth":1, "output": 'bmp'}).removeAttr("style").children().css("width","98%");
 			  }
 			);
 	
@@ -418,8 +440,8 @@ function updateDialog(orderNo) {
 
     $(document).ready(function() {
     	// Array holding selected row IDs
-    	var btnStr = "<button class='btn btn-info btn-sm' onclick='ready()'><i class='fa fa-pencil'></i></button> "
-            +"<button class='btn btn-danger btn-sm' onclick='ready()'><i class='fa fa-trash-o '></i></button> "
+    	var btnStr = //"<button class='btn btn-info btn-sm' onclick='ready()'><i class='fa fa-pencil'></i></button> " +
+            "<button class='btn btn-danger btn-sm' onclick='ready()'><i class='fa fa-trash-o '></i></button> "
             +"<div class='btn-group'>"
             +"<button type='button' class='btn btn-success dropdown-toggle btn-sm' data-toggle='dropdown'><i class='fa fa-print'></i><span class='caret'></span></button>"
             +"<ul class='dropdown-menu dropdown-success' role='menu'>"
@@ -428,8 +450,8 @@ function updateDialog(orderNo) {
             +"</ul>"
             +"</div>";
             
-       var btnStr2 = "<button class='btn btn-danger btn-sm' onclick='ready()'><i class='fa fa-trash-o '></i></button> "
-           +"<div class='btn-group'>"
+       var btnStr2 = //"<button class='btn btn-danger btn-sm' onclick='ready()'><i class='fa fa-trash-o '></i></button> " +
+           "<div class='btn-group'>"
            +"<button type='button' class='btn btn-success dropdown-toggle btn-sm' data-toggle='dropdown'><i class='fa fa-print'></i><span class='caret'></span></button>"
            +"<ul class='dropdown-menu dropdown-success' role='menu'>"
            +"<li name='printA4'><a>A4</a></li>"
@@ -450,7 +472,7 @@ function updateDialog(orderNo) {
                 className: 'select-checkbox',
                 targets:   0,
                 render: function (data, type, full, meta){
-                    return '<input type="checkbox">';
+                    return '<input type="checkbox" value="'+data.orderNo+'">';
                 }
             } ],
             columns: [
@@ -494,7 +516,7 @@ function updateDialog(orderNo) {
                 className: 'select-checkbox',
                 targets:   0,
                 render: function (data, type, full, meta){
-                    return '<input type="checkbox">';
+                	return '<input type="checkbox" value="'+data.orderNo+'">';
                 }
             } ],
             columns: [
@@ -538,63 +560,32 @@ function updateDialog(orderNo) {
         } ).draw();
         
      	// Handle click on "Select all" control
-        $('#example-select-all').on('click', function(){
+        $('.example-select-all').on('click', function(){
            // Get all rows with search applied
+           var tableId = $(this).parents("table").attr("id");
+           var table = $("#"+tableId).dataTable().api();
            var rows = table.rows({ 'search': 'applied' }).nodes();
            // Check/uncheck checkboxes for all rows in the table
            $('input[type="checkbox"]', rows).prop('checked', this.checked);
         });
      	
-        $('#example-select-all2').on('click', function(){
-            // Get all rows with search applied
-            var rows = table2.rows({ 'search': 'applied' }).nodes();
-            // Check/uncheck checkboxes for all rows in the table
-            $('input[type="checkbox"]', rows).prop('checked', this.checked);
-         });
-        
-        $('#orderList tbody').on('click', 'tr .detail', function () {
-            var data = table.row( this.parentNode.parentNode ).data();
+        $('tbody').on('click', 'tr .detail', function () {
+        	var tableId = $(this).parents("table").attr("id");
+        	var t = $("#"+tableId).dataTable().api();
+        	var data = t.row( this.parentNode.parentNode ).data();
             updateDialog(data.orderNo);
-            
         } );
         
-        $('#printList tbody').on('click', 'tr .detail', function () {
-            var data2 = table2.row( this.parentNode.parentNode ).data();
-            updateDialog(data2.orderNo);
-        } );
-        
-        function confirmPrintType(type,isLabel) {
-        	$.confirm({
-			    content:'<label>'+type+'에 송장을 출력하시겠습니까?</label><br><br>' +
-				        '<div><label><input type="radio" name="emGubun2" value="false" checked="checked">세관신고서 형식(基本形)</label></div>' +
-				        '<label><input type="radio" name="emGubun2" value="true">영수증 형식</label>'
-	        	,
-			    buttons: {
-				    confirm : {
-				    	btnClass: 'btn-info',				    	
-				    	action : function () {
-				    		//receipt label
-				    		var receipt = $(":radio[name='emGubun2']:checked").val();
-				    		window.open(
-				    				"/print?label="+isLabel+"&receipt="+receipt, 
-				    				"print"
-				    			);
-				        } 
-				    }, 
-			        cancel: function () {
-			        }
-			    }
-			});
-		}
-        
-        $('tbody').on('click', '[name=printLabel]', function () {
-        	confirmPrintType("전용 소형 라벨지",true);
-        	var data = t.row( this.parentNode.parentNode ).data();
+        $('tbody').on('click', '[name=printLabel], [name=printA4]', function () {
+        	var tableId = $(this).parents("table").attr("id");
+        	var t = $("#"+tableId).dataTable().api();
+        	var data = t.row( this.parentNode.parentNode.parentNode ).data();
+        	var type = $(this).attr("name") == "printLabel" ?  "A4" : "label" ;
+        	var isLabel = $(this).attr("name") == "printLabel" ?  true : false ;
+        	
+        	confirmPrint(type,isLabel,data.orderNo);
         });
-        $('tbody').on('click', '[name=printA4]', function () {
-        	confirmPrintType("A4 라벨지",false);
-        	var data = t.row( this.parentNode.parentNode ).data();
-        });
+        
 
     	/* 체크된 데이터 얻는방법?
     	// Handle form submission event
@@ -620,6 +611,40 @@ function updateDialog(orderNo) {
         });
         var data = table.$('input[type="checkbox"]').serialize(); */
     } );
+    
+function printAll(isLabel,type) {
+  	var tableId = $(".tab-pane.active").find("table").attr("id");
+  	alert(tableId);
+  	
+  	var sel = $('#'+tableId+' input[type=checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+    }).get();
+  	
+	confirmPrint(type, isLabel, sel);
+}
+
+function confirmPrint(type, isLabel, orderNo){
+	$.confirm({
+	    content:'<label>'+type+'에 송장을 출력하시겠습니까?</label><br><br>' +
+		        '<div><label><input type="radio" name="emGubun2" value="false" checked="checked">세관신고서 형식(基本形)</label></div>' +
+		        '<label><input type="radio" name="emGubun2" value="true">영수증 형식</label>'
+    	,
+	    buttons: {
+		    confirm : {
+		    	btnClass: 'btn-info',				    	
+		    	action : function () {
+		    		//receipt label
+		    		var receipt = $(":radio[name='emGubun2']:checked").val();
+		    		window.open(
+		    				"/order/print?label="+isLabel+"&receipt="+receipt+"&orderNoList="+orderNo
+		    			);
+		        } 
+		    }, 
+	        cancel: function () {
+	        }
+	    }
+	});
+}
 </script>
     <!-- end:javascript for this page -->
 

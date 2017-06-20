@@ -2,9 +2,7 @@ package com.dreamEMS.web.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +18,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dreamEMS.model.dto.Msg;
 import com.dreamEMS.model.entity.Book;
@@ -264,6 +262,22 @@ public class OrderController {
                 .orElseThrow(() -> new ResourceNotFoundException()
                         .setResourceName(ResourceNameConstant.BOOK)
                         .setId(bookId));*/
+    }
+    
+    
+    @RequestMapping("/print")
+    public ModelAndView printOrder(@RequestParam boolean label, 
+							    		@RequestParam boolean receipt, 
+							    		@RequestParam List orderNoList) {
+    	
+    	List<Order> orderList = orderService.getOrders(orderNoList);
+    	
+    	ModelAndView model = new ModelAndView("site.print");
+    	model.addObject("isLabel", label);
+    	model.addObject("isReceipt", receipt);
+    	model.addObject("orderList", orderList);
+    	return model;
+        //return ResponseEntity.ok(Msg.SUCCESS);
     }
 
 }
