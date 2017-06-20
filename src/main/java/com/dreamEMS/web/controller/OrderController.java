@@ -10,10 +10,13 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import com.dreamEMS.model.dto.CustomUserDetails;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -72,8 +75,8 @@ public class OrderController {
 	
 	@GetMapping("/list")
     public ResponseEntity<?> list() {
-
-		List<Order> orderList = orderService.getAllOrder();
+        Long userNo = this.getUserNo();
+		List<Order> orderList = orderService.getAllOrder(userNo);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(orderList);
@@ -81,8 +84,8 @@ public class OrderController {
 	
 	@GetMapping("/printList")
     public ResponseEntity<?> printList() {
-
-		List<Order> printOrderList = orderService.getAllPrintOrder();
+        Long userNo = this.getUserNo();
+		List<Order> printOrderList = orderService.getAllPrintOrder(userNo);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(printOrderList);
@@ -257,6 +260,18 @@ public class OrderController {
     }
 
 
+
+    private Long getUserNo(){
+        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Long userNo = user.getNo(); //get logged in username
+        if (user.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
+            userNo = null;
+        }
+        return userNo;
+    }
+
+
     /********************************** HELPER METHOD **********************************/
     private void assertBookExist(Long orderNo) {
         /*bookService
@@ -265,5 +280,7 @@ public class OrderController {
                         .setResourceName(ResourceNameConstant.BOOK)
                         .setId(bookId));*/
     }
+
+
 
 }

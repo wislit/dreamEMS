@@ -168,16 +168,15 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getAllOrder() {
-		Long userNo = getUserNo();
+	public List<Order> getAllOrder(Long userNo) {
+
 	    List<Order> orderList = orderRepository.selectAllOrder(userNo); 
 		return orderList;
 	}
 	
 	@Override
-	public List<Order> getAllPrintOrder() {
-		Long userNo = getUserNo();
-	    List<Order> orderList = orderRepository.selectAllPrintOrder(userNo); 
+	public List<Order> getAllPrintOrder(Long userNo) {
+	    List<Order> orderList = orderRepository.selectAllPrintOrder(userNo);
 		return orderList;
 	}
 

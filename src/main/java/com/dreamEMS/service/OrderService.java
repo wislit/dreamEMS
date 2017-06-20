@@ -17,8 +17,8 @@ public interface OrderService {
 	boolean saveOrder(Order order);               
 	boolean modifyOrder(Order order);               
 	boolean deleteOrder(String orderNo);               
-	List<Order> getAllOrder();               
-	List<Order> getAllPrintOrder();               
+	List<Order> getAllOrder(Long userNo);
+	List<Order> getAllPrintOrder(Long userNo);
 	
 	Order getOrder(String orderNo);               
 }
