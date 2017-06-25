@@ -3,6 +3,8 @@ package com.dreamEMS.service;
 import java.io.File;
 import java.util.List;
 
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+
 import com.dreamEMS.model.entity.Order;
 import com.dreamEMS.model.entity.TestTb;
 
@@ -17,8 +19,9 @@ public interface OrderService {
 	boolean saveOrder(Order order);               
 	boolean modifyOrder(Order order);               
 	boolean deleteOrder(String orderNo);               
-	List<Order> getAllOrder();               
-	List<Order> getAllPrintOrder();               
+	List<Order> getAllOrder(DataTablesInput input);               
+	List<Order> getAllPrintOrder();
+	int getTotCount();
 	
 	Order getOrder(String orderNo);               
 	List<Order> getOrders(List<String> orderNoList);               

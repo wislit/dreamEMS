@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,26 +19,29 @@
     <!-- start:form login -->
     <div class="container">
         <form class="form-login" action="login-process"  method="post">
-            <h2 class="form-login-heading"><spring:message code="web.login.form.lable.signin" /></h2>
+            <h2 class="form-login-heading">Dream EMS <spring:message code="web.login.form.lable.signin" /></h2>
             <spring:message code="web.form.language"/> : <a href="?lang=en_US">English</a> | <a href="?lang=ko_KR">한국어</a>
             <%-- Current Locale : ${pageContext.response.locale } --%>
             <div class="login-wrap">
                 <input type="text" class="form-control" placeholder="User ID" autofocus name="id">
                 <input type="password" class="form-control" placeholder="Password" name="password">
-                <label class="checkbox">
+                <c:if test="${param.error}">
+                <div>Invalid username and password.</div>
+                </c:if>
+                <%-- <label class="checkbox">
                     <input type="checkbox" value="remember-me">
                     	<spring:message code="web.login.form.fields.rememberme"/>
                     <span class="pull-right">
                         <a data-toggle="modal" href="#myModal"><spring:message code="web.login.form.lable.resetLink"/></a>
                     </span>
-                </label>
+                </label> --%>
                 <button class="btn btn-lg btn-login btn-block" type="submit"><spring:message code="web.login.form.lable.signin" /></button>
-                <div class="registration">
+                <%-- <div class="registration">
                     <spring:message code="web.login.form.lable.register.text"/>
                     <a class="" href="register.html">
                         <spring:message code="web.login.form.lable.register"/>
                     </a>
-                </div>
+                </div> --%>
             </div>
 
             <!-- Modal -->

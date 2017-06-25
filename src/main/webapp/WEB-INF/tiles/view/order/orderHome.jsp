@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/print.css" />
@@ -43,7 +44,7 @@
                 <div class="panel-body">
                 	<!-- start:tab nav -->
                     <ul id="orderTab" class="nav nav-tabs">
-                        <li class="active"><a href="#beforePrint" data-toggle="tab">미출력<!-- <span class="badge bg-important">14</span> --></a></li>
+                        <li class=""><a href="#beforePrint" data-toggle="tab">미출력<!-- <span class="badge bg-important">14</span> --></a></li>
                         <li class=""><a href="#afterPrint" data-toggle="tab">기출력</a></li>
                         <!-- <li class=""><a href="#pickUp" data-toggle="tab">픽업목록</a></li> -->
                         <li class="" style="float:right">
@@ -460,13 +461,20 @@ function updateDialog(orderNo) {
            +"</div>";     
             
     	var rows_selected = [];
+    	
+    	//https://datatables.net/manual/server-side
         var table = $('#orderList').DataTable( {
         	filter:false,
         	ordering: false,
+        	serverSide: true,
         	ajax: {
-        		url : "${pageContext.request.contextPath}/order/list", 
-	        	dataSrc: ""
-        	},
+    			'contentType': 'application/json',
+    			'url':  "${pageContext.request.contextPath}/order/list",
+     			'type': 'POST',
+     			'data': function(d) {
+    				return JSON.stringify(d);
+    			}
+    		},
         	columnDefs: [ {
                 orderable: false,
                 className: 'select-checkbox',

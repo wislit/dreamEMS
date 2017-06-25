@@ -122,6 +122,7 @@
                         hs_code2,
                         hs_code3,
                         hs_code4
+                        treat_po_regi_po_eng_nm
                         )
 				VALUES (#{orderDate},
 						#{custNo},
@@ -175,20 +176,22 @@
                         #{hsCode2},
                         #{hsCode3},
                         #{hsCode4}
+				        #{treatPoRegiPoEngNm}
         )
     </insert>
     
     <select id="selectAllOrder" resultType="Order">
-        SELECT
+        SELECT SQL_CALC_FOUND_ROWS
           *
         FROM
            ems.order
         WHERE
-       		print = 0
+       		print_flag = 0
         <if test="userNo != null">
           AND user_no = #{userNo}
         </if>
         order by order_date desc
+        LIMIT #{input.start}, #{input.length}    
     </select>
     
     <select id="selectAllPrintOrder" resultType="Order">
@@ -197,11 +200,15 @@
         FROM
            ems.order
         WHERE
-        	print = 1
+        	print_flag = 1
         <if test="userNo != null">
         	AND user_no = #{userNo}
         </if>
         order by order_date desc
+    </select>
+    
+    <select id="selectTotalRecords" resultType="int">
+        SELECT FOUND_ROWS();
     </select>
     
     <select id="selectOrder" resultType="Order">

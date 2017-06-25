@@ -29,26 +29,6 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    /**
-     * @param pageString
-     * @param perPageString
-     * @return / TODO
-     * @Param 
-     */
-    @GetMapping
-    public ResponseEntity<?> getBooks(@RequestParam(value = "page", required = false) String pageString,
-                                      @RequestParam(value = "per_page", required = false) String perPageString) {
-        // Parse request parameters
-        int page = PageUtil.parsePage(pageString, PageConstant.PAGE);
-        int perPage = PageUtil.parsePerPage(perPageString, PageConstant.PER_PAGE);
-
-        return ResponseEntity
-                .ok(new PaginatedResult()
-                        .setData(bookService.getBooksByPage(page, perPage))
-                        .setCurrentPage(page)
-                        .setTotalPage(bookService.getTotalPage(perPage)));
-    }
-
     @GetMapping("/{bookId}")
     public ResponseEntity<?> getBookById(@PathVariable Long bookId) {
         return bookService

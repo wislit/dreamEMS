@@ -14,6 +14,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -168,12 +169,20 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getAllOrder() {
+	public List<Order> getAllOrder(DataTablesInput input) {
 		Long userNo = getUserNo();
-	    List<Order> orderList = orderRepository.selectAllOrder(userNo); 
+	    List<Order> orderList = orderRepository.selectAllOrder(input, userNo);
+	    
 		return orderList;
 	}
 	
+	
+	
+	@Override
+	public int getTotCount() {
+		return orderRepository.selectTotalRecords();
+	}
+
 	@Override
 	public List<Order> getAllPrintOrder() {
 		Long userNo = getUserNo();

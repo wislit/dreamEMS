@@ -16,7 +16,7 @@ public class OrderScheduler {
 
     private AtomicInteger loopCounter = new AtomicInteger();
 
-    @Scheduled(fixedDelay = 1000, initialDelay = 1000)
+    //@Scheduled(fixedDelay = 1000, initialDelay = 1000)
     public void testScheduler() throws Exception{
 
         String taskName = "task-";
@@ -25,7 +25,7 @@ public class OrderScheduler {
         log.debug(taskName);
     }
 
-    @Scheduled(cron = "*/10 * * * * ?")
+    //@Scheduled(cron = "*/10 * * * * ?")
     //@Scheduled(cron = "10 00 00 * * ?")
     public void sendProcessingScheduler() throws Exception{
 

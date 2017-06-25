@@ -10,6 +10,8 @@ import javax.validation.Valid;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,12 +34,15 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dreamEMS.model.dto.Msg;
+import com.dreamEMS.model.dto.PaginatedResult;
 import com.dreamEMS.model.entity.Book;
 import com.dreamEMS.model.entity.EmsTotProcCmd;
 import com.dreamEMS.model.entity.Order;
 import com.dreamEMS.model.entity.TestTb;
+import com.dreamEMS.repository.OrderRepository;
 import com.dreamEMS.service.ApiService;
 import com.dreamEMS.service.OrderService;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.extern.apachecommons.CommonsLog;
 
@@ -54,6 +60,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    
+    @Autowired
+    private OrderRepository orderRepository;
 
     /*@Autowired
     public OrderController(ApiService apiService) { this.apiService = apiService; }*/
@@ -68,13 +77,30 @@ public class OrderController {
 		return "tiles.order.orderHome";
     }
 	
-	@GetMapping("/list")
-    public ResponseEntity<?> list() {
+	//@JsonView(DataTablesOutput.View.class)
+	@PostMapping("/list")
+    public ResponseEntity<?> list(@RequestBody DataTablesInput input) {
 
-		List<Order> orderList = orderService.getAllOrder();
-        return ResponseEntity
+		
+		//DataTablesOutput<Order> test = orderRepository.findAll(input);
+		//return OrderRepository.findAll(input);
+		//log.info(test);
+		PaginatedResult result = new PaginatedResult();
+		List<Order> orderList = orderService.getAllOrder(input);
+
+		
+		result.setData(orderList);
+        result.setDraw(input.getDraw());
+		int count = orderService.getTotCount();
+		
+		result.setRecordsTotal(count);
+		result.setRecordsFiltered(count);
+		
+		return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(orderList);
+                .body(result);
+        
+        
     }
 	
 	@GetMapping("/printList")

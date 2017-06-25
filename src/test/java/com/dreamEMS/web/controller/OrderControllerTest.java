@@ -19,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
@@ -183,7 +184,7 @@ public class OrderControllerTest {
 	@WithUserDetails(value = "ems")
 	public void adminHome() throws Exception {
 		
-        List<Order> article = orderService.getAllOrder();
+        List<Order> article = orderService.getAllOrder(new DataTablesInput());
         int count = article.size();
 
 		this.mockMvc
@@ -201,7 +202,7 @@ public class OrderControllerTest {
 	@WithUserDetails(value = "test")
 	public void userOrderList() throws Exception {
 		
-		List<Order> article = orderService.getAllOrder();
+		List<Order> article = orderService.getAllOrder(new DataTablesInput());
         int count = article.size();
         String jsonString = this.jsonStringFromObject(article);
 

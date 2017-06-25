@@ -47,5 +47,8 @@ public class User implements Serializable {
     private String senderAddr1;
     private String senderAddr2;
     private String senderTelNo;
+    
+    private Long groupId;
+    private String groupName;
 
 }
