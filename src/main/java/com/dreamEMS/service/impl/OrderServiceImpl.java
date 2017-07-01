@@ -170,7 +170,6 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<Order> getAllOrder(Map input, DataTablesInput paging) {
-		Long userNo = getUserNo();
 	    List<Order> orderList = orderRepository.selectAllOrder(input, paging);
 		return orderList;
 	}
@@ -184,7 +183,6 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<Order> getAllPrintOrder(Map input, DataTablesInput paging) {
-		Long userNo = getUserNo();
 	    List<Order> orderList = orderRepository.selectAllPrintOrder(input, paging); 
 		return orderList;
 	}
