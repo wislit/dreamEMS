@@ -55,6 +55,8 @@ $.ajaxSetup({
 
 $( document ).ajaxError(function( event, xhr, settings ) {
 	
+	
+	console.log(xhr.responseText);
 	var errorMsg = xhr.status +' : ' +  xhr.responseJSON.message;
 	if (xhr.responseJSON.isDetail){ 
 		errorMsg = errorMsg + "<br>" + i18n("err."+xhr.responseJSON.detail.code);

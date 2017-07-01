@@ -1,6 +1,7 @@
 package com.dreamEMS.web.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dreamEMS.model.dto.Errors;
 import com.dreamEMS.model.dto.Msg;
@@ -40,9 +42,9 @@ public class UserController {
     }
 	
 	@GetMapping
-    public ResponseEntity<?> getUsers() {
+    public ResponseEntity<?> getUsers(@RequestParam Map param) {
 		
-		List<User> users = userService.getAllUsers();
+		List<User> users = userService.getAllUsers(param );
 
         return ResponseEntity.ok(users);
     }

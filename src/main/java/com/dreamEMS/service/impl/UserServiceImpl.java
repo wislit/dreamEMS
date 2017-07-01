@@ -61,8 +61,8 @@ public class UserServiceImpl implements UserService {
     
     
     @Override
-	public List<User> getAllUsers() {
-    	return userRepository.selectAllUsers();
+	public List<User> getAllUsers(Map where) {
+    	return userRepository.selectAllUsers(where);
 	}
 
 	@Override

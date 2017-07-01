@@ -107,7 +107,7 @@
         FROM
           user
         <where>
-        	<if test="groupId != null">group_id = #{groupId}</if>
+        	<if test="groupId != null and groupId != '' ">group_id = #{groupId}</if>
         </where>
     </select>
     

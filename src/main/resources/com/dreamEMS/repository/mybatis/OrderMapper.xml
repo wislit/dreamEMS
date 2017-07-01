@@ -132,11 +132,13 @@
            ems.order
         WHERE
        		print_flag = 0
-        <if test="userNo != null">
-          AND user_no = #{userNo}
+        <if test="input.userNo != null">
+          AND user_no = #{input.userNo}
         </if>
         order by order_date desc
-        LIMIT #{input.start}, #{input.length}    
+        <if test="paging.start != null">
+          LIMIT #{paging.start}, #{paging.length}    
+        </if>
     </select>
     
     <select id="selectAllPrintOrder" resultType="Order">
@@ -146,11 +148,13 @@
            ems.order
         WHERE
         	print_flag = 1
-        <if test="userNo != null">
-          AND user_no = #{userNo}
+        <if test="input.userNo != null">
+          AND user_no = #{input.userNo}
         </if>
         order by order_date desc
-        LIMIT #{input.start}, #{input.length}    
+        <if test="paging.start != null">
+          LIMIT #{paging.start}, #{paging.length}    
+        </if>
     </select>
     
     <select id="selectTotalRecords" resultType="int">

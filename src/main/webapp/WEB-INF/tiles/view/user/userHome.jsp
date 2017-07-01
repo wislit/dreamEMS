@@ -160,7 +160,7 @@
             <div class="panel">
                 <div class="panel-body">
                 	<div id="search-group">
-                		<button class="hide"></button>
+                		그룹 검색 : <button class="hide btn btn-default"></button> <button class="btn btn-info" data="">전체</button> 
                 	</div>
               		<div class="adv-table">
                  			<table class="display table table-hover table-condensed text-center" id="tb-user">
@@ -295,12 +295,12 @@ function setGroup() {
 	
 	$('select#groupId').empty();
 	$('#group-table tr:nth-child(2) ~ tr').remove();
-	$('#search-group').empty();
+	$('#search-group :nth-child(2) ~ ').remove();
 	
 	$.getJSON("${pageContext.request.contextPath}/user/group",
         	function(data) {
         	var html =  $('select#groupId').html();
-        	var $searchGrp =  $('select#groupId');
+        	var $searchGrp =  $('#search-group');
         	
             var len = data.length;
             			
@@ -312,7 +312,7 @@ function setGroup() {
 				var $clone = $searchGrp.find('.hide').clone(true).removeClass('hide');
 				$clone.attr("data", data[i].groupId);
 				$clone.html(data[i].groupName);
-				$TABLE.append($clone);
+				$searchGrp.append($clone).append(" ");
 				
             }
             $('select#groupId').html(html);
@@ -479,6 +479,11 @@ function setGroup() {
 				    }
 				});
         } );
+        
+        $("#search-group").on('click','button', function () {
+			var data = $(this).attr("data");        	
+			t.ajax.url( "${pageContext.request.contextPath}/user?groupId="+data ).load();
+		})
         
        
         /* 

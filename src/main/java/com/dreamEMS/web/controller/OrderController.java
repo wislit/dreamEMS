@@ -3,7 +3,9 @@ package com.dreamEMS.web.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -29,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dreamEMS.model.dto.CustomUserDetails;
 import com.dreamEMS.model.dto.Msg;
 import com.dreamEMS.model.dto.PaginatedResult;
 import com.dreamEMS.model.entity.EmsTotProcCmd;
@@ -61,13 +66,17 @@ public class OrderController {
     }
 	
 	@PostMapping("/list")
-    public ResponseEntity<?> list(@RequestBody DataTablesInput input) {
+    public ResponseEntity<?> list(@RequestBody DataTablesInput paging) {
+		
+		Long userNo = this.getUserNo();
+		Map input = new HashMap();
+		input.put("userNo", userNo);
 		
 		PaginatedResult result = new PaginatedResult();
-		List<Order> orderList = orderService.getAllOrder(input);
+		List<Order> orderList = orderService.getAllOrder(input, paging);
 
 		result.setData(orderList);
-        result.setDraw(input.getDraw());
+        result.setDraw(paging.getDraw());
 		int count = orderService.getTotCount();
 		
 		result.setRecordsTotal(count);
@@ -79,13 +88,17 @@ public class OrderController {
     }
 	
 	@PostMapping("/printList")
-    public ResponseEntity<?> printList(@RequestBody DataTablesInput input) {
+    public ResponseEntity<?> printList(@RequestBody DataTablesInput paging) {
 
+		Long userNo = this.getUserNo();
+		Map input = new HashMap();
+		input.put("userNo", userNo);
+		
 		PaginatedResult result = new PaginatedResult();
-		List<Order> orderList = orderService.getAllPrintOrder(input);
+		List<Order> orderList = orderService.getAllPrintOrder(input, paging);
 
 		result.setData(orderList);
-        result.setDraw(input.getDraw());
+        result.setDraw(paging.getDraw());
 		int count = orderService.getTotCount();
 		
 		result.setRecordsTotal(count);
@@ -241,6 +254,16 @@ public class OrderController {
     	model.addObject("orderList", orderList);
     	return model;
         //return ResponseEntity.ok(Msg.SUCCESS);
+    }
+
+    private Long getUserNo(){
+        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Long userNo = user.getNo(); //get logged in username
+        if (user.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
+            userNo = null;
+        }
+        return userNo;
     }
 
 }
