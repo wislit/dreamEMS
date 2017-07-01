@@ -184,9 +184,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getAllPrintOrder() {
+	public List<Order> getAllPrintOrder(DataTablesInput input) {
 		Long userNo = getUserNo();
-	    List<Order> orderList = orderRepository.selectAllPrintOrder(userNo); 
+	    List<Order> orderList = orderRepository.selectAllPrintOrder(input, userNo); 
 		return orderList;
 	}
 

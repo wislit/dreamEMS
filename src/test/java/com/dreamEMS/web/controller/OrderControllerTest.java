@@ -223,7 +223,7 @@ public class OrderControllerTest {
 	@WithUserDetails(value = "test")
 	public void userprintOrderList() throws Exception {
 		
-		List<Order> article = orderService.getAllPrintOrder();
+		List<Order> article = orderService.getAllPrintOrder(new DataTablesInput());
         int count = article.size();
         String jsonString = this.jsonStringFromObject(article);
 

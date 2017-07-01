@@ -25,7 +25,7 @@
             <div class="login-wrap">
                 <input type="text" class="form-control" placeholder="User ID" autofocus name="id">
                 <input type="password" class="form-control" placeholder="Password" name="password">
-                <c:if test="${param.error}">
+                <c:if test="${param.error != null}">
                 <div>Invalid username and password.</div>
                 </c:if>
                 <%-- <label class="checkbox">

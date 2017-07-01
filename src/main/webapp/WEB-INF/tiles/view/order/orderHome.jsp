@@ -360,9 +360,7 @@
 
     <!-- start:javascript for this page -->
 <%-- <script src="${pageContext.request.contextPath}/static/assets/advanced-datatable_old/media/js/jquery.dataTables.js"></script> --%>
-<script src="${pageContext.request.contextPath}/static/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/data-tables/DT_bootstrap.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/restful-client/jquery.rest.js"></script>
+
 <script src="${pageContext.request.contextPath}/static/js/jquery-barcode.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 var selectOrder;
@@ -376,6 +374,7 @@ function print(label) {
 		);
 }
 
+/* 상세보기 */
 function updateDialog(orderNo) {
 	
 	selectOrder = orderNo;
@@ -433,14 +432,46 @@ function updateDialog(orderNo) {
 				$(".barcode_area1").barcode(rep.regiNo, "code128", {"showHRI":false, "barHeight":25, "barWidth":1, "output": 'bmp'}).removeAttr("style").children().css("width","98%");
 			  }
 			);
-	
-	//var update = $.update('/user/'+ $("#user-form input[name=no]").val() , JSON.stringify($("#user-form").serializeObject()) );
-	//update.then(ajaxSuccess, ajaxError);
-	
+}
+
+/* 일괄출력시 활성화된 탭에서 체크된것만 인쇄 */
+function printAll(isLabel,type) {
+  	var tableId = $(".tab-pane.active").find("table").attr("id");
+  	alert(tableId);
+  	
+  	var sel = $('#'+tableId+' input[type=checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+    }).get();
+  	
+	confirmPrint(type, isLabel, sel);
+}
+
+function confirmPrint(type, isLabel, orderNo){
+	$.confirm({
+	    content:'<label>'+type+'에 송장을 출력하시겠습니까?</label><br><br>' +
+		        '<div><label><input type="radio" name="emGubun2" value="false" checked="checked">세관신고서 형식(基本形)</label></div>' +
+		        '<label><input type="radio" name="emGubun2" value="true">영수증 형식</label>'
+    	,
+	    buttons: {
+		    confirm : {
+		    	btnClass: 'btn-info',				    	
+		    	action : function () {
+		    		//receipt label
+		    		var receipt = $(":radio[name='emGubun2']:checked").val();
+		    		window.open(
+		    				"/order/print?label="+isLabel+"&receipt="+receipt+"&orderNoList="+orderNo
+		    			);
+		        } 
+		    }, 
+	        cancel: function () {
+	        }
+	    }
+	});
 }
 
     $(document).ready(function() {
     	// Array holding selected row IDs
+    	
     	var btnStr = //"<button class='btn btn-info btn-sm' onclick='ready()'><i class='fa fa-pencil'></i></button> " +
             "<button class='btn btn-danger btn-sm' onclick='ready()'><i class='fa fa-trash-o '></i></button> "
             +"<div class='btn-group'>"
@@ -460,10 +491,7 @@ function updateDialog(orderNo) {
            +"</ul>"
            +"</div>";     
             
-    	var rows_selected = [];
-    	
-    	//https://datatables.net/manual/server-side
-        var table = $('#orderList').DataTable( {
+           var table = $('#orderList').DataTable( {
         	filter:false,
         	ordering: false,
         	serverSide: true,
@@ -515,10 +543,15 @@ function updateDialog(orderNo) {
         	filter:false,
         	ordering: false,
         	autoWidth : false,
+        	serverSide: true,
         	ajax: {
-        		url : "${pageContext.request.contextPath}/order/printList", 
-	        	dataSrc: ""
-        	},
+    			'contentType': 'application/json',
+    			'url':  "${pageContext.request.contextPath}/order/printList",
+     			'type': 'POST',
+     			'data': function(d) {
+    				return JSON.stringify(d);
+    			}
+    		},
         	columnDefs: [ {
                 orderable: false,
                 className: 'select-checkbox',
@@ -555,6 +588,8 @@ function updateDialog(orderNo) {
             ]
         } );
         
+        
+        /* 테이블에 인덱스 계산 */
         table.on( 'draw.dt', function () {
         	table.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                 cell.innerHTML = i+1;
@@ -567,6 +602,8 @@ function updateDialog(orderNo) {
             } );
         } ).draw();
         
+        
+        
      	// Handle click on "Select all" control
         $('.example-select-all').on('click', function(){
            // Get all rows with search applied
@@ -577,6 +614,7 @@ function updateDialog(orderNo) {
            $('input[type="checkbox"]', rows).prop('checked', this.checked);
         });
      	
+     	// Handle click on "송장번호" control
         $('tbody').on('click', 'tr .detail', function () {
         	var tableId = $(this).parents("table").attr("id");
         	var t = $("#"+tableId).dataTable().api();
@@ -584,6 +622,7 @@ function updateDialog(orderNo) {
             updateDialog(data.orderNo);
         } );
         
+     	// Handle click on "일괄출력" control
         $('tbody').on('click', '[name=printLabel], [name=printA4]', function () {
         	var tableId = $(this).parents("table").attr("id");
         	var t = $("#"+tableId).dataTable().api();
@@ -594,65 +633,8 @@ function updateDialog(orderNo) {
         	confirmPrint(type,isLabel,data.orderNo);
         });
         
-
-    	/* 체크된 데이터 얻는방법?
-    	// Handle form submission event
-        $('#frm-example').on('submit', function(e){
-           var form = this;
-
-           // Iterate over all checkboxes in the table
-           table.$('input[type="checkbox"]').each(function(){
-              // If checkbox doesn't exist in DOM
-              if(!$.contains(document, this)){
-                 // If checkbox is checked
-                 if(this.checked){
-                    // Create a hidden element 
-                    $(form).append(
-                       $('<input>')
-                          .attr('type', 'hidden')
-                          .attr('name', this.name)
-                          .val(this.value)
-                    );
-                 }
-              } 
-           });
-        });
-        var data = table.$('input[type="checkbox"]').serialize(); */
     } );
-    
-function printAll(isLabel,type) {
-  	var tableId = $(".tab-pane.active").find("table").attr("id");
-  	alert(tableId);
-  	
-  	var sel = $('#'+tableId+' input[type=checkbox]:checked').map(function(_, el) {
-        return $(el).val();
-    }).get();
-  	
-	confirmPrint(type, isLabel, sel);
-}
 
-function confirmPrint(type, isLabel, orderNo){
-	$.confirm({
-	    content:'<label>'+type+'에 송장을 출력하시겠습니까?</label><br><br>' +
-		        '<div><label><input type="radio" name="emGubun2" value="false" checked="checked">세관신고서 형식(基本形)</label></div>' +
-		        '<label><input type="radio" name="emGubun2" value="true">영수증 형식</label>'
-    	,
-	    buttons: {
-		    confirm : {
-		    	btnClass: 'btn-info',				    	
-		    	action : function () {
-		    		//receipt label
-		    		var receipt = $(":radio[name='emGubun2']:checked").val();
-		    		window.open(
-		    				"/order/print?label="+isLabel+"&receipt="+receipt+"&orderNoList="+orderNo
-		    			);
-		        } 
-		    }, 
-	        cancel: function () {
-	        }
-	    }
-	});
-}
 </script>
     <!-- end:javascript for this page -->
 

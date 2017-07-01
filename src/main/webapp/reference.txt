@@ -1,0 +1,5 @@
+https://datatables.net/manual/server-side datatable 서버쪽으로 로딩
+https://www.mkyong.com/spring-security/get-current-logged-in-username-in-spring-security/ 시큐리디 참고문서?
+http://www.baeldung.com/global-error-handler-in-a-spring-rest-api REST Exception 처리 참고
+https://craftpip.github.io/jquery-confirm/#callbacks
+https://github.com/alassek/jquery.rest

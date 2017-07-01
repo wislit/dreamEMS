@@ -159,6 +159,9 @@
         <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-body">
+                	<div id="search-group">
+                		<button class="hide"></button>
+                	</div>
               		<div class="adv-table">
                  			<table class="display table table-hover table-condensed text-center" id="tb-user">
                        	<thead>
@@ -230,11 +233,7 @@
 
     <!-- start:javascript for this page -->
 <%-- <script src="${pageContext.request.contextPath}/static/assets/advanced-datatable_old/media/js/jquery.dataTables.js"></script> --%>
-<script src="${pageContext.request.contextPath}/static/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/restful-client/jquery.rest.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/restful-client/RIP.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/data-tables/DT_bootstrap.js"></script>
-<script src="${pageContext.request.contextPath}/static/assets/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+
 <script src="${pageContext.request.contextPath}/static/js/editable-table.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" charset="utf-8"> 
@@ -296,10 +295,13 @@ function setGroup() {
 	
 	$('select#groupId').empty();
 	$('#group-table tr:nth-child(2) ~ tr').remove();
+	$('#search-group').empty();
 	
 	$.getJSON("${pageContext.request.contextPath}/user/group",
         	function(data) {
         	var html =  $('select#groupId').html();
+        	var $searchGrp =  $('select#groupId');
+        	
             var len = data.length;
             			
             for (var i = 0; i < len; i++) {
@@ -307,19 +309,11 @@ function setGroup() {
                 $( "#group-table").append('<tr data="'+data[i].groupId+'"><td class="editable-td"><span class="group-name" contenteditable="true">'+data[i].groupName+'</span></td><td>'+data[i].seq+'</td>'+
                 '<td><span class="table-up glyphicon glyphicon-arrow-up"></span> <span class="table-down glyphicon glyphicon-arrow-down"></span>'+
     		        '</td><td><span class="table-remove glyphicon glyphicon-remove"></span></td></tr>');
-                
-                /* 
-                <td><span contenteditable="true">Stir Fry</span></td>
-		        <td>0</td>
-		        <td>
-		          <span class="table-up glyphicon glyphicon-arrow-up"></span>
-		          <span class="table-down glyphicon glyphicon-arrow-down"></span>
-		        </td>
-		        <td>
-		          <span class="table-remove glyphicon glyphicon-remove"></span>
-		        </td>
-                */
-                
+				var $clone = $searchGrp.find('.hide').clone(true).removeClass('hide');
+				$clone.attr("data", data[i].groupId);
+				$clone.html(data[i].groupName);
+				$TABLE.append($clone);
+				
             }
             $('select#groupId').html(html);
         });
@@ -379,6 +373,7 @@ function setGroup() {
       	//https://github.com/alassek/jquery.rest
         $("#btn-create").click(function() {
         	$("#user-form")[0].reset();
+        	$('.tooltip').tooltip('destroy');
         	 $("#div-password").show();
         	 $("#user-form input[name=id]").removeAttr("disabled");
         	 $("#btn-signin").show();
@@ -387,8 +382,15 @@ function setGroup() {
       	
       	$("#btn-signin").click(function() {
       		$("#user-form :disabled").removeAttr('disabled')
-        	 var create = $.create('/user', JSON.stringify($("#user-form").serializeObject()) );
-        	 create.then(ajaxSuccess, ajaxError);
+        	 var create = $.create('/user', JSON.stringify($("#user-form").serializeObject()),false );
+        	 create.then(ajaxSuccess, function(xhr){
+           		var errors = xhr.responseJSON.errors;
+           		for ( var index in errors) {
+           			var filed = errors[index].substring(0, errors[index].indexOf(':'));
+           			var msg = errors[index].substring(errors[index].indexOf(':')+1);
+           			$('[name='+filed+']').attr("title",msg).tooltip('fixTitle').tooltip('show');
+				}
+           	 });
         	 $("#user-form input[name=senderZipCode]").attr("disabled", "true");
         	 $("#user-form input[name=senderAddr2]").attr("disabled", "true");
 		});

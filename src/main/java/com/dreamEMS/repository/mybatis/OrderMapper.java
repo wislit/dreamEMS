@@ -24,7 +24,7 @@ public interface OrderMapper extends OrderRepository {
     Integer selectTotalRecords();
     
     List<Order> selectAllOrder(@Param("input") DataTablesInput input, @Param("userNo") Long userNo);
-    List<Order> selectAllPrintOrder(@Param("userNo") Long userNo);
+    List<Order> selectAllPrintOrder(@Param("input") DataTablesInput input, @Param("userNo") Long userNo);
 
     Order selectOrder(Order order);
     List<Order> selectOrders(@Param("userNo") Long userNo, @Param("orders") List<String> orders);

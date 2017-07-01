@@ -14,61 +14,6 @@
         from test_tb
     </select>
     
-    <!-- 
-    INSERT INTO order (cust_no,
-                        appr_no,
-                        sender,
-                        sender_zip_code,
-                        sender_addr2,
-                        sender_mobile1,
-                        sender_mobile2,
-                        sender_mobile3,
-                        sender_mobile4,
-                        order_no,
-                        premium_cd,
-                        receive_name,
-                        receive_zip_code,
-                        receive_addr3,
-                        receive_tel_no,
-                        country_cd,
-                        em_e_e,
-                        tot_weight,
-                        bo_y_n,
-                        contents,
-                        number,
-                        weight,
-                        value,
-                        hs_code,
-                        origin,
-                        em_gubun)
-				VALUES (#{custNo},
-				        #{apprNo},
-				        #{sender},
-				        #{senderZipCode},
-				        #{senderAddr2},
-				        #{senderMobile1},
-				        #{senderMobile2},
-				        #{senderMobile3},
-				        #{senderMobile4},
-				        #{orderNo},
-				        #{premiumCd},
-				        #{receiveName},
-				        #{receiveZipCode},
-				        #{receiveAddr3},
-				        #{receiveTelNo},
-				        #{countryCd},
-				        #{emEE},
-				        #{totWeight},
-				        #{boYN},
-				        #{contents},
-				        #{number},
-				        #{weight},
-				        #{value},
-				        #{hsCode},
-				        #{origin},
-				        #{emGubun})
-     -->
-    
     <insert id="insertOrder" parameterType="com.dreamEMS.model.entity.Order">
         INSERT INTO ems.order (order_date,
         				cust_no,
@@ -195,16 +140,17 @@
     </select>
     
     <select id="selectAllPrintOrder" resultType="Order">
-        SELECT
+        SELECT SQL_CALC_FOUND_ROWS
           *
         FROM
            ems.order
         WHERE
         	print_flag = 1
         <if test="userNo != null">
-        	AND user_no = #{userNo}
+          AND user_no = #{userNo}
         </if>
         order by order_date desc
+        LIMIT #{input.start}, #{input.length}    
     </select>
     
     <select id="selectTotalRecords" resultType="int">

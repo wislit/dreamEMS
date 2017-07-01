@@ -332,12 +332,6 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
         </div>
         <!-- end:main -->
 
-
-    <!-- start:javascript for this page -->
-    <script src="${pageContext.request.contextPath}/static/assets/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="${pageContext.request.contextPath}/static/assets/restful-client/jquery.rest.js"></script>
-    
     <script>
     
     function getDesc() {

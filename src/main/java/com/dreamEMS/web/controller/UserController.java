@@ -2,8 +2,9 @@ package com.dreamEMS.web.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,11 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dreamEMS.model.dto.Errors;
 import com.dreamEMS.model.dto.Msg;
-import com.dreamEMS.model.entity.Nation;
 import com.dreamEMS.model.entity.User;
 import com.dreamEMS.model.entity.UserGroup;
 import com.dreamEMS.service.UserService;
@@ -49,7 +48,7 @@ public class UserController {
     }
 	
 	@PostMapping
-    public ResponseEntity<?> postUser(@RequestBody User user) {
+    public ResponseEntity<?> postUser(@Valid @RequestBody User user) {
 		
 		if(user.getId().equals("err")) throw new DreamEMSException(Errors.PARAMETER_ILLEGAL_ERROR);
 		userService.saveUser(user);

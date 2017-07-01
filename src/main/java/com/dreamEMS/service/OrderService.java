@@ -20,7 +20,7 @@ public interface OrderService {
 	boolean modifyOrder(Order order);               
 	boolean deleteOrder(String orderNo);               
 	List<Order> getAllOrder(DataTablesInput input);               
-	List<Order> getAllPrintOrder();
+	List<Order> getAllPrintOrder(DataTablesInput input);
 	int getTotCount();
 	
 	Order getOrder(String orderNo);               
