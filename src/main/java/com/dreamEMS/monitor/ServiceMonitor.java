@@ -42,11 +42,11 @@ public class ServiceMonitor {
         log.error("[" + signature.toShortString() + "]" + Arrays.toString(args) + "[" + e.toString() + "]");
         StackTraceElement[] st =e.getStackTrace();
         for (StackTraceElement element : st) {
-        	log.error(element.toString());
+        	//log.error(element.toString());
         }
 
         // Throw a new server internal error exception
-        throw new ServerInternalErrorException();
+        //throw new ServerInternalErrorException();
     }
 
 }

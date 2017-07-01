@@ -4,23 +4,29 @@
 
     <insert id="insertUser">
         INSERT INTO
-          user (id, 
-	          username, 
-	          password,
-	          sender,
-              sender_zip_code,
-              sender_addr1,
-              sender_addr2,
-              sender_tel_no )
+          user (
+          	id 
+	          ,username 
+	          ,password
+	          ,sender
+              ,sender_zip_code
+              ,sender_addr1
+              ,sender_addr2
+              ,sender_tel_no
+              ,group_id
+               )
         VALUES
-          (#{id}, 
-          #{username}, 
-          #{password},
-          #{sender},
-          #{senderZipCode},
-          #{senderAddr1},
-          #{senderAddr2},
-          #{senderTelNo})
+          (
+          #{id} 
+          ,#{username}
+          ,#{password}
+          ,#{sender}
+          ,#{senderZipCode}
+          ,#{senderAddr1}
+          ,#{senderAddr2}
+          ,#{senderTelNo}
+          ,#{groupId}
+          )
     </insert>
 
     <insert id="insertAuthority">
@@ -40,7 +46,8 @@
           sender_zip_code = #{senderZipCode},
           sender_addr1 = #{senderAddr1},
           sender_addr2 = #{senderAddr2},
-          sender_tel_no = #{senderTelNo}
+          sender_tel_no = #{senderTelNo},
+          group_id = #{groupId}
         WHERE
           no = #{no}
     </update>
@@ -78,7 +85,7 @@
 
     <select id="selectUserByNo" resultType="User">
         SELECT
-          *
+          *, (select group_name from user_group where group_id=user.group_id) group_name
         FROM
           user
         WHERE
@@ -87,7 +94,7 @@
 
     <select id="selectUserById" resultType="User">
         SELECT
-          *
+          *, (select group_name from user_group where group_id=user.group_id) group_name
         FROM
           user
         WHERE
@@ -96,13 +103,56 @@
 
     <select id="selectAllUsers" resultType="User">
         SELECT
-          *
+          *, (select group_name from user_group where group_id=user.group_id) group_name
         FROM
           user
+        <where>
+        	<if test="groupId != null">group_id = #{groupId}</if>
+        </where>
     </select>
     
     <select id="selectAuthority" resultType="org.springframework.security.core.authority.SimpleGrantedAuthority">
           SELECT authority_name FROM authority WHERE user_id = #{id}
      </select>
+     
+     <insert id="insertUserGroup" keyProperty="groupId" keyColumn="group_id" useGeneratedKeys="true">
+        INSERT INTO
+          user_group (
+	          group_name 
+	          ,seq
+	          )
+        VALUES
+          (
+          #{groupName}
+          ,#{seq}
+          )
+    </insert>
+    
+    <update id="updateUserGroup">
+        UPDATE
+          user_group
+        <set>
+        	<if test="groupName != null">
+	          group_name = #{groupName},
+        	</if>
+        	<if test="seq != 0">
+	          seq = #{seq}
+        	</if>
+        </set>
+        WHERE
+          group_id = #{groupId}
+    </update>
+    
+	<select id="selectAllGroup" resultType="UserGroup">
+        SELECT
+          *
+        FROM
+          user_group
+         order by seq
+    </select>
+    
+    <delete id="deleteUserGroup">
+          DELETE FROM user_group WHERE group_id = #{groupId}
+     </delete>
 
 </mapper>

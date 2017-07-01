@@ -5,6 +5,7 @@ import com.dreamEMS.model.entity.TestTb;
 import com.dreamEMS.repository.OrderRepository;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 
 import java.util.List;
 
@@ -19,8 +20,12 @@ public interface OrderMapper extends OrderRepository {
     Integer updateOrder(Order order);
     Integer deleteOrder(Order order);
     Integer selectOrder(String orderNo);
-    List<Order> selectAllOrder(@Param("userNo") Long userNo);
-    List<Order> selectAllPrintOrder(@Param("userNo") Long userNo);
+    
+    Integer selectTotalRecords();
+    
+    List<Order> selectAllOrder(@Param("input") DataTablesInput input, @Param("userNo") Long userNo);
+    List<Order> selectAllPrintOrder(@Param("input") DataTablesInput input, @Param("userNo") Long userNo);
 
     Order selectOrder(Order order);
+    List<Order> selectOrders(@Param("userNo") Long userNo, @Param("orders") List<String> orders);
 }

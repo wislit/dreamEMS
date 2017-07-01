@@ -13,6 +13,13 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/view/footer.jsp" />
 	</definition>
 	
+	<definition name="layout.noHeader" template="/WEB-INF/tiles/layout/basic.jsp">
+		<put-attribute name="title" value="Dream EMS" />
+		<put-attribute name="header" value="" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="" />
+	</definition>
+	
 	<definition name="site.login" template="/WEB-INF/tiles/layout/basic.jsp">
 		<put-attribute name="title" value="Dream EMS" />
 		<put-attribute name="header" value="" />
@@ -52,6 +59,10 @@
 	
 	<definition name="sample.*" extends="layout.basic">
 		<put-attribute name="body" value="/WEB-INF/tiles/view/home/sample/{1}.jsp" />
+	</definition>
+	
+	<definition name="blank.*.*" extends="layout.noHeader">
+		<put-attribute name="body" value="/WEB-INF/tiles/view/{1}/{2}.jsp" />
 	</definition>
 
 </tiles-definitions>

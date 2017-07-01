@@ -2,17 +2,13 @@ package com.dreamEMS.web.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
-import com.dreamEMS.model.dto.CustomUserDetails;
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,7 +19,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,12 +29,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dreamEMS.model.dto.Msg;
-import com.dreamEMS.model.entity.Book;
+import com.dreamEMS.model.dto.PaginatedResult;
 import com.dreamEMS.model.entity.EmsTotProcCmd;
 import com.dreamEMS.model.entity.Order;
-import com.dreamEMS.model.entity.TestTb;
 import com.dreamEMS.service.ApiService;
 import com.dreamEMS.service.OrderService;
 
@@ -59,36 +54,48 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
-
-    /*@Autowired
-    public OrderController(ApiService apiService) { this.apiService = apiService; }*/
-
-
-
-
+    
 	@GetMapping("/home")
     public String home(Model model) {
 		
-		//https://www.mkyong.com/spring-security/get-current-logged-in-username-in-spring-security/
+		
 		return "tiles.order.orderHome";
     }
 	
-	@GetMapping("/list")
-    public ResponseEntity<?> list() {
-        Long userNo = this.getUserNo();
-		List<Order> orderList = orderService.getAllOrder(userNo);
-        return ResponseEntity
+	@PostMapping("/list")
+    public ResponseEntity<?> list(@RequestBody DataTablesInput input) {
+		
+		PaginatedResult result = new PaginatedResult();
+		List<Order> orderList = orderService.getAllOrder(input);
+
+		result.setData(orderList);
+        result.setDraw(input.getDraw());
+		int count = orderService.getTotCount();
+		
+		result.setRecordsTotal(count);
+		result.setRecordsFiltered(count);
+		
+		return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(orderList);
+                .body(result);
     }
 	
-	@GetMapping("/printList")
-    public ResponseEntity<?> printList() {
-        Long userNo = this.getUserNo();
-		List<Order> printOrderList = orderService.getAllPrintOrder(userNo);
-        return ResponseEntity
+	@PostMapping("/printList")
+    public ResponseEntity<?> printList(@RequestBody DataTablesInput input) {
+
+		PaginatedResult result = new PaginatedResult();
+		List<Order> orderList = orderService.getAllPrintOrder(input);
+
+		result.setData(orderList);
+        result.setDraw(input.getDraw());
+		int count = orderService.getTotCount();
+		
+		result.setRecordsTotal(count);
+		result.setRecordsFiltered(count);
+		
+		return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(printOrderList);
+                .body(result);
     }
 	
 	
@@ -163,14 +170,10 @@ public class OrderController {
     }
     
     @PutMapping("/{orderNo}")
-    public ResponseEntity<?> putOrder(@PathVariable Long orderNo, @RequestBody Book book) {
-        assertBookExist(orderNo);
-
-        //bookService.modifyBookOnNameById(book.setId(bookId));
-
+    public ResponseEntity<?> putOrder(@PathVariable Long orderNo, @RequestBody Order order) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(book);
+                .body(order);
     }
 
     @DeleteMapping("/{orderNo}")
@@ -181,38 +184,6 @@ public class OrderController {
                 .body(rt);
     }
 
-
-
-    @GetMapping("/test")
-    public ResponseEntity<?> test() {
-
-        Map<String,Object> resultMap = new HashedMap();
-//        List<Nation> nationList = apiService.getNationList(ApiConstant.PREMIUMCD_EMS);
-//        List<EmsSearchNewEngZipCodeInfo> zipCodeInfoList = apiService.getEmsSearchNewEngZipCodeInfoList("이문로",5,1);
-//        List<JuDo> juDoList = apiService.getJuDoList("CN");
-//        List<SiDo> siDoList = apiService.getSiDoList("CN","BEIJING");
-//        List<ZipCode> zipCodeList = apiService.getZipCodeList("CN","BEIJING","BEIJING");
-//        EmsTotProcCmd emsTotProcCmd = apiService.getEmsTotProcCmd(ApiConstant.PREMIUMCD_EMS,"CN", 30000, "n", 0, "em");
-//        String custno = apiService.getCustno();
-//        String apprno = apiService.getApprno(custno);
-
-        List<TestTb> tbList = orderService.getTestTbList();
-
-//        resultMap.put("nationList",nationList);
-//        resultMap.put("zipCodeInfoList",zipCodeInfoList);
-//        resultMap.put("juDoList",juDoList);
-//        resultMap.put("siDoList",siDoList);
-//        resultMap.put("zipCodeList",zipCodeList);
-//        resultMap.put("emsTotProcCmd",emsTotProcCmd);
-//        resultMap.put("custno",custno);
-//        resultMap.put("apprno",apprno);
-        resultMap.put("tbList",tbList);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(resultMap);
-    }
-    
     @ResponseBody
     @RequestMapping(value = "/excelUpload", method = RequestMethod.POST)
     public Object excelUploadAjax(MultipartHttpServletRequest request)  throws Exception{
@@ -259,26 +230,19 @@ public class OrderController {
         return emsTotProcCmd.getEmsTotProc();
     }
 
-
-
-    private Long getUserNo(){
-        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Long userNo = user.getNo(); //get logged in username
-        if (user.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
-            userNo = null;
-        }
-        return userNo;
-    }
-
-
-    /********************************** HELPER METHOD **********************************/
-    private void assertBookExist(Long orderNo) {
-        /*bookService
-                .getBookById(bookId)
-                .orElseThrow(() -> new ResourceNotFoundException()
-                        .setResourceName(ResourceNameConstant.BOOK)
-                        .setId(bookId));*/
+    @RequestMapping("/print")
+    public ModelAndView printOrder(@RequestParam boolean label, 
+							    		@RequestParam boolean receipt, 
+							    		@RequestParam List orderNoList) {
+    	
+    	List<Order> orderList = orderService.getOrders(orderNoList);
+    	
+    	ModelAndView model = new ModelAndView("site.print");
+    	model.addObject("isLabel", label);
+    	model.addObject("isReceipt", receipt);
+    	model.addObject("orderList", orderList);
+    	return model;
+        //return ResponseEntity.ok(Msg.SUCCESS);
     }
 
 

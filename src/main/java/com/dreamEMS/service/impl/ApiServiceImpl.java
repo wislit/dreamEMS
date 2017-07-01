@@ -574,6 +574,7 @@ public class ApiServiceImpl implements ApiService {
         plainStr.append(getPlainStrNotNull("&senderemail=", order.getSenderMail()));
         plainStr.append(getPlainStrNotNull("&snd_message=", order.getSndMessage()));
         plainStr.append(getPlainStrNotNull("&premiumcd=", order.getPremiumCd()));
+        
         plainStr.append(getPlainStrNotNull("&receivename=", order.getReceiveName()));
         plainStr.append(getPlainStrNotNull("&receivezipcode=", order.getReceiveZipCode()));
         plainStr.append(getPlainStrNotNull("&receiveaddr1=", order.getReceiveAddr1()));
@@ -599,7 +600,13 @@ public class ApiServiceImpl implements ApiService {
         plainStr.append(getPlainStrNotNull("&value=", order.getValue()));
         plainStr.append(getPlainStrNotNull("&hs_code=", order.getHsCode()));
         plainStr.append(getPlainStrNotNull("&origin=", order.getOrigin()));
+        
         plainStr.append(getPlainStrNotNull("&EM_gubun=", order.getEmGubun()));
+        //contents 개수만큼 추가
+        String[] countStr = order.getContents().split(";"); 
+        for (int i = 0; i < countStr.length -1; i++) {
+        	plainStr.append( ";" + order.getEmGubun() ); 
+		}
         
         /*plainStr.append(getPlainStrNotNull("&orderprsnaddr2=", order.getCustNo()));
         plainStr.append(getPlainStrNotNull("&orderprsnnm=", order.getCustNo()));

@@ -1,7 +1,9 @@
 package com.dreamEMS.service.impl;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dreamEMS.model.dto.CustomUserDetails;
 import com.dreamEMS.model.entity.User;
+import com.dreamEMS.model.entity.UserGroup;
 import com.dreamEMS.repository.UserRepository;
 import com.dreamEMS.service.UserService;
 
@@ -26,9 +29,14 @@ import com.dreamEMS.service.UserService;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+
+	private final UserRepository userRepository;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    @Override
+    public List<UserGroup> getGroupList() {
+    	return userRepository.selectAllGroup();
+    }
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -112,5 +120,27 @@ public class UserServiceImpl implements UserService {
     			userRepository.deleteUserById(user.getId()) > 0;
         return  rvl;
     }
+	@Override
+	public boolean modifyUserGroup(UserGroup group) {
+		return userRepository.updateUserGroup(group)> 0;
+	}
+	@Override
+	public boolean saveUserGroup(UserGroup group) {
+		return userRepository.insertUserGroup(group) > 0;
+	}
+	@Override
+	public boolean deleteUserGroup(Long groupId) {
+		
+		Map where = new HashMap<>();
+		where.put("groupId", groupId );
+		List<User> user = userRepository.selectAllUsers(where);
+		if (user.size() > 0) {
+			return false;
+		}
+		
+		return userRepository.deleteUserGroup(groupId) > 0;
+	}
+    
+    
 
 }

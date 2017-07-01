@@ -3,6 +3,7 @@ package com.dreamEMS.model.entity;
 import java.io.Serializable;
 import java.util.Collection;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 
 import lombok.Getter;
@@ -27,13 +28,13 @@ public class User implements Serializable {
     private static final long serialVersionUID = 7698862379923111158L;
 
     
-    /**사용자 고유번호
-     */
     private Long no;
-    /**tt
-     */
+    
+    @NotEmpty
     private String id;
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String password;
     
     private boolean enabled;
@@ -42,10 +43,19 @@ public class User implements Serializable {
     private boolean accountNonLocked;
     private Collection<? extends GrantedAuthority> authorities;
     
+    
+    @NotEmpty
     private String sender;
+    @NotEmpty
     private String senderZipCode;
+    @NotEmpty
     private String senderAddr1;
+    @NotEmpty
     private String senderAddr2;
+    @NotEmpty
     private String senderTelNo;
+    
+    private Long groupId;
+    private String groupName;
 
 }

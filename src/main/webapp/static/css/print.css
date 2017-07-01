@@ -1,10 +1,5 @@
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
-@page {
-    size: A4;
-    margin: 0;
-}
-
 body.print {
   background: rgb(204,204,204); 
 }
@@ -13,7 +8,7 @@ body.print {
   width: 21cm;
   height: 29.7cm;
   display: block;
-  margin: 0 auto;
+  margin: 0px auto;
   box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
 }
 .print page[size="label"] {
@@ -21,7 +16,7 @@ body.print {
   width: 271mm;
   height: 110mm;
   display: block;
-  margin: 0 auto;
+   margin: 0px auto;
   box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
 }
 
@@ -42,6 +37,7 @@ padding: 0;
 .print .br-right{border-right: 1px solid #000;}
 .print .br-left{border-left: 1px solid #000; }
 .print .br-bottom{border-bottom: 1px solid #000;}
+.print .br-top{border-top: 1px solid #000;}
 .print .va-top{ vertical-align: top }
 .print .va-middle{vertical-align: middle;}
 .print .ft-left{float: left; padding-left: 4px;}
@@ -51,9 +47,10 @@ padding: 0;
 .print .text-blue{color: #1970ec;}
 .print .ta-left {text-align: left; padding-left: 4px;}
 .print .ta-right {text-align: right; padding-right: 4px;}
+.print .ta-middle {text-align: center;}
 .print .text-lg { font-size: 13px; font-weight: bold; }
 .print .ls-sm{ letter-spacing: -1.5px; }
-.print .ls-md{letter-spacing: -0.5px; }
+.print .ls-md{letter-spacing: -0.8px; }
 
 
 
@@ -65,14 +62,38 @@ padding: 0;
 .print .invoice td.base-h{height: 50px;}
 .print .invoice .va-middle{line-height: 25px;}
 
-.print .footer{float: left; padding: 4% 5% 0 5%; width: 90%;}
+.print .footer{float: left; padding: 2% 5% 0 5%; width: 90%;}
 /* .div-label-footer{float: right; width: 33%; position: absolute; right: -80px; top: 210px; transform: rotate(-90deg);} */  
 
-.print .div-label-footer{float: right; width: 20%; position: absolute; right: 320px; top: 210px; transform: rotate(-90deg);}  
+/* .print .div-label-footer{float: right; width: 20%; position: absolute; right: 320px; top: 210px; transform: rotate(-90deg);} */  
+.print .div-label-footer{float: right; width: 10%; margin-right: 10px; margin-top : -18.5%;}  
+.print .div-label-footer td{height: 30px;}  
+/* .print .div-label-footer .barcode_area2{
+    display:inline-block;
+    position:absolute;
+    right: 50px;
+    margin-top: 50px; 
+    -webkit-transform:rotate(-90deg);
+} */
+
+.print .div-label-footer .barcode_area2{
+    position: relative;
+ 	 top: 85px;
+  	transform: rotate(-90deg);
+}
+
+.print .test {
+    clear:both;
+    float:right;
+    margin-top: 0px;
+   }
 
 .print .div-label-1{float: left; padding: 1% 1.5%; width: 58.5%;}
 
-.print .invoice2{float: left; padding: 0.5% 1.2%; width: 26%;}
+.print .invoice1{float: left; padding: 0.5% 1.2%; width: 45%;}
+.print .invoice2{float: left; padding: 0.5% 1.2%; width: 25%;}
+.print .receipt1{float: left; padding: 3% 0% 0 5%; width: 43%;}
+.print .receipt2{float: left; padding: 0.5% 1.2%; width: 25%;}
 
 .print .test1{line-height: 0.9;}
 
@@ -102,6 +123,8 @@ padding: 0;
 
 .print .addr-h{height: 110px !important;}
 .print .tb-print2 .addr-h{height: 80px !important;}
+.print .receipt1 .addr-h{height: 120px !important;}
+.print .receipt2 .addr-h{height: 35px !important;}
 .print .tb-print2 .ls-xs{letter-spacing: -1.2px;}
 .print .tb-print2 .ls-sm{letter-spacing: -1.9px;}
 
@@ -122,14 +145,21 @@ padding: 0;
 .print .tb-print2 td{height: 12px; font-size: 10px; }
 .print .tb-print3 td{height: 18px; font-size: 12px; }
 .print .invoice2 td{height: 8px; font-size: 8px; line-height: 1;}
-.print .receipt2 td{height: 14px; font-size: 12px; }
+.print .receipt1 td{height: 40px; font-size: 12px; }
+.print .receipt2 td{height: 10px; font-size: 10px; }
+.print .div-label-footer td{height: 35px; font-size: 10px; }
+
 
 
 @media print {
-    body, page[size="A4"] {
+    body, page[size="A4"], page[size="label"] {
     margin: 0;
     box-shadow: 0;
   }
+   page {
+			page-break-after: always;
+			overflow: hidden;
+	}
     tbody::after {
         content: ''; display: block;
         page-break-after: always;
@@ -140,7 +170,7 @@ padding: 0;
       width : 190mm;
     }
     div.div-a4.invoice{
-      width : 95mm;
+      width : 90mm;
     }
     div.none{
     	display: none;
@@ -148,7 +178,9 @@ padding: 0;
     div.div-label-1{
       width : 162mm;
     }
-    .div-label-footer{float: right; width: 36.5%; position: absolute; right: -130px; top: 185px;
-        transform: rotate(-90deg);}  
+    /* .div-label-footer{float: right; width: 36.5%; position: absolute; right: -130px; top: 185px;
+        transform: rotate(-90deg);
+    } */  
+    .noprint{display: none; }
   
 }

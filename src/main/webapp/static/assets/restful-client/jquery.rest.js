@@ -45,27 +45,43 @@
       $.restSetup.csrfToken = $.restSetup.csrfToken || $('meta[name=csrf-token]').attr('content');
     });
 
-    function collect_options (url, data, success, error) {
+    //민경 : global 추가함 
+    function collect_options (url, data, global, success, error) {
       var options = { dataType: 'json' };
       if (arguments.length === 1 && typeof arguments[0] !== "string") {
-        options = $.extend(options, url);
+        options = $.extend(options, url, global);
         if ("url" in options)
-        if ("data" in options) {
+        if ("data" in options){
           options.url = fill_url(options.url, options.data);
         }
-      } else {
-        // shift arguments if data argument was omitted
-        if ($.isFunction(data)) {
-          error = success;
-          success = data;
-          data = null;
-        }
+        options.global =global;
+      }
+      else {
+    	  
+    	  // shift arguments if data argument was omitted
+    	if (typeof arguments[1] === "boolean"){
+    		error = success;
+    		success = global;
+    		global = data;
+    		data = null;
+    		
+    	}else if ($.isFunction(data)) {
+            error = global;
+            success = data;
+            global = true;
+            data = null;
+        }else if ($.isFunction(global)) {
+    		error = success;
+            success = global;
+            global = true;
+    	}
 
         url = fill_url(url, data);
 
         options = $.extend(options, {
           url: url,
           data: data,
+          global:global,
           success: function (data, text, xhr) {
             if (success) success.call(options.context || options, data, get_headers(xhr), xhr);
           },
@@ -74,6 +90,7 @@
           }
         });
       }
+      
       return options;
     }
 

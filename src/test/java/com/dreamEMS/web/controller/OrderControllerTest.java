@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
@@ -182,7 +184,7 @@ public class OrderControllerTest {
 	@WithUserDetails(value = "ems")
 	public void adminHome() throws Exception {
 		
-        List<Order> article = orderService.getAllOrder();
+        List<Order> article = orderService.getAllOrder(new DataTablesInput());
         int count = article.size();
 
 		this.mockMvc
@@ -200,7 +202,7 @@ public class OrderControllerTest {
 	@WithUserDetails(value = "test")
 	public void userOrderList() throws Exception {
 		
-		List<Order> article = orderService.getAllOrder();
+		List<Order> article = orderService.getAllOrder(new DataTablesInput());
         int count = article.size();
         String jsonString = this.jsonStringFromObject(article);
 
@@ -221,7 +223,7 @@ public class OrderControllerTest {
 	@WithUserDetails(value = "test")
 	public void userprintOrderList() throws Exception {
 		
-		List<Order> article = orderService.getAllPrintOrder();
+		List<Order> article = orderService.getAllPrintOrder(new DataTablesInput());
         int count = article.size();
         String jsonString = this.jsonStringFromObject(article);
 
@@ -233,6 +235,17 @@ public class OrderControllerTest {
 		.andExpect(content().json(jsonString));
 		
 	}
+	
+	@Test
+	@WithUserDetails(value = "ems")
+    public void getOrders(){
+		String[] strArr		=		{"20170525151526101","20170525151052574","20170525121742349"};
+ 		List strList		=		Arrays.asList(strArr);
+
+
+ 		orderService.getOrders(strList);
+   	 
+    }
 	
 	
 	

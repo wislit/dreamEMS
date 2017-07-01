@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.dreamEMS.model.entity.User;
+import com.dreamEMS.model.entity.UserGroup;
 
 /**
  * @author Xiaoyue Xiao
@@ -32,5 +33,10 @@ public interface UserService extends UserDetailsService {
     boolean deleteUserById(User user);
 
 	PasswordEncoder passwordEncoder();
+
+	List<UserGroup> getGroupList();
+	boolean modifyUserGroup(UserGroup group);
+	boolean saveUserGroup(UserGroup group);
+	boolean deleteUserGroup(Long groupId);
 
 }

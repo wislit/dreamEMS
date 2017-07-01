@@ -325,6 +325,19 @@ isadmin ${isAdmin}
 <script src="${pageContext.request.contextPath}/static/assets/jquery-confirm/jquery-confirm.js"></script>
 <%-- <script src="${pageContext.request.contextPath}/static/assets/bootstrap-table/bootstrap-table.min.js"></script> --%>
 <%-- <script src="${pageContext.request.contextPath}/static/assets/bootstrap-table/bootstrap-table-locale-all.min.js"></script> --%>
+
+<!-- data table -->
+<script src="${pageContext.request.contextPath}/static/assets/advanced-datatable/media/js/jquery.dataTables.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/data-tables/DT_bootstrap.js"></script>
+
+<!-- REST ajax -->
+<script src="${pageContext.request.contextPath}/static/assets/restful-client/jquery.rest.js"></script>
+
+<!-- INPUT -->
+<script src="${pageContext.request.contextPath}/static/assets/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/assets/datepicker/js/bootstrap-datepicker.js"></script>
+
+
 <script type="text/javascript">
 $(document).ready(function() {
 	loadBundles('${pageContext.response.locale}');
