@@ -3,14 +3,11 @@ package com.dreamEMS.web.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -35,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dreamEMS.model.dto.CustomUserDetails;
 import com.dreamEMS.model.dto.Msg;
+import com.dreamEMS.model.dto.PaginatedParam;
 import com.dreamEMS.model.dto.PaginatedResult;
 import com.dreamEMS.model.entity.EmsTotProcCmd;
 import com.dreamEMS.model.entity.Order;
@@ -66,17 +64,16 @@ public class OrderController {
     }
 	
 	@PostMapping("/list")
-    public ResponseEntity<?> list(@RequestBody DataTablesInput paging) {
+    public ResponseEntity<?> list(@RequestBody PaginatedParam input) {
 		
 		Long userNo = this.getUserNo();
-		Map input = new HashMap();
-		input.put("userNo", userNo);
+		input.setUserNo(userNo);
 		
 		PaginatedResult result = new PaginatedResult();
-		List<Order> orderList = orderService.getAllOrder(input, paging);
+		List<Order> orderList = orderService.getAllOrder(input);
 
 		result.setData(orderList);
-        result.setDraw(paging.getDraw());
+        result.setDraw(input.getDraw());
 		int count = orderService.getTotCount();
 		
 		result.setRecordsTotal(count);
@@ -88,17 +85,16 @@ public class OrderController {
     }
 	
 	@PostMapping("/printList")
-    public ResponseEntity<?> printList(@RequestBody DataTablesInput paging) {
+    public ResponseEntity<?> printList(@RequestBody PaginatedParam input) {
 
 		Long userNo = this.getUserNo();
-		Map input = new HashMap();
-		input.put("userNo", userNo);
+		input.setUserNo(userNo);
 		
 		PaginatedResult result = new PaginatedResult();
-		List<Order> orderList = orderService.getAllPrintOrder(input, paging);
+		List<Order> orderList = orderService.getAllPrintOrder(input);
 
 		result.setData(orderList);
-        result.setDraw(paging.getDraw());
+        result.setDraw(input.getDraw());
 		int count = orderService.getTotCount();
 		
 		result.setRecordsTotal(count);

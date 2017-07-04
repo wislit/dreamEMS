@@ -1,11 +1,10 @@
 package com.dreamEMS.repository;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 
+import com.dreamEMS.model.dto.PaginatedParam;
 import com.dreamEMS.model.entity.Order;
 import com.dreamEMS.model.entity.TestTb;
 
@@ -22,8 +21,8 @@ public interface OrderRepository{
 
     Integer selectTotalRecords();
     
-    List<Order> selectAllOrder(@Param("input") Map input, @Param("paging") DataTablesInput paging);
-    List<Order> selectAllPrintOrder(@Param("input") Map input, @Param("paging") DataTablesInput paging);
+    List<Order> selectAllOrder(@Param("input") PaginatedParam input);
+    List<Order> selectAllPrintOrder(@Param("input") PaginatedParam input);
     
     Order selectOrder(Order order);
     List<Order> selectOrders(@Param("userNo") Long userNo, @Param("orders") List<String> orders);

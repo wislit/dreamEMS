@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/print.css" />
+<sec:authorize access="hasAuthority('ADMIN')" var="isAdmin" />
 <body>
 <!-- start:main -->
 <div class="container"> <!-- footer.jsp에 container </div> 있음 마지막에 닫는태그 안써도됨 -->
 <div id="main">
-
     <!-- start:breadcrumb -->
     <%-- <ol class="breadcrumb">
         <li><a href="${pageContext.request.contextPath}/">Home</a></li>
@@ -42,6 +43,49 @@
         <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-body">
+                	<div class="col-sm-12">
+	                	<!-- start:search well -->
+		       			<div class="well well" style="padding: 10px;">
+		        			<form class="form-inline" role="form">
+		        				<div class="row" >
+			        				<div class="col-sm-6" style="padding: 0;">
+			        					<div class="col-sm-6" style="padding: 0;">
+				        					<div class="form-group">
+						                   		<button type="button" class="btn btn-default btn-sm" name="changeDate" data="today" >당일</button>
+						                   		<button type="button" class="btn btn-default btn-sm" name="changeDate" data="weekend" >1주일</button>
+						                   		<button type="button" class="btn btn-default btn-sm" name="changeDate" data="month" >1개월</button>
+						                   		<button type="button" class="btn btn-default btn-sm" name="changeDate" data="year" >1년</button>
+						                   </div>
+			        					</div>
+					                   <div class="col-sm-6" style="padding: 0;">
+						                   <div class="input-daterange input-group" id="datepicker">
+					                            <input type="text" class="form-control input-sm" name="start" id="startDate"/>
+											    <span class="input-group-addon">~</span>
+											    <input type="text" class="input-sm form-control" name="end" id="endDate"/>
+											</div>
+					                   </div>
+				       				</div>
+								<div class="col-sm-6" style="padding: 0 10px;">
+			       					<div class="form-group">
+			       						<label for="regiNo">송장</label>
+			                       	 	<input type="input" class="form-control input-sm" id="regiNo" style="width: 120px;">
+			                        </div>
+			                         <c:if test="${isAdmin }">
+				                        <div class="form-group">
+				       						<label for="sender">발송인</label>
+				                       	 	<input type="input" class="form-control input-sm" id="sender" style="width: 120px;">
+				                        </div>
+                                    </c:if>
+			       					<div class="form-group">
+		                          		<button type="button" class="btn btn-info btn-sm" id="searchBtn">검색</button>
+		                          	</div>
+			       				</div>		        				
+		                    </div>
+	                    	</form>
+		             	</div>
+		             	<!-- end:search well -->
+                	</div>
+                
                 	<!-- start:tab nav -->
                     <ul id="orderTab" class="nav nav-tabs">
                         <li class=""><a href="#beforePrint" data-toggle="tab">미출력<!-- <span class="badge bg-important">14</span> --></a></li>
@@ -70,6 +114,9 @@
 		                                    <th class="text-center">No</th>
 		                                    <th class="text-center">날짜</th>
 		                                    <th class="text-center">송장번호</th>
+		                                    <c:if test="${isAdmin }">
+		                                    <th class="text-center">발송인</th>
+		                                    </c:if>
 		                                    <th class="text-center">받는사람</th>
 		                                    <th class="text-center">국가</th>
 		                                    <th class="text-center">중량(g)</th>
@@ -95,6 +142,9 @@
 		                                    <th class="text-center">No</th>
 		                                    <th class="text-center">날짜</th>
 		                                    <th class="text-center">송장번호</th>
+		                                    <c:if test="${isAdmin }">
+		                                    <th class="text-center">발송인</th>
+		                                    </c:if>
 		                                    <th class="text-center">받는사람</th>
 		                                    <th class="text-center">국가</th>
 		                                    <th class="text-center">중량(g)</th>
@@ -437,8 +487,6 @@ function updateDialog(orderNo) {
 /* 일괄출력시 활성화된 탭에서 체크된것만 인쇄 */
 function printAll(isLabel,type) {
   	var tableId = $(".tab-pane.active").find("table").attr("id");
-  	alert(tableId);
-  	
   	var sel = $('#'+tableId+' input[type=checkbox]:checked').map(function(_, el) {
         return $(el).val();
     }).get();
@@ -447,6 +495,12 @@ function printAll(isLabel,type) {
 }
 
 function confirmPrint(type, isLabel, orderNo){
+	
+	if(orderNo.length == 0 ){
+		$.alert("선택된 주문이 없습니다.");
+		return;
+	}
+	
 	$.confirm({
 	    content:'<label>'+type+'에 송장을 출력하시겠습니까?</label><br><br>' +
 		        '<div><label><input type="radio" name="emGubun2" value="false" checked="checked">세관신고서 형식(基本形)</label></div>' +
@@ -470,7 +524,56 @@ function confirmPrint(type, isLabel, orderNo){
 }
 
     $(document).ready(function() {
-    	// Array holding selected row IDs
+    	
+    	$('.input-daterange').datepicker({
+    		 format: "yyyy-mm-dd",
+   		    weekStart: 1,
+   		    todayBtn: "linked",
+   		    language: "kr",
+   		    daysOfWeekHighlighted: "0",
+    	});
+    	
+    	
+    	/* 초기에 1년단위로 설정 */
+    	var dpg = $.fn.datepicker.DPGlobal;
+		var date = dpg.parseDate( new Date(),  dpg.parseFormat('yyyy-mm-dd'));
+		$(".input-daterange [name=end]").datepicker("setDate", date);
+		//date.setMonth(date.getMonth() - 1 );
+		date.setFullYear(date.getFullYear() - 1 );
+		$(".input-daterange [name=start]").datepicker("setDate", date);
+        
+		
+		
+		$("button[name=changeDate]").click(function() {
+    		
+    		var type = $(this).attr("data");
+    		
+    		var date = dpg.parseDate( new Date(),  dpg.parseFormat('yyyy-mm-dd'));
+    		$(".input-daterange [name=end]").datepicker("setDate", date);
+    		
+    		switch (type) {
+			case "today":
+				date.setDate(date.getDate());
+				break;
+			case "weekend":
+				date.setDate(date.getDate() - 7 );			
+				break;
+			case "month":
+				date.setMonth(date.getMonth() - 1 );
+				break;
+			case "year":
+				date.setFullYear(date.getFullYear() - 1 );
+				break;
+			}
+    		$(".input-daterange [name=start]").datepicker("setDate", date);
+		});
+        
+    	$("#searchBtn").click(function() {
+    		var tableId = $(".tab-pane.active").find("table").attr("id");
+    	  	var table = $("#"+tableId).dataTable().api();        	
+    	  	table.ajax.reload();
+    	  	
+		});
     	
     	var btnStr = //"<button class='btn btn-info btn-sm' onclick='ready()'><i class='fa fa-pencil'></i></button> " +
             "<button class='btn btn-danger btn-sm' onclick='ready()'><i class='fa fa-trash-o '></i></button> "
@@ -492,6 +595,11 @@ function confirmPrint(type, isLabel, orderNo){
            +"</div>";     
             
            var table = $('#orderList').DataTable( {
+        	dom: '<if<t>lp>',       	   
+        	language : {
+        		"info":           "Total _TOTAL_ entries",
+        	    "infoEmpty":      "Total 0 entries",
+        	},
         	filter:false,
         	ordering: false,
         	serverSide: true,
@@ -500,6 +608,10 @@ function confirmPrint(type, isLabel, orderNo){
     			'url':  "${pageContext.request.contextPath}/order/list",
      			'type': 'POST',
      			'data': function(d) {
+     				d.sender = $("#sender").val();
+     				d.regiNo = $("#regiNo").val();
+     				d.startDate = $("#startDate").val();
+     				d.endDate = $("#endDate").val();
     				return JSON.stringify(d);
     			}
     		},
@@ -527,6 +639,10 @@ function confirmPrint(type, isLabel, orderNo){
                     return '<a href=" #user-modal" class="detail" data-toggle="modal"><strong>'+data+'</strong></a>';
                 	}
                 },
+                <c:if test='${isAdmin }'>
+                { data: "sender"},
+                </c:if>
+                
                 { data: "receiveName"},
                 { data: "countryCd"},
                 { data: "totWeight"},
@@ -549,6 +665,10 @@ function confirmPrint(type, isLabel, orderNo){
     			'url':  "${pageContext.request.contextPath}/order/printList",
      			'type': 'POST',
      			'data': function(d) {
+     				d.sender = $("#sender").val();
+     				d.regiNo = $("#regiNo").val();
+     				d.startDate = $("#startDate").val();
+     				d.endDate = $("#endDate").val();
     				return JSON.stringify(d);
     			}
     		},
@@ -576,6 +696,9 @@ function confirmPrint(type, isLabel, orderNo){
                         return '<a href=" #user-modal" class="detail" data-toggle="modal"><strong>'+data+'</strong></a>';
                     	}
                 },
+                <c:if test='${isAdmin }'>
+                { data: "sender"},
+                </c:if>
                 { data: "receiveName"},
                 { data: "countryCd"},
                 { data: "totWeight"},

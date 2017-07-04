@@ -38,7 +38,7 @@ public class OrderScheduler {
 
         log.info("Current time is :: " + Calendar.getInstance().getTime());
 
-        List<Order> orderList = orderService.getAllPrintOrder(null, null);
+        List<Order> orderList = orderService.getAllPrintOrder(null);
 
         for (Order order : orderList){
 

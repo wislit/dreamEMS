@@ -184,7 +184,7 @@ public class OrderControllerTest {
 	@WithUserDetails(value = "ems")
 	public void adminHome() throws Exception {
 		
-        List<Order> article = orderService.getAllOrder(null, new DataTablesInput());
+        List<Order> article = orderService.getAllOrder(null);
         int count = article.size();
 
 		this.mockMvc
@@ -202,7 +202,7 @@ public class OrderControllerTest {
 	@WithUserDetails(value = "test")
 	public void userOrderList() throws Exception {
 		
-		List<Order> article = orderService.getAllOrder(null, new DataTablesInput());
+		List<Order> article = orderService.getAllOrder(null);
         int count = article.size();
         String jsonString = this.jsonStringFromObject(article);
 
@@ -223,7 +223,7 @@ public class OrderControllerTest {
 	@WithUserDetails(value = "test")
 	public void userprintOrderList() throws Exception {
 		
-		List<Order> article = orderService.getAllPrintOrder(null, new DataTablesInput());
+		List<Order> article = orderService.getAllPrintOrder(null);
         int count = article.size();
         String jsonString = this.jsonStringFromObject(article);
 

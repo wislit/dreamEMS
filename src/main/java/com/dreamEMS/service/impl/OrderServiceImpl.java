@@ -14,12 +14,12 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.dreamEMS.model.dto.CustomUserDetails;
+import com.dreamEMS.model.dto.PaginatedParam;
 import com.dreamEMS.model.entity.Order;
 import com.dreamEMS.model.entity.OrderResponse;
 import com.dreamEMS.model.entity.TestTb;
@@ -169,8 +169,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getAllOrder(Map input, DataTablesInput paging) {
-	    List<Order> orderList = orderRepository.selectAllOrder(input, paging);
+	public List<Order> getAllOrder(PaginatedParam input) {
+	    List<Order> orderList = orderRepository.selectAllOrder(input);
 		return orderList;
 	}
 	
@@ -182,8 +182,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getAllPrintOrder(Map input, DataTablesInput paging) {
-	    List<Order> orderList = orderRepository.selectAllPrintOrder(input, paging); 
+	public List<Order> getAllPrintOrder(PaginatedParam input) {
+	    List<Order> orderList = orderRepository.selectAllPrintOrder(input); 
 		return orderList;
 	}
 

@@ -135,9 +135,18 @@
         <if test="input != null and input.userNo != null">
           AND user_no = #{input.userNo}
         </if>
+        <if test="input != null and input.startDate != null">
+          AND order_date BETWEEN  #{input.startDate}  AND #{input.endDate}
+        </if>
+        <if test="input != null and input.sender != null and input.sender != ''">
+          AND sender = #{input.sender}
+        </if>
+        <if test="input != null and input.regiNo != null and input.regiNo != ''">
+          AND regi_no = #{input.regiNo}
+        </if>
         order by order_date desc
-        <if test="paging != null and paging.start != null">
-          LIMIT #{paging.start}, #{paging.length}    
+        <if test="input != null and input != null">
+          LIMIT #{input.start}, #{input.length}    
         </if>
     </select>
     
@@ -151,9 +160,18 @@
         <if test="input != null and input.userNo != null">
           AND user_no = #{input.userNo}
         </if>
+        <if test="input != null and input.startDate != null">
+          AND order_date BETWEEN  #{input.startDate}  AND #{input.endDate}
+        </if>
+        <if test="input != null and input.sender != null and input.sender != ''">
+          AND sender = #{input.sender}
+        </if>
+        <if test="input != null and input.regiNo != null and input.regiNo != ''">
+          AND regi_no = #{input.regiNo}
+        </if>
         order by order_date desc
-        <if test="paging != null and paging.start != null">
-          LIMIT #{paging.start}, #{paging.length}    
+        <if test="input != null and input != null">
+          LIMIT #{input.start}, #{input.length}    
         </if>
     </select>
     

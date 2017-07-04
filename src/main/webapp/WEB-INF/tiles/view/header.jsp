@@ -337,7 +337,6 @@ isadmin ${isAdmin}
 <script src="${pageContext.request.contextPath}/static/assets/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/assets/datepicker/js/bootstrap-datepicker.js"></script>
 
-
 <script type="text/javascript">
 $(document).ready(function() {
 	loadBundles('${pageContext.response.locale}');

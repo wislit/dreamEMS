@@ -231,15 +231,13 @@
 
 <!-- javascript for this page -->
 <!-- bootstrap date picker -->
-<script src="${pageContext.request.contextPath}/static/assets/datepicker/js/bootstrap-datepicker.js"></script>
 
 <script type="text/javascript">
  $(document).ready(function() {
- 		$('#dp1,#dp2').datepicker({});
+ 	$('#dp1,#dp2').datepicker({});
 
-var nowTemp = new Date();
-      var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-
+	var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
  });
  
  </script>

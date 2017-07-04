@@ -2,10 +2,8 @@ package com.dreamEMS.service;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.data.jpa.datatables.mapping.DataTablesInput;
-
+import com.dreamEMS.model.dto.PaginatedParam;
 import com.dreamEMS.model.entity.Order;
 import com.dreamEMS.model.entity.TestTb;
 
@@ -20,8 +18,8 @@ public interface OrderService {
 	boolean saveOrder(Order order);               
 	boolean modifyOrder(Order order);               
 	boolean deleteOrder(String orderNo);               
-	List<Order> getAllOrder(Map input, DataTablesInput paging);               
-	List<Order> getAllPrintOrder(Map input, DataTablesInput paging);
+	List<Order> getAllOrder(PaginatedParam input);               
+	List<Order> getAllPrintOrder(PaginatedParam input);
 	int getTotCount();
 	
 	Order getOrder(String orderNo);               
