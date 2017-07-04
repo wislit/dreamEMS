@@ -32,7 +32,7 @@ public class OrderScheduler {
         log.info(taskName);
     }
 
-    @Scheduled(cron = "*/60 * * * * ?")
+    //@Scheduled(cron = "*/60 * * * * ?")
     //@Scheduled(cron = "10 00 00 * * ?")
     public void sendProcessingScheduler() throws Exception{
 
