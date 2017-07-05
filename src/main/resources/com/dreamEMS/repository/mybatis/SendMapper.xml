@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dreamEMS.repository.mybatis.OrderMapper">
+
+    <insert id="saveSend" parameterType="Send">
+        insert into send (send_no,user_no,send_date,order_count,post_price,ems_price)
+        values (#{sendNo},#{userNo},#{sendDate},#{orderCount},#{postPrice},#{emsPrice})
+        <selectKey keyProperty="sendNo" resultType="long" order="AFTER">
+            SELECT LAST_INSERT_ID() as send_no
+        </selectKey>
+    </insert>
+
+
+</mapper>
