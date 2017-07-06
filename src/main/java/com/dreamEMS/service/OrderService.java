@@ -25,9 +25,6 @@ public interface OrderService {
 	
 	Order getOrder(String orderNo);               
 	List<Order> getOrders(List<String> orderNoList);
-	/**
-	 * @param order
-	 * @return
-	 */
 	boolean saveOrderNotSession(Order order);               
+
 }
