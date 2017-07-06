@@ -18,10 +18,16 @@ public interface OrderService {
 	boolean saveOrder(Order order);               
 	boolean modifyOrder(Order order);               
 	boolean deleteOrder(String orderNo);               
+	boolean updatePrintFlag(List<String> orders);               
 	List<Order> getAllOrder(PaginatedParam input);               
 	List<Order> getAllPrintOrder(PaginatedParam input);
 	int getTotCount();
 	
 	Order getOrder(String orderNo);               
-	List<Order> getOrders(List<String> orderNoList);               
+	List<Order> getOrders(List<String> orderNoList);
+	/**
+	 * @param order
+	 * @return
+	 */
+	boolean saveOrderNotSession(Order order);               
 }

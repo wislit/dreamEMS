@@ -248,8 +248,19 @@ public class OrderController {
     	model.addObject("isLabel", label);
     	model.addObject("isReceipt", receipt);
     	model.addObject("orderList", orderList);
+    	model.addObject("orderNoList", orderNoList);
     	return model;
         //return ResponseEntity.ok(Msg.SUCCESS);
+    }
+    
+    @PostMapping("/updatePrintFlag")
+    public ResponseEntity<?> updatePrintFlag(@RequestParam List orders) {
+
+    	boolean ret = orderService.updatePrintFlag(orders);
+    	
+    	Msg msg = ret ? Msg.SUCCESS : Msg.FAIL ;
+    	
+        return ResponseEntity.ok(msg);
     }
 
     private Long getUserNo(){

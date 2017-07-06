@@ -659,6 +659,8 @@ var beforePrint = function() {
 };
 var afterPrint = function() {
    console.log('이 Function은 프린트 이후에 호출됩니다.');
+   var create = $.create('/order/updatePrintFlag', JSON.stringify( '${orderNoList}' ), false );
+   //updatePrintFlag
    //setTimeout(function(){window.close();}, 1);
 };
 

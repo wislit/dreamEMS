@@ -567,12 +567,34 @@ function confirmPrint(type, isLabel, orderNo){
 			}
     		$(".input-daterange [name=start]").datepicker("setDate", date);
 		});
+		
+		var searchData = {};
         
     	$("#searchBtn").click(function() {
     		var tableId = $(".tab-pane.active").find("table").attr("id");
     	  	var table = $("#"+tableId).dataTable().api();        	
-    	  	table.ajax.reload();
     	  	
+    	  	searchData.sender = $("#sender").val();
+    	  	searchData.regiNo = $("#regiNo").val();
+    	  	searchData.startDate = $("#startDate").val();
+    	  	searchData.endDate = $("#endDate").val();
+    	  	
+    	  	table.ajax.reload();
+    	  	/* 
+    	  	d.sender = $("#sender").val();
+			d.regiNo = $("#regiNo").val();
+			d.startDate = $("#startDate").val();
+			d.endDate = $("#endDate").val();
+			
+			ajax: {
+    			'contentType': 'application/json',
+    			'url':  "${pageContext.request.contextPath}/order/list",
+     			'type': 'POST',
+     			'data': function(d) {
+    				return JSON.stringify(d);
+    			}
+    	  	
+    	  	*/
 		});
     	
     	var btnStr = //"<button class='btn btn-info btn-sm' onclick='ready()'><i class='fa fa-pencil'></i></button> " +
@@ -608,12 +630,9 @@ function confirmPrint(type, isLabel, orderNo){
     			'url':  "${pageContext.request.contextPath}/order/list",
      			'type': 'POST',
      			'data': function(d) {
-     				d.sender = $("#sender").val();
-     				d.regiNo = $("#regiNo").val();
-     				d.startDate = $("#startDate").val();
-     				d.endDate = $("#endDate").val();
-    				return JSON.stringify(d);
-    			}
+     					d = $.extend(d, searchData);
+     					return JSON.stringify(d);
+     				}
     		},
         	columnDefs: [ {
                 orderable: false,
@@ -665,11 +684,8 @@ function confirmPrint(type, isLabel, orderNo){
     			'url':  "${pageContext.request.contextPath}/order/printList",
      			'type': 'POST',
      			'data': function(d) {
-     				d.sender = $("#sender").val();
-     				d.regiNo = $("#regiNo").val();
-     				d.startDate = $("#startDate").val();
-     				d.endDate = $("#endDate").val();
-    				return JSON.stringify(d);
+     				d = $.extend(d, searchData);
+ 					return JSON.stringify(d);
     			}
     		},
         	columnDefs: [ {

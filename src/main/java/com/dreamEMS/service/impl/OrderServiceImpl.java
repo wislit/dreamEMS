@@ -1,9 +1,7 @@
 package com.dreamEMS.service.impl;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -106,10 +104,6 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public boolean saveOrder(Order order) {
 		
-		String orderNo = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format(System.currentTimeMillis());
-		order.setOrderNo( orderNo );
-		order.setOrderDate(new Date());
-		
 		String custNo = apiService.getCustno();
 		String apprNo = apiService.getApprno(custNo);
 		order.setCustNo(custNo);
@@ -137,6 +131,7 @@ public class OrderServiceImpl implements OrderService {
         	order.setSenderMobile4(m.group(3));
         }
 
+        int dbInsert = orderRepository.insertOrder(order);
         
 		OrderResponse response = apiService.receiptEms(custNo, apprNo, order);
 		
@@ -148,7 +143,43 @@ public class OrderServiceImpl implements OrderService {
 		order.setTreatPoRegiPoCd(response.getTreatPoRegiPoCd());
 		order.setTreatPoRegiPoEngNm(response.getTreatPoRegiPoEngNm());
 		
-		return  orderRepository.insertOrder(order) > 0;
+		int dbUpdate = orderRepository.updateOrderStatus(order);
+		
+		//수정해야함
+		return   dbInsert > 0;
+	}
+	
+	@Override
+	public boolean saveOrderNotSession(Order order) {
+		
+		String custNo = apiService.getCustno();
+		String apprNo = apiService.getApprno(custNo);
+		order.setCustNo(custNo);
+		order.setApprNo(apprNo);
+		
+        int dbInsert = orderRepository.insertOrder(order);
+        
+		OrderResponse response = apiService.receiptEms(custNo, apprNo, order);
+		
+		order.setReqNo(response.getReqNo());
+		order.setReceiveSeq(response.getReceiveSeq());
+		order.setRegiNo(response.getRegiNo());
+		order.setPreRecevPrc(response.getPreRecevPrc());
+		order.setPrcPayMethCd(response.getPrcPayMethCd());
+		order.setTreatPoRegiPoCd(response.getTreatPoRegiPoCd());
+		order.setTreatPoRegiPoEngNm(response.getTreatPoRegiPoEngNm());
+		
+		int dbUpdate = orderRepository.updateOrderStatus(order);
+		
+		//수정해야함
+		return   dbInsert > 0;
+	}
+	
+	
+
+	@Override
+	public boolean updatePrintFlag(List<String> orders) {
+		return  orderRepository.updateOrderPrint(orders) >0 ;
 	}
 
 	@Override

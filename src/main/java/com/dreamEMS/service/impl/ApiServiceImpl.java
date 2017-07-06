@@ -350,7 +350,7 @@ public class ApiServiceImpl implements ApiService {
     public String getCustno() {
         String custno = "";
         String plainStr = "memberID="+ApiConstant.EPOST_ID;
-        String regData = this.getEncryptData(ApiConstant.REGKEY,plainStr);
+        String regData = this.getEncryptData(ApiConstant.SEEDKEY,plainStr);
 
         StringBuffer apiUrl = new StringBuffer();
         apiUrl.append("http://eship.epost.go.kr/api.EmsIdCustnoInfo.ems?regkey=");
@@ -382,7 +382,7 @@ public class ApiServiceImpl implements ApiService {
     public String getApprno(String custno) {
         String apprno = "";
         String plainStr = "custno="+custno;
-        String regData = this.getEncryptData(ApiConstant.REGKEY,plainStr);
+        String regData = this.getEncryptData(ApiConstant.SEEDKEY,plainStr);
 
         StringBuffer apiUrl = new StringBuffer();
         apiUrl.append("http://eship.epost.go.kr/api.EmsPrcPayMethodList.ems?regkey=");
@@ -415,8 +415,8 @@ public class ApiServiceImpl implements ApiService {
         OrderResponse orderResponse = null;
         String plainStr = this.getPlainStr2(custno,apprno,order);
         log.info(plainStr);
-        String regData = this.getEncryptData(ApiConstant.REGKEY,plainStr);
-
+        String regData = this.getEncryptData(ApiConstant.SEEDKEY,plainStr);
+        log.info(regData);
         StringBuffer apiUrl = new StringBuffer();
         // TODO: 2017-04-23 라이브 적용시 url 변경
         //apiUrl.append("http://eship.epost.go.kr/api.EmsApplyInsertReceiveTempCmdNew.ems?regkey=");    //라이브 url
@@ -429,6 +429,8 @@ public class ApiServiceImpl implements ApiService {
         
         //.ems?key=test& regData=d30c973e3e4b5eb75462423c0aa100bc0ea16fc031987
         //http://eship.epost.go.kr/api.EmsApplyInsertReceiveTempCmdNew.ems?key=test& regData=d30c973e3e4b5eb75462423c0aa100bc0ea16fc031987
+        
+        log.info(apiUrl);
         
         try {
             String xmlStr = this.callApi(apiUrl.toString(),"GET");
@@ -559,22 +561,7 @@ public class ApiServiceImpl implements ApiService {
         StringBuffer plainStr = new StringBuffer();
         plainStr.append(getPlainStrNotNull("custno=", order.getCustNo()));
         plainStr.append(getPlainStrNotNull("&apprno=", order.getApprNo()));
-        plainStr.append(getPlainStrNotNull("&sender=", order.getSender()));
-        plainStr.append(getPlainStrNotNull("&senderzipcode=", order.getSenderZipCode()));
-        plainStr.append(getPlainStrNotNull("&senderaddr1=", order.getSenderAddr1()));
-        plainStr.append(getPlainStrNotNull("&senderaddr2=", order.getSenderAddr2()));
-        plainStr.append(getPlainStrNotNull("&sendertelno1=", order.getSenderTelNo1()));
-        plainStr.append(getPlainStrNotNull("&sendertelno2=", order.getSenderTelNo2()));
-        plainStr.append(getPlainStrNotNull("&sendertelno3=", order.getSenderTelNo3()));
-        plainStr.append(getPlainStrNotNull("&sendertelno4=", order.getSenderTelNo4()));
-        plainStr.append(getPlainStrNotNull("&sendermobile1=", order.getSenderMobile1()));
-        plainStr.append(getPlainStrNotNull("&sendermobile2=", order.getSenderMobile2()));
-        plainStr.append(getPlainStrNotNull("&sendermobile3=", order.getSenderMobile3()));
-        plainStr.append(getPlainStrNotNull("&sendermobile4=", order.getSenderMobile4()));
-        plainStr.append(getPlainStrNotNull("&senderemail=", order.getSenderMail()));
-        plainStr.append(getPlainStrNotNull("&snd_message=", order.getSndMessage()));
         plainStr.append(getPlainStrNotNull("&premiumcd=", order.getPremiumCd()));
-        
         plainStr.append(getPlainStrNotNull("&receivename=", order.getReceiveName()));
         plainStr.append(getPlainStrNotNull("&receivezipcode=", order.getReceiveZipCode()));
         plainStr.append(getPlainStrNotNull("&receiveaddr1=", order.getReceiveAddr1()));
@@ -592,14 +579,27 @@ public class ApiServiceImpl implements ApiService {
         plainStr.append(getPlainStrNotNull("&totweight=", order.getTotWeight()));
         plainStr.append(getPlainStrNotNull("&boyn=", order.getBoYN()));
         plainStr.append(getPlainStrNotNull("&boprc=", order.getBoPrc()));
-        plainStr.append(getPlainStrNotNull("&orderprsnzipcd=", order.getOrderPrsnZipCd()));
-        plainStr.append(getPlainStrNotNull("&orderprsnaddr1=", order.getOrderPrsnAddr1()));
         plainStr.append(getPlainStrNotNull("&contents=", order.getContents()));
         plainStr.append(getPlainStrNotNull("&number=", order.getNumber()));
         plainStr.append(getPlainStrNotNull("&weight=", order.getWeight()));
         plainStr.append(getPlainStrNotNull("&value=", order.getValue()));
         plainStr.append(getPlainStrNotNull("&hs_code=", order.getHsCode()));
         plainStr.append(getPlainStrNotNull("&origin=", order.getOrigin()));
+        
+        plainStr.append(getPlainStrNotNull("&sender=", order.getSender()));
+        plainStr.append(getPlainStrNotNull("&senderzipcode=", order.getSenderZipCode()));
+        plainStr.append(getPlainStrNotNull("&senderaddr1=", order.getSenderAddr1()));
+        plainStr.append(getPlainStrNotNull("&senderaddr2=", order.getSenderAddr2()));
+        plainStr.append(getPlainStrNotNull("&sendertelno1=", order.getSenderTelNo1()));
+        plainStr.append(getPlainStrNotNull("&sendertelno2=", order.getSenderTelNo2()));
+        plainStr.append(getPlainStrNotNull("&sendertelno3=", order.getSenderTelNo3()));
+        plainStr.append(getPlainStrNotNull("&sendertelno4=", order.getSenderTelNo4()));
+        plainStr.append(getPlainStrNotNull("&sendermobile1=", order.getSenderMobile1()));
+        plainStr.append(getPlainStrNotNull("&sendermobile2=", order.getSenderMobile2()));
+        plainStr.append(getPlainStrNotNull("&sendermobile3=", order.getSenderMobile3()));
+        plainStr.append(getPlainStrNotNull("&sendermobile4=", order.getSenderMobile4()));
+        plainStr.append(getPlainStrNotNull("&senderemail=", order.getSenderMail()));
+        plainStr.append(getPlainStrNotNull("&snd_message=", order.getSndMessage()));
         
         plainStr.append(getPlainStrNotNull("&EM_gubun=", order.getEmGubun()));
         //contents 개수만큼 추가

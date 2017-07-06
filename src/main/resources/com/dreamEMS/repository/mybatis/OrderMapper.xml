@@ -14,8 +14,8 @@
         from test_tb
     </select>
     
-    <insert id="insertOrder" parameterType="com.dreamEMS.model.entity.Order">
-        INSERT INTO ems.order (order_date,
+    <insert id="insertOrder" keyColumn="order_no" keyProperty="orderNo"  useGeneratedKeys="true" >
+        INSERT INTO ems.order (
         				cust_no,
                         appr_no,
                         user_no,
@@ -26,7 +26,6 @@
                         sender_mobile2,
                         sender_mobile3,
                         sender_mobile4,
-                        order_no,
                         premium_cd,
                         receive_name,
                         receive_zip_code,
@@ -43,14 +42,6 @@
                         hs_code,
                         origin,
                         em_gubun,
-                        req_no,
-                        receive_seq,
-                        regi_no,
-                        pre_recev_prc,
-                        prc_pay_meth_cd,
-                        treat_po_regi_po_cd,
-                        treat_po_regi_po_eng_nm,
-                        print,
                         contents1,
                         contents2,
                         contents3,
@@ -67,9 +58,8 @@
                         hs_code2,
                         hs_code3,
                         hs_code4
-                        treat_po_regi_po_eng_nm
                         )
-				VALUES (#{orderDate},
+				VALUES (
 						#{custNo},
 				        #{apprNo},
 				        #{userNo},
@@ -80,7 +70,6 @@
 				        #{senderMobile2},
 				        #{senderMobile3},
 				        #{senderMobile4},
-				        #{orderNo},
 				        #{premiumCd},
 				        #{receiveName},
 				        #{receiveZipCode},
@@ -97,14 +86,6 @@
 				        #{hsCode},
 				        #{origin},
 				        #{emGubun},
-				        #{reqNo},
-				        #{receiveSeq},
-				        #{regiNo},
-				        #{preRecevPrc},
-				        #{prcPayMethCd},
-				        #{treatPoRegiPoCd},
-				        #{treatPoRegiPoEngNm},
-				        #{print},
                         #{contents1},
                         #{contents2},
                         #{contents3},
@@ -121,9 +102,34 @@
                         #{hsCode2},
                         #{hsCode3},
                         #{hsCode4}
-				        #{treatPoRegiPoEngNm}
         )
     </insert>
+    
+    <update id="updateOrderStatus">
+        UPDATE
+          ems.order
+        SET
+          req_no = #{reqNo},
+          receive_seq = #{receiveSeq},
+          regi_no = #{regiNo},
+          pre_recev_prc = #{preRecevPrc},
+          prc_pay_meth_cd = #{prcPayMethCd},
+          treat_po_regi_po_cd = #{treatPoRegiPoCd},
+          treat_po_regi_po_eng_nm = #{treatPoRegiPoEngNm}
+        WHERE
+          order_no = #{orderNo}
+    </update>
+    
+    <update id="updateOrderPrint">
+        UPDATE
+          ems.order
+        SET
+          print_flag = 1,
+        WHERE order_no in
+        <foreach collection="orders" item="order"   open="(" close=")" separator=",">
+		      #{order}
+		 </foreach>
+    </update>
     
     <select id="selectAllOrder" resultType="Order">
         SELECT SQL_CALC_FOUND_ROWS
@@ -136,7 +142,7 @@
           AND user_no = #{input.userNo}
         </if>
         <if test="input != null and input.startDate != null">
-          AND order_date BETWEEN  #{input.startDate}  AND #{input.endDate}
+          AND order_date BETWEEN #{input.startDate} AND DATE_ADD(#{input.endDate}, INTERVAL 1 DAY)
         </if>
         <if test="input != null and input.sender != null and input.sender != ''">
           AND sender = #{input.sender}
@@ -161,7 +167,7 @@
           AND user_no = #{input.userNo}
         </if>
         <if test="input != null and input.startDate != null">
-          AND order_date BETWEEN  #{input.startDate}  AND #{input.endDate}
+          AND order_date BETWEEN #{input.startDate} AND DATE_ADD(#{input.endDate}, INTERVAL 1 DAY)
         </if>
         <if test="input != null and input.sender != null and input.sender != ''">
           AND sender = #{input.sender}

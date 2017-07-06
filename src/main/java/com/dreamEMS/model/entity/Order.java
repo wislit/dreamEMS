@@ -137,10 +137,10 @@ public class Order implements Serializable {
     private String orderNo;			//업체측 주문번호(50) *UNIQUE KEY
     /*@Email
     @Pattern(regexp = "[\\p{Alnum}\\.\\@\\<\\>\\-\\_]{1,40}")*/
-    private String senderMail = "sender@mail.com";		//발송인 이메일(40)
+    private String senderMail; //= "sender@mail.com";		//발송인 이메일(40)
     /*@Email
     @Pattern(regexp = "[\\p{Alnum}\\.\\@\\<\\>\\-\\_]{1,40}")*/
-    private String receiveMail = "receiver@mail.com";		//수취인 이메일(40)
+    private String receiveMail; //= "receiver@mail.com";		//수취인 이메일(40)
     
     
     @Pattern(regexp = "[\\d]{10}")

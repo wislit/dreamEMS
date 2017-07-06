@@ -124,20 +124,51 @@ public class OrderModelTest {
     	 System.out.println(test);
     }
      
-     //@Test
+     @Test
      public void saveOrder(){
-    	 Order order = new Order();
-    	 order.setPremiumCd("31");
-    	 order.setReceiveName("姚安光");
-    	 order.setReceiveTelNo("13172036918");
-    	 order.setCountryCd("CN");
-    	 order.setReceiveZipCode("08281");
-    	 order.setReceiveAddr3("上海市金山区亭林镇林盛路54号");
-    	 order.setTotWeight("18800");
-    	 order.setContents("Stationery");
-    	 order.setValue("49");
     	 
-    	 boolean rvl = orderService.saveOrder(order);
+    	 
+    	 Order order = new Order();
+		 order.setUserNo((long) 89);
+		 order.setReceiveName("James Lee");
+		 order.setReceiveTelNo("13172036918");
+		 order.setCountryCd("CN");
+		 order.setReceiveAddr3("St. temp 12");
+		 order.setTotWeight("3000");
+		 order.setContents("clocks");
+		 order.setValue("100");
+		 order.setEmGubun("Merchandise");
+		 
+		 order.setSender("ZHAO RUI");
+		 order.setSenderZipCode("14449");
+		 order.setSenderAddr1("401-301Seokcheon-ro 397");
+		 order.setSenderAddr2("Bucheon-si Gyeonggi-do");
+		 order.setSenderTelNo2("000");
+		 order.setSenderTelNo3("0000");
+		 order.setSenderTelNo4("0000");
+		 order.setSenderMobile2("010");
+		 order.setSenderMobile3("2993");
+		 order.setSenderMobile4("5467");
+		 
+		 order.setPremiumCd("31");
+		 order.setEmEE("em");
+		 
+		 order.setReceiveMail("jlww@email.com");
+		 
+		 
+		 order.setReceiveZipCode("07803");
+		 order.setReceiveAddr1("new jersey");
+		 order.setReceiveAddr2("min hill");
+		 order.setReceiveTelNo1("81"); 
+		 order.setReceiveTelNo2("1245"); 
+		 order.setReceiveTelNo3("4857"); 
+		 order.setReceiveTelNo4("4563"); 
+		 order.setNumber("1");
+		 order.setWeight("2900");
+		 order.setHsCode("9105100000");
+		 order.setOrigin("KR");
+		 
+    	 boolean rvl = orderService.saveOrderNotSession(order);
     	 System.out.println(rvl);
     	 
      }

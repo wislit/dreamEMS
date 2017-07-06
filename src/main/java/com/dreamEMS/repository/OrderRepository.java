@@ -18,6 +18,8 @@ public interface OrderRepository{
     Integer updateOrder(Order order);
     Integer deleteOrder(Order order);
     Integer selectOrder(String orderNo);
+    Integer updateOrderStatus(Order order);
+    Integer updateOrderPrint(@Param("orders") List<String> orders);
 
     Integer selectTotalRecords();
     

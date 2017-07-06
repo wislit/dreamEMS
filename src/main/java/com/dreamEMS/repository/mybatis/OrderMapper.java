@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.dreamEMS.model.dto.PaginatedParam;
 import com.dreamEMS.model.entity.Order;
 import com.dreamEMS.model.entity.TestTb;
+import com.dreamEMS.model.entity.User;
 import com.dreamEMS.repository.OrderRepository;
 
 /**
@@ -21,6 +22,8 @@ public interface OrderMapper extends OrderRepository {
     Integer updateOrder(Order order);
     Integer deleteOrder(Order order);
     Integer selectOrder(String orderNo);
+    Integer updateOrderStatus(Order order);
+    Integer updateOrderPrint(@Param("orders") List<String> orders);
     
     Integer selectTotalRecords();
     

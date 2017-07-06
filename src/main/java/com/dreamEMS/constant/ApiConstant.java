@@ -6,7 +6,10 @@ package com.dreamEMS.constant;
 public class ApiConstant {
 
     // api 키
-    public static final String REGKEY = "6c1591025283e7f421486051285602";
+    //public static final String REGKEY = "6c1591025283e7f421486051285602";
+    //보안키 a815cf7607f527fe160226
+	public static final String SEEDKEY = "a815cf7607f527fe160226";
+	public static final String REGKEY = "6c1591025283e7f421486051285602";
     public static final String REGKEY_TRACKING = "6c1591025283e7f421486051285602";
 
     // premiumcd 코드

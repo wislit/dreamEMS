@@ -224,7 +224,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
     <td class="va-middle" colspan="3" rowspan="2">
     	<div class="col-sm-4" style="padding: 0px;">Postage<br>우편요금</div>
     	<div class="input-group">
-            <input type="text" class="form-control warning" disabled="" value="" name="proc">
+            <input type="text" class="form-control" disabled="" value="" name="proc">
             <span class="input-group-addon input-group-addon-default">원</span>
         </div>
     </td>
@@ -366,7 +366,6 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
 			} );
         	
         	getDesc();
-        	$('#dp1').datepicker({});
         	
         	$("#submitOrder").click(function() {
         		
@@ -398,7 +397,7 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
 				$('input[name=number]').val(number);
 				$('input[name=hsCode]').val(hsCode);
 				        		
-           	 var create = $.create('/order', JSON.stringify($("#registForm").serializeObject()) );
+           	 var create = $.create('/order', JSON.stringify($("#registForm").serializeObject()), false );
            	 create.then(function(reponse) {
            		$.alert({
            		    content:  i18n("msg."+reponse.code),
@@ -413,10 +412,13 @@ tr.col-item{letter-spacing: -1.7px; line-height: 1.1;}
            		    }
            		});
 			}, function(xhr){
-           		 
-           		var errors = xhr.responseJSON;
-           		for ( var index in errors) {
-           			$('[name='+errors[index]+']').attr("title","error").tooltip('fixTitle').tooltip('show');
+				if(xhr.status == 400){
+	           		var errors = xhr.responseJSON;
+	           		for ( var index in errors) {
+	           			$('[name='+errors[index]+']').attr("title","error").tooltip('fixTitle').tooltip('show');
+					}
+				}else{
+					ajaxError(xhr);
 				}
            	 });
    		});

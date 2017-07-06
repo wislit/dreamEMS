@@ -125,8 +125,9 @@
       var csrfParam = new RegExp("(" + $.restSetup.csrfParam + "=)", "i"),
           userBeforeSend = settings.beforeSend,
           methodOverride;
-
-      if (typeof settings.data !== "string")
+      
+      //민경수정 if (typeof settings.data !== "string") 아래처럼 수정
+      if (typeof settings.data !== "string" && typeof settings.data !== "object")
       if (settings.data != null) {
           settings.data = $.param(settings.data);
       }
